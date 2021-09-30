@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb7d2c1ee036e14299137b5831d0d83, type: 3}
+  m_Name: Bones
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 6585804636780753850, guid: 7825f257fe3a6704ea506f3959128291, type: 3}
+  type: 2
+  description: The leftovers of those who has been slained!
