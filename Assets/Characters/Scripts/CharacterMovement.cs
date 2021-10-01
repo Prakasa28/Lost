@@ -1,192 +1,148 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Characters.Scripts
+public class CharacterMovement : MonoBehaviour
 {
-    public class CharacterMovement : MonoBehaviour
+    // character animator component
+    private Animator animator;
+
+    // getter/setter parameter IDs
+    private int isWalkingHash;
+    private int isRunningHash;
+
+    // store player input   
+    private PlayerInput input;
+    private CharacterController characterController;
+    private Vector2 currentMovementInput;
+    private Vector3 currentMovement;
+    private Vector3 currentRunMovement;
+
+    private bool isMovementPressed;
+    private bool isRunPressed;
+
+    private float rotationFactorPerFrame = 15.0f;
+
+    void Awake()
     {
-        // character animator component
-        private Animator animator;
+        animator = GetComponent<Animator>();
+        input = new PlayerInput();
+        characterController = GetComponent<CharacterController>();
+        isWalkingHash = Animator.StringToHash("IsWalking");
+        isRunningHash = Animator.StringToHash("IsRunning");
+        // moving
+        input.CharacterControls.Move.started += onMovementInput;
+        input.CharacterControls.Move.canceled += onMovementInput;
 
-        // getter/setter parameter IDs
-        private int isMovingHash;
-        private int isDodgingHash;
-        private int isAttackingHash;
+        //running
+        input.CharacterControls.Run.started += onRun;
+        input.CharacterControls.Run.canceled += onRun;
 
-        // store player input   
-        private PlayerInput input;
-        private CharacterController characterController;
-        private Vector2 currentMovementInput;
-        private Vector3 currentMovement;
+        //TODO - attacking
+    }
 
-        private bool isMovementPressed;
-        private float rotationFactorPerFrame = 15.0f;
+    void onMovementInput(InputAction.CallbackContext context)
+    {
+        currentMovementInput = context.ReadValue<Vector2>();
+        currentMovement.x = currentMovementInput.x;
+        currentMovement.z = currentMovementInput.y;
+        currentRunMovement.x = currentMovementInput.x * 3.0f;
+        currentRunMovement.z = currentMovementInput.y * 3.0f;
+        isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
+    }
 
-        public float movementSpeed;
-        public float dashDistance = 15;
-        private bool isAttacking = false;
-        private bool isDodging = false;
-  
-        [SerializeField] private float animationFinishedTime = 0.6f;
-        
-        void Awake()
+    void onRun(InputAction.CallbackContext context)
+    {
+        isRunPressed = context.ReadValueAsButton();
+    }
+
+    private void Update()
+    {
+        handleGravity();
+        handleRotation();
+        handleAnimation();
+        if (isRunPressed)
         {
-            animator = GetComponent<Animator>();
-            input = new PlayerInput();
-            characterController = GetComponent<CharacterController>();
-
-
-            //animations
-            isMovingHash = Animator.StringToHash("IsMoving");
-            isDodgingHash = Animator.StringToHash("IsDodging");
-            isAttackingHash = Animator.StringToHash("IsAttacking");
-
-            //moving
-            input.CharacterControls.Move.performed += onMovementInput;
-
-            //dodging
-            input.CharacterControls.Dodge.performed += onDodge;
-
-            //attacking
-            input.CharacterControls.Attack.performed += onAttack;
+            characterController.Move(currentRunMovement * Time.deltaTime);
         }
 
-        void onMovementInput(InputAction.CallbackContext context)
+        characterController.Move(currentMovement * Time.deltaTime);
+    }
+
+    void handleGravity()
+    {
+        // apply proper gravity depending if the character is grounded or not
+        if (characterController.isGrounded)
         {
-            currentMovementInput = context.ReadValue<Vector2>();
-            currentMovement.x = currentMovementInput.x * movementSpeed;
-            currentMovement.z = currentMovementInput.y * movementSpeed;
-            isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
+            float groundedGravity = -.05f;
+            currentMovement.y = groundedGravity;
+            currentRunMovement.y = groundedGravity;
         }
 
+        float gravity = -9.8f;
+        currentMovement.y += gravity;
+        currentRunMovement.y += gravity;
+    }
 
-        void onDodge(InputAction.CallbackContext context)
+    void handleRotation()
+    {
+        Vector3 positionToLookAt;
+
+        positionToLookAt.x = currentMovement.x;
+        positionToLookAt.y = 0.0f;
+        positionToLookAt.z = currentMovement.z;
+        // current rotation of character
+        Quaternion currentRotation = transform.rotation;
+
+
+        if (isMovementPressed)
         {
-            if (!isDodging)
-            {
-                animator.SetTrigger(isDodgingHash);
-                StartCoroutine(InitialiseDodge());
-            }
+            // create a new rotation based on where the player is currently pressing
+            Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
+            transform.rotation =
+                Quaternion.Slerp(currentRotation, targetRotation, rotationFactorPerFrame * Time.deltaTime);
         }
-        
+    }
 
-        private void onAttack(InputAction.CallbackContext context)
+
+    void handleAnimation()
+    {
+        bool isRunning = animator.GetBool(isRunningHash);
+        bool isWalking = animator.GetBool(isWalkingHash);
+
+        // start walking if movement pressed is true and not already walking
+        if (isMovementPressed && !isWalking)
         {
-            if (!isAttacking)
-            {
-                animator.SetTrigger(isAttackingHash);
-                StartCoroutine(InitialiseAttack());
-            }
-        }
-
-        IEnumerator InitialiseAttack()
-        {
-            yield return new WaitForSeconds(0.1f);
-            isAttacking = true;
-        }
-
-        IEnumerator InitialiseDodge()
-        {
-            yield return new WaitForSeconds(0.1f);
-            isDodging = true;
-        }
-        
-        private void Update()
-        {
-            handleGravity();
-            handleRotation();
-            handleAnimation();
-
-
-            if (isAttacking)
-            {
-                if (animator.GetCurrentAnimatorStateInfo(1).normalizedTime >= animationFinishedTime)
-                {
-                    isAttacking = false; 
-                }
-            }
-            
-            if (isDodging)
-            {
-                if (animator.GetCurrentAnimatorStateInfo(2).normalizedTime >= animationFinishedTime)
-                {
-                    isDodging = false; 
-                }
-                characterController.Move(currentMovement * dashDistance * Time.deltaTime);    
-            }
-            
-            characterController.Move(currentMovement * Time.deltaTime);
-            
+            animator.SetBool(isWalkingHash, true);
         }
 
-        void handleGravity()
+        // stop walking if button is released and already walking 
+        if (!isMovementPressed && isWalking)
         {
-            // apply proper gravity depending if the character is grounded or not
-            if (characterController.isGrounded)
-            {
-                float groundedGravity = -.05f;
-                currentMovement.y = groundedGravity;
-            }
-
-            float gravity = -9.8f;
-            currentMovement.y += gravity;
+            animator.SetBool(isWalkingHash, false);
         }
 
-        void handleRotation()
+        // start running if movement pressed and run is pressed is true and not already running
+        if ((isMovementPressed && isRunPressed) && !isRunning)
         {
-            Vector3 positionToLookAt;
-
-            // change in position our character should point to
-            positionToLookAt.x = currentMovement.x;
-            positionToLookAt.y = 0.0f;
-            positionToLookAt.z = currentMovement.z;
-
-            // current rotation of character
-            Quaternion currentRotation = transform.rotation;
-
-
-            if (isMovementPressed)
-            {
-                // create a new rotation based on where the player is currently pressing
-                Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
-                transform.rotation =
-                    Quaternion.Slerp(currentRotation, targetRotation, rotationFactorPerFrame * Time.deltaTime);
-            }
+            animator.SetBool(isRunningHash, true);
         }
 
-
-        void handleAnimation()
+        // stop running if movement or run pressed are false and currently running
+        if ((!isMovementPressed || !isRunPressed) && isRunning)
         {
-            // bool isRunning = animator.GetBool(isRunningHash);
-            bool isMoving = animator.GetBool(isMovingHash);
-
-            // start moving if movement pressed is true and not already walking
-            if (isMovementPressed && !isMoving)
-            {
-                animator.SetBool(isMovingHash, true);
-            }
-
-            // stop moving if button is released and already walking 
-            if (!isMovementPressed && isMoving)
-            {
-                animator.SetBool(isMovingHash, false);
-            }
-
+            animator.SetBool(isRunningHash, false);
         }
-        
-        
+    }
 
-        // enable player actions map
-        private void OnEnable()
-        {
-            input.CharacterControls.Enable();
-        }
+    // enable player actions map
+    private void OnEnable()
+    {
+        input.CharacterControls.Enable();
+    }
 
-        // disable player actions map
-        private void OnDisable()
-        {
-            input.CharacterControls.Disable();
-        }
+    // disable player actions map
+    private void OnDisable()
+    {
+        input.CharacterControls.Disable();
     }
 }
