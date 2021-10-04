@@ -24,6 +24,10 @@ namespace Characters.Scripts
 
         private float rotationFactorPerFrame = 15.0f;
 
+
+        public float dashSpeed;
+        public float dashTime;
+        
         void Awake()
         {
             //initialise variables
@@ -44,6 +48,7 @@ namespace Characters.Scripts
             input.CharacterControls.Run.canceled += onRun;
 
             //TODO - dodge
+            
 
             //TODO - attacking
         }
@@ -62,6 +67,7 @@ namespace Characters.Scripts
         {
             isRunPressed = context.ReadValueAsButton();
         }
+        
 
         private void Update()
         {
@@ -119,6 +125,7 @@ namespace Characters.Scripts
         {
             bool isRunning = animator.GetBool(isRunningHash);
             bool isWalking = animator.GetBool(isWalkingHash);
+
             // start walking if movement pressed is true and not already walking
             if (isMovementPressed && !isWalking)
             {
