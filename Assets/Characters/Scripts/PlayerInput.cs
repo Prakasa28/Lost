@@ -70,7 +70,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""name"": ""Keyboard"",
                     ""id"": ""326e29cc-d2f9-4084-8de5-9a53c8532d53"",
                     ""path"": ""2DVector"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press(pressPoint=0.5,behavior=1)"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Move"",
