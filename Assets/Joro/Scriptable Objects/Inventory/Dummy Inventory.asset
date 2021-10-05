@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cc73445177766147906d91c8a8f2f93, type: 3}
   m_Name: Dummy Inventory
   m_EditorClassIdentifier: 
-  Container: []
+  savePath: 
+  Container:
+    Items: []

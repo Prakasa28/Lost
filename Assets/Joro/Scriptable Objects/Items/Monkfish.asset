@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3536aa701ada5df4cbfcaee689aec0f0, type: 3}
   m_Name: Monkfish
   m_EditorClassIdentifier: 
-  prefab: {fileID: 5148001147002805451, guid: a3f9bf170af9b9d4183bb90d53426de5, type: 3}
+  Id: 5
+  uiDisplay: {fileID: 21300000, guid: 9c7eb79b3ec09b04581298a9625bd276, type: 3}
   type: 0
   description: Can be fished alot hehe.
-  restoreHealthValue: 16
+  buffs:
+  - attribute: 0
+    value: 5

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efb7d2c1ee036e14299137b5831d0d83, type: 3}
   m_Name: Bones
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6585804636780753850, guid: 7825f257fe3a6704ea506f3959128291, type: 3}
+  Id: 0
+  uiDisplay: {fileID: 21300000, guid: e151d03e416cd074ba986bc3227b27ee, type: 3}
   type: 2
   description: The leftovers of those who has been slained!
+  buffs: []

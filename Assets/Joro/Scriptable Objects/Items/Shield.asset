@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fce90659c357b4149b663c48e3748371, type: 3}
   m_Name: Shield
   m_EditorClassIdentifier: 
-  prefab: {fileID: 5687308946215364827, guid: 99543cf47d229c344a5940062366e0d4, type: 3}
+  Id: 4
+  uiDisplay: {fileID: 21300000, guid: 0e7c8b2f936cae04bab03bdcf6ac72c9, type: 3}
   type: 1
   description: Very powerful!!
-  atkBonus: 10
-  defenceBonus: 0
+  buffs:
+  - attribute: 1
+    value: 5
