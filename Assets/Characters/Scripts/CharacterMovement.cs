@@ -25,8 +25,8 @@ namespace Characters.Scripts
         private float rotationFactorPerFrame = 15.0f;
 
 
-        public float dashSpeed;
-        public float dashTime;
+        public float walkSpeed;
+        public float runSpeed;
         
         void Awake()
         {
@@ -56,10 +56,10 @@ namespace Characters.Scripts
         void onMovementInput(InputAction.CallbackContext context)
         {
             currentMovementInput = context.ReadValue<Vector2>();
-            currentMovement.x = currentMovementInput.x;
-            currentMovement.z = currentMovementInput.y;
-            currentRunMovement.x = currentMovementInput.x * 3.0f;
-            currentRunMovement.z = currentMovementInput.y * 3.0f;
+            currentMovement.x = currentMovementInput.x * walkSpeed;
+            currentMovement.z = currentMovementInput.y * walkSpeed;
+            currentRunMovement.x = currentMovementInput.x * runSpeed;
+            currentRunMovement.z = currentMovementInput.y * runSpeed;
             isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
         }
 
