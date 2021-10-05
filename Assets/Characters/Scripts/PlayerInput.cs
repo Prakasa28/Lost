@@ -78,7 +78,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""name"": ""Keyboard"",
                     ""id"": ""326e29cc-d2f9-4084-8de5-9a53c8532d53"",
                     ""path"": ""2DVector"",
-                    ""interactions"": ""Press(behavior=1)"",
+                    ""interactions"": ""Press(pressPoint=2,behavior=1)"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Move"",
@@ -187,7 +187,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""1360dcb4-5d9b-437d-97a3-73ca91c6c147"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
