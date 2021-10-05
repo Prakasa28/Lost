@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,7 +12,6 @@ namespace Characters.Scripts
         private int isWalkingHash;
         private int isRunningHash;
         private int isDodgingHash;
-        private int isAttackingHash;
 
         // store player input   
         private PlayerInput input;
@@ -21,22 +19,19 @@ namespace Characters.Scripts
         private Vector2 currentMovementInput;
         private Vector3 currentMovement;
         private Vector3 currentRunMovement;
+        // private Vector3 currentDodgeMovement;
 
         private bool isMovementPressed;
         private bool isRunPressed;
-        private bool isDodgePressed;
-        private bool isAttackPressed;
-
+        // private bool isDodgePressed;
 
         private float rotationFactorPerFrame = 15.0f;
 
-        public float dashSpeed;
-        public float dashTime;
-        public float walkSpeed;
-        public float runSpeed;
-
+        public float runningSpeed;
+        public float movementSpeed;
         void Awake()
         {
+            //initialise variables
             animator = GetComponent<Animator>();
             input = new PlayerInput();
             characterController = GetComponent<CharacterController>();
@@ -45,7 +40,6 @@ namespace Characters.Scripts
             isWalkingHash = Animator.StringToHash("IsWalking");
             isRunningHash = Animator.StringToHash("IsRunning");
             isDodgingHash = Animator.StringToHash("IsDodging");
-            isAttackingHash = Animator.StringToHash("IsFighting");
 
             //moving
             input.CharacterControls.Move.started += onMovementInput;
@@ -56,22 +50,25 @@ namespace Characters.Scripts
             input.CharacterControls.Run.canceled += onRun;
 
             //dodge
-            input.CharacterControls.Dodge.started += onDodge;
-            input.CharacterControls.Dodge.canceled += onDodge;
+            // input.CharacterControls.Dodge.started += onDodge;
+            // input.CharacterControls.Dodge.canceled += onDodge;
 
-
-            //attacking
-            input.CharacterControls.Attack.started += onAttack;
-            input.CharacterControls.Attack.canceled += onAttack;
+            //TODO - attacking
         }
 
         void onMovementInput(InputAction.CallbackContext context)
         {
             currentMovementInput = context.ReadValue<Vector2>();
-            currentMovement.x = currentMovementInput.x * walkSpeed;
-            currentMovement.z = currentMovementInput.y * walkSpeed;
-            currentRunMovement.x = currentMovementInput.x * runSpeed;
-            currentRunMovement.z = currentMovementInput.y * runSpeed;
+            //movement
+            currentMovement.x = currentMovementInput.x * movementSpeed;
+            currentMovement.z = currentMovementInput.y * movementSpeed;
+            //run
+            currentRunMovement.x = currentMovementInput.x * runningSpeed;
+            currentRunMovement.z = currentMovementInput.y * runningSpeed;
+            // dodge
+            // currentDodgeMovement.x = currentMovementInput.x * 6.0f;
+            // currentDodgeMovement.z = currentMovementInput.y * 6.0f;
+
             isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
         }
 
@@ -80,15 +77,10 @@ namespace Characters.Scripts
             isRunPressed = context.ReadValueAsButton();
         }
 
-        void onDodge(InputAction.CallbackContext context)
-        {
-            isDodgePressed = context.ReadValueAsButton();
-        }
-
-        void onAttack(InputAction.CallbackContext context)
-        {
-            isAttackPressed = context.ReadValueAsButton();
-        }
+        // void onDodge(InputAction.CallbackContext context)
+        // {
+        //     isDodgePressed = context.ReadValueAsButton();
+        // }
 
 
         private void Update()
@@ -101,25 +93,14 @@ namespace Characters.Scripts
             {
                 characterController.Move(currentRunMovement * Time.deltaTime);
             }
-
+            //
             // if (isDodgePressed)
             // {
-            //     StartCoroutine(Dash());
+            //     characterController.Move(currentDodgeMovement * Time.deltaTime);
             // }
 
             characterController.Move(currentMovement * Time.deltaTime);
         }
-
-
-        // IEnumerator Dash()
-        // {
-        //     float startTime = Time.time;
-        //     while (Time.time < startTime + dashTime)
-        //     {
-        //         characterController.Move(currentMovement * dashSpeed * Time.deltaTime);
-        //         yield return null;
-        //     }
-        // }
 
         void handleGravity()
         {
@@ -163,8 +144,8 @@ namespace Characters.Scripts
         {
             bool isRunning = animator.GetBool(isRunningHash);
             bool isWalking = animator.GetBool(isWalkingHash);
-            bool isDodging = animator.GetBool(isDodgingHash);
-            bool isAttacking = animator.GetBool(isAttackingHash);
+            // bool isDodging = animator.GetBool(isDodgingHash);
+
 
             // start walking if movement pressed is true and not already walking
             if (isMovementPressed && !isWalking)
@@ -172,38 +153,23 @@ namespace Characters.Scripts
                 animator.SetBool(isWalkingHash, true);
             }
 
-            // start attacking if not already attacking
-            if (isAttackPressed && !isAttacking)
-            {
-                animator.SetBool(isAttackingHash, true);
-            }
-
-            // stop attacking if already attacking
-            if (!isAttackPressed && isAttacking)
-            {
-                animator.SetBool(isAttackingHash, false);
-            }
-
-            // start dodging if not already dodging
-            if (isDodgePressed && !isDodging)
-            {
-                animator.SetBool(isDodgingHash, true);
-                
-            }
-
-            // stop dodging if already dodging
-            if (!isDodgePressed && isDodging)
-            {
-                animator.SetBool(isDodgingHash, false);
-            }
-
-
             // stop walking if button is released and already walking 
             if (!isMovementPressed && isWalking)
             {
                 animator.SetBool(isWalkingHash, false);
             }
 
+            // // start dodging if dodge pressed is true and not already dodging
+            // if (isDodgePressed && !isDodging)
+            // {
+            //     animator.SetBool(isDodgingHash, true);
+            // }
+            //
+            // // stop dodging if button is released and already dodging 
+            // if (!isDodgePressed && isDodging)
+            // {
+            //     animator.SetBool(isDodgingHash, false);
+            // }
 
             // start running if movement pressed and run is pressed is true and not already running
             if ((isMovementPressed && isRunPressed) && !isRunning)
