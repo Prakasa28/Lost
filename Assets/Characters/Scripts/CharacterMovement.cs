@@ -10,8 +10,7 @@ namespace Characters.Scripts
         private Animator animator;
 
         // getter/setter parameter IDs
-        private int isWalkingHash;
-        private int isRunningHash;
+        private int isMovingHash;
         private int isDodgingHash;
         private int isAttackingHash;
 
@@ -20,106 +19,105 @@ namespace Characters.Scripts
         private CharacterController characterController;
         private Vector2 currentMovementInput;
         private Vector3 currentMovement;
-        private Vector3 currentRunMovement;
 
         private bool isMovementPressed;
-        private bool isRunPressed;
-        private bool isDodgePressed;
-        private bool isAttackPressed;
-
-
         private float rotationFactorPerFrame = 15.0f;
 
-        public float dashSpeed;
-        public float dashTime;
-        public float walkSpeed;
-        public float runSpeed;
-
+        public float movementSpeed;
+        public float dashDistance = 15;
+        private bool isAttacking = false;
+        private bool isDodging = false;
+  
+        [SerializeField] private float animationFinishedTime = 0.6f;
+        
         void Awake()
         {
             animator = GetComponent<Animator>();
             input = new PlayerInput();
             characterController = GetComponent<CharacterController>();
 
+
             //animations
-            isWalkingHash = Animator.StringToHash("IsWalking");
-            isRunningHash = Animator.StringToHash("IsRunning");
+            isMovingHash = Animator.StringToHash("IsMoving");
             isDodgingHash = Animator.StringToHash("IsDodging");
-            isAttackingHash = Animator.StringToHash("IsFighting");
+            isAttackingHash = Animator.StringToHash("IsAttacking");
 
             //moving
-            input.CharacterControls.Move.started += onMovementInput;
-            input.CharacterControls.Move.canceled += onMovementInput;
+            input.CharacterControls.Move.performed += onMovementInput;
 
-            //running
-            input.CharacterControls.Run.started += onRun;
-            input.CharacterControls.Run.canceled += onRun;
-
-            //dodge
-            input.CharacterControls.Dodge.started += onDodge;
-            input.CharacterControls.Dodge.canceled += onDodge;
-
+            //dodging
+            input.CharacterControls.Dodge.performed += onDodge;
 
             //attacking
-            input.CharacterControls.Attack.started += onAttack;
-            input.CharacterControls.Attack.canceled += onAttack;
+            input.CharacterControls.Attack.performed += onAttack;
         }
 
         void onMovementInput(InputAction.CallbackContext context)
         {
             currentMovementInput = context.ReadValue<Vector2>();
-            currentMovement.x = currentMovementInput.x * walkSpeed;
-            currentMovement.z = currentMovementInput.y * walkSpeed;
-            currentRunMovement.x = currentMovementInput.x * runSpeed;
-            currentRunMovement.z = currentMovementInput.y * runSpeed;
+            currentMovement.x = currentMovementInput.x * movementSpeed;
+            currentMovement.z = currentMovementInput.y * movementSpeed;
             isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
         }
 
-        void onRun(InputAction.CallbackContext context)
-        {
-            isRunPressed = context.ReadValueAsButton();
-        }
 
         void onDodge(InputAction.CallbackContext context)
         {
-            isDodgePressed = context.ReadValueAsButton();
+            if (!isDodging)
+            {
+                animator.SetTrigger(isDodgingHash);
+                StartCoroutine(InitialiseDodge());
+            }
         }
 
-        void onAttack(InputAction.CallbackContext context)
+        private void onAttack(InputAction.CallbackContext context)
         {
-            isAttackPressed = context.ReadValueAsButton();
+            if (!isAttacking)
+            {
+                animator.SetTrigger(isAttackingHash);
+                StartCoroutine(InitialiseAttack());
+            }
         }
 
+        IEnumerator InitialiseAttack()
+        {
+            yield return new WaitForSeconds(0.1f);
+            isAttacking = true;
+        }
 
+        IEnumerator InitialiseDodge()
+        {
+            yield return new WaitForSeconds(0.1f);
+            isDodging = true;
+        }
+        
         private void Update()
         {
             handleGravity();
             handleRotation();
             handleAnimation();
 
-            if (isRunPressed)
+
+            if (isAttacking)
             {
-                characterController.Move(currentRunMovement * Time.deltaTime);
+                if (animator.GetCurrentAnimatorStateInfo(1).normalizedTime >= animationFinishedTime)
+                {
+                    isAttacking = false; 
+                }
             }
-
-            // if (isDodgePressed)
-            // {
-            //     StartCoroutine(Dash());
-            // }
-
+            
+            if (isDodging)
+            {
+                if (animator.GetCurrentAnimatorStateInfo(2).normalizedTime >= animationFinishedTime)
+                {
+                    isDodging = false; 
+                }
+                characterController.Move(currentMovement * dashDistance * Time.deltaTime);    
+            }
+            
             characterController.Move(currentMovement * Time.deltaTime);
+            
         }
-
-
-        // IEnumerator Dash()
-        // {
-        //     float startTime = Time.time;
-        //     while (Time.time < startTime + dashTime)
-        //     {
-        //         characterController.Move(currentMovement * dashSpeed * Time.deltaTime);
-        //         yield return null;
-        //     }
-        // }
 
         void handleGravity()
         {
@@ -128,12 +126,10 @@ namespace Characters.Scripts
             {
                 float groundedGravity = -.05f;
                 currentMovement.y = groundedGravity;
-                currentRunMovement.y = groundedGravity;
             }
 
             float gravity = -9.8f;
             currentMovement.y += gravity;
-            currentRunMovement.y += gravity;
         }
 
         void handleRotation()
@@ -161,62 +157,24 @@ namespace Characters.Scripts
 
         void handleAnimation()
         {
-            bool isRunning = animator.GetBool(isRunningHash);
-            bool isWalking = animator.GetBool(isWalkingHash);
-            bool isDodging = animator.GetBool(isDodgingHash);
-            bool isAttacking = animator.GetBool(isAttackingHash);
+            // bool isRunning = animator.GetBool(isRunningHash);
+            bool isMoving = animator.GetBool(isMovingHash);
 
-            // start walking if movement pressed is true and not already walking
-            if (isMovementPressed && !isWalking)
+            // start moving if movement pressed is true and not already walking
+            if (isMovementPressed && !isMoving)
             {
-                animator.SetBool(isWalkingHash, true);
+                animator.SetBool(isMovingHash, true);
             }
 
-            // start attacking if not already attacking
-            if (isAttackPressed && !isAttacking)
+            // stop moving if button is released and already walking 
+            if (!isMovementPressed && isMoving)
             {
-                animator.SetBool(isAttackingHash, true);
+                animator.SetBool(isMovingHash, false);
             }
 
-            // stop attacking if already attacking
-            if (!isAttackPressed && isAttacking)
-            {
-                animator.SetBool(isAttackingHash, false);
-            }
-
-            // start dodging if not already dodging
-            if (isDodgePressed && !isDodging)
-            {
-                animator.SetBool(isDodgingHash, true);
-                
-            }
-
-            // stop dodging if already dodging
-            if (!isDodgePressed && isDodging)
-            {
-                animator.SetBool(isDodgingHash, false);
-            }
-
-
-            // stop walking if button is released and already walking 
-            if (!isMovementPressed && isWalking)
-            {
-                animator.SetBool(isWalkingHash, false);
-            }
-
-
-            // start running if movement pressed and run is pressed is true and not already running
-            if ((isMovementPressed && isRunPressed) && !isRunning)
-            {
-                animator.SetBool(isRunningHash, true);
-            }
-
-            // stop running if movement or run pressed are false and currently running
-            if ((!isMovementPressed || !isRunPressed) && isRunning)
-            {
-                animator.SetBool(isRunningHash, false);
-            }
         }
+        
+        
 
         // enable player actions map
         private void OnEnable()
