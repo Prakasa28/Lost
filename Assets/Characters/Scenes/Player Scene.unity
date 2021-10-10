@@ -199,13 +199,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 845056026}
-  m_LocalRotation: {x: 0.080397874, y: -0, z: -0, w: 0.9967629}
-  m_LocalPosition: {x: -0.03, y: 4.37, z: -6.42}
+  m_LocalRotation: {x: 0.115256734, y: 0.00035360976, z: -0.00018725221, w: 0.99333566}
+  m_LocalPosition: {x: -0.09, y: 4.15, z: -16.07}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 9.223, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 13.237, y: 0.039, z: -0.017}
 --- !u!1001 &934782614
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -213,10 +213,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 439849905647714254, guid: 050235a32337cf046a940aeb39e6ca02, type: 3}
-      propertyPath: m_Avatar
-      value: 
-      objectReference: {fileID: 9000000, guid: e6f8c6b4cd0c5d24fbefebd224edfdb5, type: 3}
     - target: {fileID: 439849905647714254, guid: 050235a32337cf046a940aeb39e6ca02, type: 3}
       propertyPath: m_Controller
       value: 
@@ -370,7 +366,7 @@ Transform:
   m_GameObject: {fileID: 1846243282}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 8}
+  m_LocalScale: {x: 30.900002, y: 3, z: 23.3496}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -392,8 +388,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cb016e20b8793f4fbeac9403a2b41ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runningSpeed: 5
-  movementSpeed: 3.4
+  dashSpeed: 0.1
+  dashTime: 0.2
+  walkSpeed: 5
+  runSpeed: 6
 --- !u!143 &1882986295
 CharacterController:
   m_ObjectHideFlags: 0
