@@ -5,7 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ItemType {
+public enum ItemType
+{
     Food,
     Weapon,
     Shield,
@@ -13,28 +14,28 @@ public enum ItemType {
     Default
 }
 
-public enum Attributes {
+public enum Attributes
+{
     Agility,
     Intellect,
     Stamina,
     Strength
 }
 
-public abstract class ItemObject : ScriptableObject
+[CreateAssetMenu(fileName = "New Item", menuName = "Inventory System/Items/Item")]
+public class ItemObject : ScriptableObject
 {
-
-    public int Id;
-   public Sprite uiDisplay;
-   public ItemType type;
-   [TextArea(15,20)]
-   public string description;
-
-   public ItemBuff[] buffs;
-
-   public Item CreateItem() {
-       Item newItem = new Item(this);
-       return newItem;
-   }
+    public Sprite uiDisplay;
+    public ItemType type;
+    public bool stackable; 
+    [TextArea(15, 20)]
+    public string description;
+    public Item data = new Item();
+    public Item CreateItem()
+    {
+        Item newItem = new Item(this);
+        return newItem;
+    }
 
 }
 
@@ -43,21 +44,23 @@ public abstract class ItemObject : ScriptableObject
 public class Item
 {
     public string Name;
-    public int Id;
+    public int Id = -1;
     public ItemBuff[] buffs;
 
-    public Item(ItemObject item) {
+    public Item(ItemObject item)
+    {
         Name = item.name;
-        Id = item.Id;
-        buffs = new ItemBuff[item.buffs.Length];
+        Id = item.data.Id;
+        buffs = new ItemBuff[item.data.buffs.Length];
 
         for (int i = 0; i < buffs.Length; i++)
         {
-           buffs[i]  = item.buffs[i];
+            buffs[i] = item.data.buffs[i];
         }
     }
 
-    public Item() {
+    public Item()
+    {
         Name = "";
         Id = -1;
     }
@@ -72,6 +75,6 @@ public class ItemBuff
 
     public ItemBuff(int _value)
     {
-       value = _value; 
+        value = _value;
     }
 }

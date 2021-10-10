@@ -9,11 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efb7d2c1ee036e14299137b5831d0d83, type: 3}
+  m_Script: {fileID: 11500000, guid: 783f5d8fe3e4b90469a4760edc47f083, type: 3}
   m_Name: Bones
   m_EditorClassIdentifier: 
-  Id: 0
-  uiDisplay: {fileID: 21300000, guid: e151d03e416cd074ba986bc3227b27ee, type: 3}
-  type: 2
-  description: The leftovers of those who has been slained!
-  buffs: []
+  uiDisplay: {fileID: 21300000, guid: 60b618638d57aae49a74cef5ce35dbe6, type: 3}
+  type: 0
+  stackable: 1
+  description: 
+  data:
+    Name: 
+    Id: 2
+    buffs: []
