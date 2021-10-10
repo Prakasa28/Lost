@@ -8,7 +8,7 @@ public class EqupmentObject : ItemObject
 {
     public void Awake()
     {
-        type = ItemType.Equipment;
+        type = ItemType.Armor;
     }
 
 }

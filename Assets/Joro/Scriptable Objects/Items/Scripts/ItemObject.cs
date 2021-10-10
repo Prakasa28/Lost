@@ -7,7 +7,9 @@ using UnityEngine;
 
 public enum ItemType {
     Food,
-    Equipment,
+    Weapon,
+    Shield,
+    Armor,
     Default
 }
 
@@ -53,6 +55,11 @@ public class Item
         {
            buffs[i]  = item.buffs[i];
         }
+    }
+
+    public Item() {
+        Name = "";
+        Id = -1;
     }
 }
 
