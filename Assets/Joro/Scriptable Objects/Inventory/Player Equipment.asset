@@ -15,20 +15,20 @@ MonoBehaviour:
   database: {fileID: 11400000, guid: a2555e0a9d9b7cb4987c7e71f436d099, type: 2}
   savePath: /equpment.Save
   Container:
-    Items:
+    Slots:
     - AllowedItems: 01000000
       item:
         Name: 
         Id: -1
         buffs: []
       amount: 0
-    - AllowedItems: 02000000
+    - AllowedItems: 03000000
       item:
         Name: 
         Id: -1
         buffs: []
       amount: 0
-    - AllowedItems: 03000000
+    - AllowedItems: 02000000
       item:
         Name: 
         Id: -1
