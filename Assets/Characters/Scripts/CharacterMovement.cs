@@ -69,6 +69,7 @@ namespace Characters.Scripts
                 StartCoroutine(InitialiseDodge());
             }
         }
+        
 
         private void onAttack(InputAction.CallbackContext context)
         {
