@@ -25,11 +25,13 @@ public enum Attributes
 public class ItemObject : ScriptableObject
 {
     public Sprite uiDisplay;
+    public GameObject characterDisplay;
     public ItemType type;
     public bool stackable; 
     [TextArea(15, 20)]
     public string description;
     public Item data = new Item();
+
     public Item CreateItem()
     {
         Item newItem = new Item(this);

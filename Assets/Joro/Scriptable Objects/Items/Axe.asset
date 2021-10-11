@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Axe
   m_EditorClassIdentifier: 
   uiDisplay: {fileID: 21300000, guid: 754e20e08e343284caadfa2540becad6, type: 3}
+  characterDisplay: {fileID: 1688207647419120, guid: 9e7134bd16b21cc4a8551794a16703c4, type: 3}
   type: 1
   stackable: 0
   description: 

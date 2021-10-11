@@ -8,6 +8,14 @@ public class Player : MonoBehaviour
     public InventoryObject equipment;
     public Attribute[] attributes;
 
+    private Transform weapon;
+    private Transform shield;
+
+    public Mesh unArmoredMesh;
+    public Mesh armoredMesh;
+    public Transform weaponTransform;
+    public Transform shieldTransform;
+
     private void Start()
     {
         for (int i = 0; i < attributes.Length; i++)
@@ -17,12 +25,12 @@ public class Player : MonoBehaviour
 
         for (int i = 0; i < equipment.GetSlots.Length; i++)
         {
-            equipment.GetSlots[i].OnBeforeUpdate += OnBeforeSlotUpdate;
-            equipment.GetSlots[i].OnAfterUpdate += OnAfterSlotUpdate;
+            equipment.GetSlots[i].OnBeforeUpdate += OnRemoveItem;
+            equipment.GetSlots[i].OnAfterUpdate += OnAddItem;
         }
     }
 
-    public void OnBeforeSlotUpdate(InventorySlot _slot)
+    public void OnRemoveItem(InventorySlot _slot)
     {
         if (_slot.itemObject == null)
         {
@@ -34,7 +42,7 @@ public class Player : MonoBehaviour
             case InterfaceType.Inventory:
                 break;
             case InterfaceType.Equpment:
-                // print(string.Concat("Removed ", _slot.itemObject, " on ", _slot.parent.inventory.type, ", Allowed Items:", string.Join(", ", _slot.AllowedItems)));
+                print(string.Concat("Removed ", _slot.itemObject, " on ", _slot.parent.inventory.type, ", Allowed Items:", string.Join(", ", _slot.AllowedItems)));
 
                 for (int i = 0; i < _slot.item.buffs.Length; i++)
                 {
@@ -46,6 +54,28 @@ public class Player : MonoBehaviour
                         }
                     }
                 }
+
+                switch (_slot.AllowedItems[0])
+                {
+                    case ItemType.Weapon:
+                        if (_slot.itemObject.characterDisplay != null)
+                        {
+                            Destroy(weapon.gameObject);
+                        }
+                        break;
+                    case ItemType.Shield:
+                        if (_slot.itemObject.characterDisplay != null)
+                        {
+                            Destroy(shield.gameObject);
+                        }
+                        break;
+                    case ItemType.Armor:
+                        var skinnedMeshedRenderer = this.GetComponentInChildren<SkinnedMeshRenderer>();
+                        skinnedMeshedRenderer.sharedMesh = unArmoredMesh;
+                        break;
+                }
+
+
                 break;
             case InterfaceType.Chest:
                 break;
@@ -54,7 +84,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void OnAfterSlotUpdate(InventorySlot _slot)
+    public void OnAddItem(InventorySlot _slot)
     {
 
         if (_slot.itemObject == null)
@@ -67,7 +97,7 @@ public class Player : MonoBehaviour
             case InterfaceType.Inventory:
                 break;
             case InterfaceType.Equpment:
-                // print(string.Concat("Placed ", _slot.itemObject, " on ", _slot.parent.inventory.type, ", Allowed Items:", string.Join(", ", _slot.AllowedItems)));
+                print(string.Concat("Placed ", _slot.itemObject, " on ", _slot.parent.inventory.type, ", Allowed Items:", string.Join(", ", _slot.AllowedItems)));
 
                 for (int i = 0; i < _slot.item.buffs.Length; i++)
                 {
@@ -79,6 +109,29 @@ public class Player : MonoBehaviour
                         }
                     }
                 }
+
+                switch (_slot.AllowedItems[0])
+                {
+                    case ItemType.Weapon:
+                        if (_slot.itemObject.characterDisplay != null)
+                        {
+                            weapon = Instantiate(_slot.itemObject.characterDisplay, weaponTransform).transform;
+                        }
+                        break;
+                    case ItemType.Shield:
+
+                        if (_slot.itemObject.characterDisplay != null)
+                        {
+                            shield = Instantiate(_slot.itemObject.characterDisplay, shieldTransform).transform;
+                        }
+                        break;
+                    case ItemType.Armor:
+                        //TODO switch whole armor
+                        var skinnedMeshedRenderer = this.GetComponentInChildren<SkinnedMeshRenderer>();
+                        skinnedMeshedRenderer.sharedMesh = armoredMesh;
+                        break;
+                }
+
                 break;
             case InterfaceType.Chest:
                 break;

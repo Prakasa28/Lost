@@ -113,12 +113,14 @@ public abstract class UserInterface : MonoBehaviour
     {
         Destroy(MouseData.tempItemBeingDragged);
 
+        //Remove the Item if there is no empty slot under the mouse
         if (MouseData.interfaceMouseIsOver == null)
         {
             slotsOnInterface[obj].RemoveItem();
             return;
         }
 
+        //If there is a slot under the mosue
         if (MouseData.slotHoveredOver)
         {
             InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
