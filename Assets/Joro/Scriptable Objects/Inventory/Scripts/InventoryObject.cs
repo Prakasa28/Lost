@@ -7,11 +7,19 @@ using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEditor;
 
+public enum InterfaceType 
+{
+    Inventory,
+    Equpment,
+    Chest
+}
+
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
 public class InventoryObject : ScriptableObject
 {
 
     public ItemDatabaseObject database;
+    public InterfaceType type;
     public string savePath;
     public Inventory Container;
     public InventorySlot[] GetSlots { get { return Container.Slots; } }
@@ -198,7 +206,7 @@ public class InventorySlot
 
     public InventorySlot(Item _item, int _amount)
     {
-        UpdateSlot(new Item(), _amount);
+        UpdateSlot(_item, _amount);
     }
 
     public void RemoveItem()

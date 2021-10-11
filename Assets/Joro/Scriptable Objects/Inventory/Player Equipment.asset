@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Player Equipment
   m_EditorClassIdentifier: 
   database: {fileID: 11400000, guid: a2555e0a9d9b7cb4987c7e71f436d099, type: 2}
+  type: 1
   savePath: /equpment.Save
   Container:
     Slots:

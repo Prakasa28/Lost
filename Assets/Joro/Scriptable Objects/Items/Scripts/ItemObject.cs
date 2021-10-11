@@ -16,10 +16,9 @@ public enum ItemType
 
 public enum Attributes
 {
-    Agility,
-    Intellect,
     Stamina,
-    Strength
+    Strength,
+    Defense,
 }
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Inventory System/Items/Item")]
@@ -68,7 +67,7 @@ public class Item
 
 
 [System.Serializable]
-public class ItemBuff
+public class ItemBuff : IModifier
 {
     public Attributes attribute;
     public int value;
@@ -76,5 +75,10 @@ public class ItemBuff
     public ItemBuff(int _value)
     {
         value = _value;
+    }
+
+    public void AddValue(ref int baseValue)
+    {
+        baseValue += value;
     }
 }
