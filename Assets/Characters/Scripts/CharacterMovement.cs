@@ -24,7 +24,7 @@ namespace Characters.Scripts
 
         private float rotationFactorPerFrame = 15.0f;
 
-        void Awake()
+        void Awake()    
         {
             //initialise variables
             animator = GetComponent<Animator>();

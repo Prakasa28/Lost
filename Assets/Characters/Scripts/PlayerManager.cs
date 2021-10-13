@@ -14,5 +14,5 @@ public class PlayerManager : MonoBehaviour
     #endregion
 
 
-    public CharacterController player;
+    public Player player;
 }
