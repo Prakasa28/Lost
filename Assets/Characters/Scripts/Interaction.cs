@@ -60,10 +60,5 @@ public class Interaction : MonoBehaviour
         }
     }
 
-    // private void playAnimation()
-    // {    
-    //     // play animation
-    //     var chestParticles = Instantiate(particles, transform.position, Quaternion.identity);
-    //     chestParticles.GetComponent<ParticleSystem>().Play();
-    // }
+ 
 }
