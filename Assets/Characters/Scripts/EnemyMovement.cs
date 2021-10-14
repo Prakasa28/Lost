@@ -10,10 +10,12 @@ public class EnemyMovement : MonoBehaviour
     CharacterCombat combat;
 
     
+    
     // Start is called before the first frame update
     void Start()
     {
         target = PlayerManager.instance.player.transform;
+        
         agent = GetComponent<NavMeshAgent>();
         combat = GetComponent<CharacterCombat>();
     }
