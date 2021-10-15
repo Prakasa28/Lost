@@ -40,6 +40,14 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
                     ""id"": ""a81a749e-c0fc-4f5a-8c9a-01295cdce810"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": ""NormalizeVector2"",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""f8671606-ba7a-4e45-ab29-4f96aeb9b677"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": ""NormalizeVector2"",
                     ""interactions"": ""Press""
                 }
             ],
@@ -120,6 +128,17 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
                     ""action"": ""Ultimate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2055075a-781e-4096-b412-8c66905ca9a5"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -131,6 +150,7 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
         m_CharacterControlls_Move = m_CharacterControlls.FindAction("Move", throwIfNotFound: true);
         m_CharacterControlls_Dodge = m_CharacterControlls.FindAction("Dodge", throwIfNotFound: true);
         m_CharacterControlls_Ultimate = m_CharacterControlls.FindAction("Ultimate", throwIfNotFound: true);
+        m_CharacterControlls_Attack = m_CharacterControlls.FindAction("Attack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -183,6 +203,7 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
     private readonly InputAction m_CharacterControlls_Move;
     private readonly InputAction m_CharacterControlls_Dodge;
     private readonly InputAction m_CharacterControlls_Ultimate;
+    private readonly InputAction m_CharacterControlls_Attack;
     public struct CharacterControllsActions
     {
         private @PlayerInputV2 m_Wrapper;
@@ -190,6 +211,7 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
         public InputAction @Move => m_Wrapper.m_CharacterControlls_Move;
         public InputAction @Dodge => m_Wrapper.m_CharacterControlls_Dodge;
         public InputAction @Ultimate => m_Wrapper.m_CharacterControlls_Ultimate;
+        public InputAction @Attack => m_Wrapper.m_CharacterControlls_Attack;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControlls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -208,6 +230,9 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
                 @Ultimate.started -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnUltimate;
                 @Ultimate.performed -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnUltimate;
                 @Ultimate.canceled -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnUltimate;
+                @Attack.started -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnAttack;
+                @Attack.performed -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnAttack;
+                @Attack.canceled -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnAttack;
             }
             m_Wrapper.m_CharacterControllsActionsCallbackInterface = instance;
             if (instance != null)
@@ -221,6 +246,9 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
                 @Ultimate.started += instance.OnUltimate;
                 @Ultimate.performed += instance.OnUltimate;
                 @Ultimate.canceled += instance.OnUltimate;
+                @Attack.started += instance.OnAttack;
+                @Attack.performed += instance.OnAttack;
+                @Attack.canceled += instance.OnAttack;
             }
         }
     }
@@ -230,5 +258,6 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
         void OnUltimate(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
     }
 }

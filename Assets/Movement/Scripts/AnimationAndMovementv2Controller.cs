@@ -18,6 +18,8 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
 
     int isMovingHash;
     int isDodgingHash;
+    int isAttackingHash1;
+    int isAttackingHash2;
     int isUltimatingHash;
 
     Vector2 currentMovementInput;
@@ -25,21 +27,26 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
 
     bool isMovementPressed;
     bool isDodgePressed;
+    bool isAttackedPressed;
     bool isUltimatePressed;
 
     bool performingAction = false;
 
+    public float attackCooldown = .5f;
     public float dashCooldown = 1.5f;
     public float ultimateCooldown = 6f;
 
+    private float attackCooldownCurrent = 0;
     private float dashCooldownCurrent = 0;
     private float ultimateCooldownCurrent = 0;
 
+    private bool switchAttackAnimations = false;
+
 
     private float nextActionTime = 0.0f;
-    private float period = .5f; //Update cooldown timer every sec
+    private float period = .1f; //Update cooldown timer every sec
 
-    public GameObject normalAblilityUIObject;
+    public GameObject attackAbilityUIObject;
     public GameObject dashAblilityUIObject;
     public GameObject ultimateAbilityUIObject;
 
@@ -51,6 +58,8 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
 
         isMovingHash = Animator.StringToHash("IsMoving");
         isDodgingHash = Animator.StringToHash("IsDodging");
+        isAttackingHash1 = Animator.StringToHash("IsAttacking1");
+        isAttackingHash2 = Animator.StringToHash("IsAttacking2");
         isUltimatingHash = Animator.StringToHash("IsUltimating");
 
         playerInput.CharacterControlls.Move.started += onMovementInput;
@@ -60,6 +69,9 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
         playerInput.CharacterControlls.Dodge.canceled += OnDodge;
         playerInput.CharacterControlls.Ultimate.started += OnUltimate;
         playerInput.CharacterControlls.Ultimate.canceled += OnUltimate;
+        playerInput.CharacterControlls.Attack.started += OnAttack;
+        playerInput.CharacterControlls.Attack.canceled += OnAttack;
+
 
     }
     void onMovementInput(InputAction.CallbackContext context)
@@ -77,54 +89,9 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
     {
         isUltimatePressed = context.ReadValueAsButton();
     }
-    void handleMovement()
+    void OnAttack(InputAction.CallbackContext context)
     {
-        handleGravity();
-        handleRotation();
-        characterController.Move(currentMovement * characterSpeed * Time.deltaTime);
-    }
-    private void cooldownControl()
-    {
-        if (Time.time > nextActionTime)
-        {
-            nextActionTime += period;
-            if (dashCooldownCurrent > 0)
-                dashCooldownCurrent -= period;
-
-            if (ultimateCooldownCurrent > 0)
-                ultimateCooldownCurrent -= period;
-
-        }
-
-    }
-    private void updateUIAbility(float cooldown, GameObject uiObject)
-    {
-        Image image = uiObject.transform.Find("Image").gameObject.GetComponent<Image>();
-        GameObject coolDownObject = uiObject.transform.Find("Cooldown").gameObject;
-
-        if (cooldown > 0)
-        {
-            image.fillAmount -= 1 / cooldown * Time.deltaTime;
-            coolDownObject.SetActive(true);
-
-            int coolDownToShow = Mathf.FloorToInt(cooldown);
-            if (cooldown < 1)
-            {
-                coolDownToShow = 1;
-            }
-            coolDownObject.transform.GetComponent<TextMeshProUGUI>().text = Mathf.Floor(coolDownToShow).ToString();
-        }
-        else
-        {
-            image.fillAmount = 1;
-            coolDownObject.SetActive(false);
-        }
-
-    }
-    private void updateUI()
-    {
-        updateUIAbility(dashCooldownCurrent, dashAblilityUIObject);
-        updateUIAbility(ultimateCooldownCurrent, ultimateAbilityUIObject);
+        isAttackedPressed = context.ReadValueAsButton();
     }
 
     // Update is called once per frame
@@ -138,6 +105,48 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
         updateUI();
         cooldownControl();
         handleActions();
+    }
+
+    void handleRotation(float rotationSpeed = 0)
+    {
+        if (rotationSpeed == 0)
+            rotationSpeed = rotationFactorPerFrame * Time.deltaTime;
+
+        Vector3 positionToLookAt;
+
+        positionToLookAt.x = currentMovement.x;
+        positionToLookAt.y = 0.0f;
+        positionToLookAt.z = currentMovement.z;
+
+
+        Quaternion currentRotation = transform.rotation;
+
+        if (positionToLookAt != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
+            transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationSpeed);
+        }
+
+
+    }
+    void handleGravity()
+    {
+        if (characterController.isGrounded)
+        {
+            float groundedGravity = -.5f;
+            currentMovement.y = groundedGravity;
+        }
+        else
+        {
+            float gravity = -10f;
+            currentMovement.y = gravity;
+        }
+    }
+    void handleMovement()
+    {
+        handleGravity();
+        handleRotation();
+        characterController.Move(currentMovement * characterSpeed * Time.deltaTime);
     }
 
 
@@ -157,6 +166,11 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
 
         if (!performingAction)
         {
+            if (isAttackedPressed)
+            {
+                StartCoroutine(Attack());
+            }
+
             if (isDodgePressed && dashCooldownCurrent <= 0)
             {
                 StartCoroutine(Dash());
@@ -170,6 +184,29 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
         }
     }
 
+    IEnumerator Attack()
+    {
+        performingAction = true;
+
+        if (switchAttackAnimations)
+        {
+            animator.SetBool(isAttackingHash1, true);
+            yield return new WaitForSeconds(1f);
+            animator.SetBool(isAttackingHash1, false);
+        }
+        else
+        {
+            animator.SetBool(isAttackingHash2, true);
+            yield return new WaitForSeconds(1.2f);
+            animator.SetBool(isAttackingHash2, false);
+
+        }
+
+        switchAttackAnimations = !switchAttackAnimations;
+        attackCooldownCurrent = attackCooldown;
+
+        performingAction = false;
+    }
     IEnumerator Ultimate()
     {
         performingAction = true;
@@ -179,18 +216,14 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
         animator.SetBool(isUltimatingHash, false);
         yield return new WaitForSeconds(0.2f);
 
-        performingAction = false;
         ultimateCooldownCurrent = ultimateCooldown;
-        if (dashCooldownCurrent == 0)
-        {
-            dashCooldownCurrent = .5f;
-        }
-    }
 
+        performingAction = false;
+    }
     IEnumerator Dash()
     {
         performingAction = true;
-
+        handleRotation(1);
         Vector3 dashDir = currentMovement;
         float startTime = Time.time;
         animator.SetBool(isDodgingHash, true);
@@ -201,48 +234,70 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
         }
         animator.SetBool(isDodgingHash, false);
 
-        performingAction = false;
         dashCooldownCurrent = dashCooldown;
-    }
 
-    IEnumerator WaitTime(float time)
-    {
-        yield return new WaitForSeconds(time);
+        performingAction = false;
     }
 
 
-
-    void handleGravity()
+    void cooldownControl()
     {
-        if (characterController.isGrounded)
+        if (Time.time > nextActionTime)
         {
-            float groundedGravity = -.5f;
-            currentMovement.y = groundedGravity;
+            nextActionTime += period;
+            if (dashCooldownCurrent > 0)
+                dashCooldownCurrent -= period;
+
+            if (ultimateCooldownCurrent > 0)
+                ultimateCooldownCurrent -= period;
+
+            if (attackCooldownCurrent > 0)
+                attackCooldownCurrent -= period;
+
+        }
+
+    }
+    void updateUIAbility(float cooldown, GameObject uiObject)
+    {
+        Image image = uiObject.transform.Find("Image").gameObject.GetComponent<Image>();
+        GameObject coolDownObject = uiObject.transform.Find("Cooldown").gameObject;
+
+        if (cooldown > 0)
+        {
+            image.fillAmount -= 1 / cooldown * Time.deltaTime;
+            coolDownObject.SetActive(true);
+
+            float coolDownToShow = Mathf.Floor(cooldown);
+
+            if (cooldown < 1)
+            {
+                coolDownToShow = cooldown;
+                coolDownObject.transform.GetComponent<TextMeshProUGUI>().fontSize = 19;
+                coolDownObject.transform.GetComponent<TextMeshProUGUI>().text = coolDownToShow.ToString("F1");
+            }
+            else
+            {
+
+                coolDownObject.transform.GetComponent<TextMeshProUGUI>().text = coolDownToShow.ToString();
+            }
         }
         else
         {
-            float gravity = -10f;
-            currentMovement.y = gravity;
+            image.fillAmount = 1;
+            coolDownObject.SetActive(false);
         }
+
     }
-    void handleRotation()
+    void updateUI()
     {
-        Vector3 positionToLookAt;
-
-        positionToLookAt.x = currentMovement.x;
-        positionToLookAt.y = 0.0f;
-        positionToLookAt.z = currentMovement.z;
-
-
-        Quaternion currentRotation = transform.rotation;
-
-        if (positionToLookAt != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
-            transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationFactorPerFrame * Time.deltaTime);
-        }
-
+        updateUIAbility(dashCooldownCurrent, dashAblilityUIObject);
+        updateUIAbility(ultimateCooldownCurrent, ultimateAbilityUIObject);
+        updateUIAbility(attackCooldownCurrent, attackAbilityUIObject);
     }
+
+
+
+
     void OnEnable()
     {
         playerInput.CharacterControlls.Enable();
