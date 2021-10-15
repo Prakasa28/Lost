@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657755, g: 0.4964127, b: 0.57481825, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657695, g: 0.49641138, b: 0.5748175, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: a4e471d2b0c9ea2459df76554f181dca, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 180e7e9a35a19b74b921cacf7a4ce59d, type: 2}
 --- !u!1 &232734939
 GameObject:
   m_ObjectHideFlags: 3
@@ -224,6 +224,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1246249176, guid: 7b57bd1ca86fe124fa80a64dd162cc52, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1077830188709591339, guid: 7b57bd1ca86fe124fa80a64dd162cc52, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -279,7 +283,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1246249176, guid: 7b57bd1ca86fe124fa80a64dd162cc52, type: 3}
   m_PrefabInstance: {fileID: 274662936}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2118213769}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b1648e82bf4f5d40bfaa20cde15a257, type: 3}
@@ -610,60 +614,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2017426830 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5387149015896633110, guid: 89be4c26d1c3a9f438f88de7ed2dbec5, type: 3}
-  m_PrefabInstance: {fileID: 598030194566316469}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2017426834 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5392387638011309332, guid: 89be4c26d1c3a9f438f88de7ed2dbec5, type: 3}
-  m_PrefabInstance: {fileID: 598030194566316469}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2017426835
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2017426830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81ac067ad98463d4088a50465fd73f41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 40
-  damage:
-    baseValue: 5
-  armor:
-    baseValue: 3
---- !u!114 &2017426836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2017426830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c941ed401ce9ae44baf285ef7b0ba337, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 3
-  interactionTransform: {fileID: 2017426834}
---- !u!114 &2017426837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2017426830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9fad8fb6026730408abef43ede8eeb8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackSpeed: 1
 --- !u!1 &2059725526
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,46 +707,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
---- !u!1 &2118213769 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1077830188709858479, guid: 7b57bd1ca86fe124fa80a64dd162cc52, type: 3}
-  m_PrefabInstance: {fileID: 274662936}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2118213775 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1077830188709591339, guid: 7b57bd1ca86fe124fa80a64dd162cc52, type: 3}
   m_PrefabInstance: {fileID: 274662936}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2118213776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2118213769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9fad8fb6026730408abef43ede8eeb8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackSpeed: 1
---- !u!114 &2118213777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2118213769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 605470f82704a8e4c90986f8a809e6fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  damage:
-    baseValue: 0
-  armor:
-    baseValue: 0
 --- !u!1001 &598030194566316469
 PrefabInstance:
   m_ObjectHideFlags: 0

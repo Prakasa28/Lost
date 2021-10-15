@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 // ReSharper disable once CheckNamespace
-public class Interaction : MonoBehaviour
+public class Chest : MonoBehaviour
 {
     // get the children object
     public GameObject chest;
@@ -31,7 +31,7 @@ public class Interaction : MonoBehaviour
             text.SetActive(true);
             backgroundText.SetActive(true);
             opened = true;
-         }
+        }
     }
 
     private void OnCollisionExit()
@@ -59,6 +59,4 @@ public class Interaction : MonoBehaviour
             particles.Play();
         }
     }
-
- 
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationAI : MonoBehaviour
+public class AI : MonoBehaviour
 {
     // range for the UI
     public float range = 5f;

@@ -7,7 +7,7 @@ public class EnemyMovement : MonoBehaviour
 
     private Transform target;
     private NavMeshAgent agent;
-    CharacterCombat combat;
+    // CharacterCombat combat;
 
     
     
@@ -17,7 +17,7 @@ public class EnemyMovement : MonoBehaviour
         target = PlayerManager.instance.player.transform;
         
         agent = GetComponent<NavMeshAgent>();
-        combat = GetComponent<CharacterCombat>();
+        // combat = GetComponent<CharacterCombat>();
     }
 
     // Update is called once per frame
@@ -30,11 +30,11 @@ public class EnemyMovement : MonoBehaviour
 
             if (distance <= agent.stoppingDistance)
             {
-                CharacterStats targetStats = target.GetComponent<CharacterStats>();
-                if (targetStats != null)
-                {
-                    combat.Attack(targetStats);
-                }
+                // CharacterStats targetStats = target.GetComponent<CharacterStats>();
+                // if (targetStats != null)
+                // {
+                //     combat.Attack(targetStats);
+                // }
               
                 // Face the target
                 FaceTarget(); 
