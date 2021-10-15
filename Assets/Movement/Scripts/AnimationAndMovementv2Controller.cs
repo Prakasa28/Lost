@@ -43,8 +43,6 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
     public GameObject dashAblilityUIObject;
     public GameObject ultimateAbilityUIObject;
 
-
-
     void Awake()
     {
         playerInput = new PlayerInputV2();
@@ -99,7 +97,35 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
         }
 
     }
+    private void updateUIAbility(float cooldown, GameObject uiObject)
+    {
+        Image image = uiObject.transform.Find("Image").gameObject.GetComponent<Image>();
+        GameObject coolDownObject = uiObject.transform.Find("Cooldown").gameObject;
 
+        if (cooldown > 0)
+        {
+            image.fillAmount -= 1 / cooldown * Time.deltaTime;
+            coolDownObject.SetActive(true);
+
+            int coolDownToShow = Mathf.FloorToInt(cooldown);
+            if (cooldown < 1)
+            {
+                coolDownToShow = 1;
+            }
+            coolDownObject.transform.GetComponent<TextMeshProUGUI>().text = Mathf.Floor(coolDownToShow).ToString();
+        }
+        else
+        {
+            image.fillAmount = 1;
+            coolDownObject.SetActive(false);
+        }
+
+    }
+    private void updateUI()
+    {
+        updateUIAbility(dashCooldownCurrent, dashAblilityUIObject);
+        updateUIAbility(ultimateCooldownCurrent, ultimateAbilityUIObject);
+    }
 
     // Update is called once per frame
     void Update()
@@ -113,32 +139,6 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
         cooldownControl();
         handleActions();
     }
-
-    private void updateUI()
-    {
-        updateUIAbility(dashCooldownCurrent, dashAblilityUIObject);
-        updateUIAbility(ultimateCooldownCurrent, ultimateAbilityUIObject);
-    }
-
-    private void updateUIAbility(float cooldown, GameObject uiObject)
-    {
-        Image image = uiObject.transform.Find("Image").gameObject.GetComponent<Image>();
-        GameObject coolDownObject = uiObject.transform.Find("Cooldown").gameObject;
-
-        if (cooldown > 0)
-        {
-            image.fillAmount -= 1 / dashCooldownCurrent * Time.deltaTime;
-            coolDownObject.SetActive(true);
-            coolDownObject.transform.GetComponent<TextMeshProUGUI>().text = Mathf.Floor(dashCooldownCurrent).ToString();
-        }
-        else
-        {
-            image.fillAmount = 1;
-            coolDownObject.SetActive(false);
-        }
-
-    }
-
 
 
     void handleActions()
@@ -183,7 +183,7 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
         ultimateCooldownCurrent = ultimateCooldown;
         if (dashCooldownCurrent == 0)
         {
-            dashCooldownCurrent += 0.1f;
+            dashCooldownCurrent = .5f;
         }
     }
 
