@@ -31,7 +31,7 @@ public class Interaction : MonoBehaviour
             text.SetActive(true);
             backgroundText.SetActive(true);
             opened = true;
-        }
+         }
     }
 
     private void OnCollisionExit()
