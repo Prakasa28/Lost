@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8268446a702d3304abe522dd5c5722de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items: []
   item: {fileID: 0}
 --- !u!1 &2151315195609788949
 GameObject:
@@ -104,7 +103,8 @@ PrefabInstance:
       propertyPath: m_IsKinematic
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1246249176, guid: 7b57bd1ca86fe124fa80a64dd162cc52, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7b57bd1ca86fe124fa80a64dd162cc52, type: 3}
 --- !u!1 &1382104933898139147 stripped
 GameObject:

@@ -14,7 +14,7 @@ public class AI : MonoBehaviour
 
     // get player position
     private Transform playerPos;
-    public Player player;
+    public GameObject player;
     private Animator animator;
 
     // get player position

@@ -45,6 +45,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 3
   player: {fileID: 0}
+--- !u!136 &362770070
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033080745422578475}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.0230634
+  m_Height: 2.0775573
+  m_Direction: 1
+  m_Center: {x: 0.0014129878, y: 0.942921, z: -0.06631335}
 --- !u!1001 &1031334590837421859
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -126,5 +140,10 @@ GameObject:
 --- !u!4 &1035808743972130107 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4476971180112408, guid: 02ac59dea0bf44d4d87bba04f0a6ca33, type: 3}
+  m_PrefabInstance: {fileID: 1031334590837421859}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1033080745422578475 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1746224119714824, guid: 02ac59dea0bf44d4d87bba04f0a6ca33, type: 3}
   m_PrefabInstance: {fileID: 1031334590837421859}
   m_PrefabAsset: {fileID: 0}

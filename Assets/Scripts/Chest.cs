@@ -6,7 +6,7 @@ public class Chest : MonoBehaviour
 {
     // get the children object
     public GameObject chest;
-    public Player player;
+    public GameObject player;
     public ParticleSystem particles;
     public GameObject items;
     public GameObject text;
