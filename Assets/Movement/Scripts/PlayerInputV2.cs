@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Movement/PlayerInputV2.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Movement/Scripts/PlayerInputV2.inputactions'
 
 using System;
 using System.Collections;
@@ -33,6 +33,14 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": ""NormalizeVector2"",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Ultimate"",
+                    ""type"": ""Button"",
+                    ""id"": ""a81a749e-c0fc-4f5a-8c9a-01295cdce810"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": ""NormalizeVector2"",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -101,6 +109,17 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
                     ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9bd310da-7c11-47a8-aac5-f476de1588aa"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Ultimate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -111,6 +130,7 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
         m_CharacterControlls = asset.FindActionMap("CharacterControlls", throwIfNotFound: true);
         m_CharacterControlls_Move = m_CharacterControlls.FindAction("Move", throwIfNotFound: true);
         m_CharacterControlls_Dodge = m_CharacterControlls.FindAction("Dodge", throwIfNotFound: true);
+        m_CharacterControlls_Ultimate = m_CharacterControlls.FindAction("Ultimate", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -162,12 +182,14 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
     private ICharacterControllsActions m_CharacterControllsActionsCallbackInterface;
     private readonly InputAction m_CharacterControlls_Move;
     private readonly InputAction m_CharacterControlls_Dodge;
+    private readonly InputAction m_CharacterControlls_Ultimate;
     public struct CharacterControllsActions
     {
         private @PlayerInputV2 m_Wrapper;
         public CharacterControllsActions(@PlayerInputV2 wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_CharacterControlls_Move;
         public InputAction @Dodge => m_Wrapper.m_CharacterControlls_Dodge;
+        public InputAction @Ultimate => m_Wrapper.m_CharacterControlls_Ultimate;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControlls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -183,6 +205,9 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
                 @Dodge.started -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnDodge;
                 @Dodge.performed -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnDodge;
                 @Dodge.canceled -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnDodge;
+                @Ultimate.started -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnUltimate;
+                @Ultimate.performed -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnUltimate;
+                @Ultimate.canceled -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnUltimate;
             }
             m_Wrapper.m_CharacterControllsActionsCallbackInterface = instance;
             if (instance != null)
@@ -193,6 +218,9 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
                 @Dodge.started += instance.OnDodge;
                 @Dodge.performed += instance.OnDodge;
                 @Dodge.canceled += instance.OnDodge;
+                @Ultimate.started += instance.OnUltimate;
+                @Ultimate.performed += instance.OnUltimate;
+                @Ultimate.canceled += instance.OnUltimate;
             }
         }
     }
@@ -201,5 +229,6 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
+        void OnUltimate(InputAction.CallbackContext context);
     }
 }
