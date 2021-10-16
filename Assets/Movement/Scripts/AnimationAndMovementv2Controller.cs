@@ -31,6 +31,7 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
     bool isUltimatePressed;
 
     bool performingAction = false;
+    bool canMove = true;
 
     public float attackCooldown = .5f;
     public float dashCooldown = 1.5f;
@@ -97,7 +98,7 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!performingAction)
+        if (canMove)
         {
             handleMovement();
         }
@@ -210,6 +211,7 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
     IEnumerator Ultimate()
     {
         performingAction = true;
+        canMove = false;
 
         animator.SetBool(isUltimatingHash, true);
         yield return new WaitForSeconds(2.3f);
@@ -218,14 +220,17 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
 
         ultimateCooldownCurrent = ultimateCooldown;
 
+        canMove = true;
         performingAction = false;
     }
     IEnumerator Dash()
     {
         performingAction = true;
-        handleRotation(1);
+        canMove = false;
+
         Vector3 dashDir = currentMovement;
         float startTime = Time.time;
+        handleRotation(1);
         animator.SetBool(isDodgingHash, true);
         while (Time.time < startTime + dashTime)
         {
@@ -236,6 +241,7 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
 
         dashCooldownCurrent = dashCooldown;
 
+        canMove = true;
         performingAction = false;
     }
 
