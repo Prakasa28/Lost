@@ -10,16 +10,22 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
     PlayerInputV2 playerInput;
     CharacterController characterController;
     Animator animator;
+    FocusEnemy enemy;
 
     public float characterSpeed = 15;
     public float dashTime = .7f;
     public float dashSpeed = 25;
+    public float chargeSpeed = 50;
+    public float chargeMinRadius = 20;
+    public float chargeMaxRadius = 40;
     public float rotationFactorPerFrame = 30.0f;
 
     int isMovingHash;
     int isDodgingHash;
     int isAttackingHash1;
     int isAttackingHash2;
+    int isChargingHash;
+    int isEndCharging;
     int isUltimatingHash;
 
     Vector2 currentMovementInput;
@@ -28,17 +34,20 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
     bool isMovementPressed;
     bool isDodgePressed;
     bool isAttackedPressed;
+    bool isChargePressed;
     bool isUltimatePressed;
 
     bool performingAction = false;
     bool canMove = true;
 
-    public float attackCooldown = .5f;
+    public float attackCooldown = .2f;
     public float dashCooldown = 1.5f;
+    public float chargeCooldown = 6f;
     public float ultimateCooldown = 6f;
 
     private float attackCooldownCurrent = 0;
     private float dashCooldownCurrent = 0;
+    private float chargeCooldownCurrent = 0;
     private float ultimateCooldownCurrent = 0;
 
     private bool switchAttackAnimations = false;
@@ -49,6 +58,7 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
 
     public GameObject attackAbilityUIObject;
     public GameObject dashAblilityUIObject;
+    public GameObject chargeAblilityUIObject;
     public GameObject ultimateAbilityUIObject;
 
     void Awake()
@@ -56,11 +66,14 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
         playerInput = new PlayerInputV2();
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+        enemy = GetComponent<FocusEnemy>();
 
         isMovingHash = Animator.StringToHash("IsMoving");
         isDodgingHash = Animator.StringToHash("IsDodging");
         isAttackingHash1 = Animator.StringToHash("IsAttacking1");
         isAttackingHash2 = Animator.StringToHash("IsAttacking2");
+        isChargingHash = Animator.StringToHash("IsCharging");
+        isEndCharging = Animator.StringToHash("IsEndCharging");
         isUltimatingHash = Animator.StringToHash("IsUltimating");
 
         playerInput.CharacterControlls.Move.started += onMovementInput;
@@ -72,6 +85,9 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
         playerInput.CharacterControlls.Ultimate.canceled += OnUltimate;
         playerInput.CharacterControlls.Attack.started += OnAttack;
         playerInput.CharacterControlls.Attack.canceled += OnAttack;
+        playerInput.CharacterControlls.Charge.started += OnCharge;
+        playerInput.CharacterControlls.Charge.canceled += OnCharge;
+
 
 
     }
@@ -93,6 +109,11 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
     void OnAttack(InputAction.CallbackContext context)
     {
         isAttackedPressed = context.ReadValueAsButton();
+    }
+
+    void OnCharge(InputAction.CallbackContext context)
+    {
+        isChargePressed = context.ReadValueAsButton();
     }
 
     // Update is called once per frame
@@ -167,7 +188,7 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
 
         if (!performingAction)
         {
-            if (isAttackedPressed)
+            if (isAttackedPressed && attackCooldownCurrent <= 0)
             {
                 StartCoroutine(Attack());
             }
@@ -175,6 +196,18 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
             if (isDodgePressed && dashCooldownCurrent <= 0)
             {
                 StartCoroutine(Dash());
+            }
+
+
+            if (enemy.focusedTarget != null)
+            {
+                float distance = Vector3.Distance(transform.position, enemy.focusedTarget.transform.position);
+
+                if (isChargePressed && chargeCooldownCurrent <= 0 && distance >= chargeMinRadius && distance <= chargeMaxRadius)
+                {
+                    StartCoroutine(Charge());
+                }
+
             }
 
             if (isUltimatePressed && ultimateCooldownCurrent <= 0)
@@ -185,6 +218,54 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
         }
     }
 
+    IEnumerator Charge()
+    {
+
+        performingAction = true;
+        canMove = false;
+
+        GameObject focusedEnemy = enemy.focusedTarget;
+
+
+        animator.SetBool(isChargingHash, true);
+        while (true)
+        {
+            FaceEnemy(focusedEnemy);
+            var offset = focusedEnemy.transform.position - transform.position;
+            offset.y = 0;
+
+            if (offset.magnitude < 4f)
+            {
+                break;
+            }
+
+            offset = offset.normalized * chargeSpeed;
+            characterController.Move(offset * Time.deltaTime);
+
+
+            yield return null;
+        }
+        animator.SetBool(isChargingHash, false);
+        animator.SetBool(isEndCharging, true);
+
+        yield return new WaitForSeconds(.4f);
+
+        animator.SetBool(isEndCharging, false);
+
+        chargeCooldownCurrent = chargeCooldown;
+        canMove = true;
+        performingAction = false;
+    }
+
+    private void FaceEnemy(GameObject enemy)
+    {
+        //face the target
+        Vector3 direction = (enemy.transform.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 1);
+
+    }
+
     IEnumerator Attack()
     {
         performingAction = true;
@@ -192,13 +273,13 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
         if (switchAttackAnimations)
         {
             animator.SetBool(isAttackingHash1, true);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(.5f);
             animator.SetBool(isAttackingHash1, false);
         }
         else
         {
             animator.SetBool(isAttackingHash2, true);
-            yield return new WaitForSeconds(1.2f);
+            yield return new WaitForSeconds(1f);
             animator.SetBool(isAttackingHash2, false);
 
         }
@@ -254,6 +335,9 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
             if (dashCooldownCurrent > 0)
                 dashCooldownCurrent -= period;
 
+            if (chargeCooldownCurrent > 0)
+                chargeCooldownCurrent -= period;
+
             if (ultimateCooldownCurrent > 0)
                 ultimateCooldownCurrent -= period;
 
@@ -263,7 +347,7 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
         }
 
     }
-    void updateUIAbility(float cooldown, GameObject uiObject)
+    void updateUIAbility(float cooldown, GameObject uiObject, bool avaliable = true)
     {
         Image image = uiObject.transform.Find("Image").gameObject.GetComponent<Image>();
         GameObject coolDownObject = uiObject.transform.Find("Cooldown").gameObject;
@@ -289,16 +373,33 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
         }
         else
         {
-            image.fillAmount = 1;
+            if (!avaliable)
+            {
+                image.fillAmount = 0;
+            }
+            else
+            {
+                image.fillAmount = 1;
+            }
             coolDownObject.SetActive(false);
         }
 
     }
     void updateUI()
     {
+        bool chargeAvaliable = false;
+        if (enemy.focusedTarget != null)
+        {
+            float distance = Vector3.Distance(transform.position, enemy.focusedTarget.transform.position);
+
+            if (distance >= chargeMinRadius && distance <= chargeMaxRadius)
+                chargeAvaliable = true;
+        }
+
         updateUIAbility(dashCooldownCurrent, dashAblilityUIObject);
         updateUIAbility(ultimateCooldownCurrent, ultimateAbilityUIObject);
         updateUIAbility(attackCooldownCurrent, attackAbilityUIObject);
+        updateUIAbility(chargeCooldownCurrent, chargeAblilityUIObject, chargeAvaliable);
     }
 
 
