@@ -8,7 +8,12 @@ public class PlayerInventory : MonoBehaviour
     // placeholders
     public GameObject shieldPlaceHolder;
     public GameObject weaponPlaceHolder;
-
+    
+    
+    // show text when picking up item
+    public GameObject text;
+            
+    
     // animator
     private Animator animator;
     // private int isPickingUpHash;
@@ -24,6 +29,7 @@ public class PlayerInventory : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>();
+        text.SetActive(false);
     }
 
     private void Update()
@@ -40,7 +46,7 @@ public class PlayerInventory : MonoBehaviour
         if (groundItem)
         {
             followingItem = groundItem;
-            Debug.Log("Entered collision: " + followingItem);
+            text.SetActive(true);
         }
     }
 
@@ -48,6 +54,7 @@ public class PlayerInventory : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         followingItem = null;
+        text.SetActive(false);
     }
 
     void AddItem(ItemObject newItem)
@@ -83,6 +90,7 @@ public class PlayerInventory : MonoBehaviour
             AddItem(followingItem.item);
             Destroy(followingItem.gameObject);
             followingItem = null;
+            text.SetActive(false);
             Debug.Log("I have picked up an item!");
         }
     }
