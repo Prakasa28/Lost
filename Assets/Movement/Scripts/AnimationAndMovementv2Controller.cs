@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class AnimationAndMovementv2Controller : MonoBehaviour
 {
-    PlayerInputV2 playerInput;
+    InputHandler inputHandler;
     CharacterController characterController;
     Animator animator;
     FocusEnemy enemy;
@@ -28,15 +28,6 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
     int isEndCharging;
     int isUltimatingHash;
 
-    Vector2 currentMovementInput;
-    Vector3 currentMovement;
-
-    bool isMovementPressed;
-    bool isDodgePressed;
-    bool isAttackedPressed;
-    bool isChargePressed;
-    bool isUltimatePressed;
-
     bool performingAction = false;
     bool canMove = true;
 
@@ -56,6 +47,7 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
     private float nextActionTime = 0.0f;
     private float period = .1f; //Update cooldown timer every sec
 
+    public ParticleSystem particleForCharge;
     public GameObject attackAbilityUIObject;
     public GameObject dashAblilityUIObject;
     public GameObject chargeAblilityUIObject;
@@ -63,10 +55,10 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
 
     void Awake()
     {
-        playerInput = new PlayerInputV2();
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         enemy = GetComponent<FocusEnemy>();
+        inputHandler = GetComponent<InputHandler>();
 
         isMovingHash = Animator.StringToHash("IsMoving");
         isDodgingHash = Animator.StringToHash("IsDodging");
@@ -76,44 +68,6 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
         isEndCharging = Animator.StringToHash("IsEndCharging");
         isUltimatingHash = Animator.StringToHash("IsUltimating");
 
-        playerInput.CharacterControlls.Move.started += onMovementInput;
-        playerInput.CharacterControlls.Move.canceled += onMovementInput;
-        playerInput.CharacterControlls.Move.performed += onMovementInput;
-        playerInput.CharacterControlls.Dodge.started += OnDodge;
-        playerInput.CharacterControlls.Dodge.canceled += OnDodge;
-        playerInput.CharacterControlls.Ultimate.started += OnUltimate;
-        playerInput.CharacterControlls.Ultimate.canceled += OnUltimate;
-        playerInput.CharacterControlls.Attack.started += OnAttack;
-        playerInput.CharacterControlls.Attack.canceled += OnAttack;
-        playerInput.CharacterControlls.Charge.started += OnCharge;
-        playerInput.CharacterControlls.Charge.canceled += OnCharge;
-
-
-
-    }
-    void onMovementInput(InputAction.CallbackContext context)
-    {
-        currentMovementInput = context.ReadValue<Vector2>();
-        currentMovement.z = currentMovementInput.x;
-        currentMovement.x = -currentMovementInput.y;
-        isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
-    }
-    void OnDodge(InputAction.CallbackContext context)
-    {
-        isDodgePressed = context.ReadValueAsButton();
-    }
-    void OnUltimate(InputAction.CallbackContext context)
-    {
-        isUltimatePressed = context.ReadValueAsButton();
-    }
-    void OnAttack(InputAction.CallbackContext context)
-    {
-        isAttackedPressed = context.ReadValueAsButton();
-    }
-
-    void OnCharge(InputAction.CallbackContext context)
-    {
-        isChargePressed = context.ReadValueAsButton();
     }
 
     // Update is called once per frame
@@ -136,9 +90,9 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
 
         Vector3 positionToLookAt;
 
-        positionToLookAt.x = currentMovement.x;
+        positionToLookAt.x = inputHandler.currentMovement.x;
         positionToLookAt.y = 0.0f;
-        positionToLookAt.z = currentMovement.z;
+        positionToLookAt.z = inputHandler.currentMovement.z;
 
 
         Quaternion currentRotation = transform.rotation;
@@ -156,19 +110,19 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
         if (characterController.isGrounded)
         {
             float groundedGravity = -.5f;
-            currentMovement.y = groundedGravity;
+            inputHandler.currentMovement.y = groundedGravity;
         }
         else
         {
             float gravity = -10f;
-            currentMovement.y = gravity;
+            inputHandler.currentMovement.y = gravity;
         }
     }
     void handleMovement()
     {
         handleGravity();
         handleRotation();
-        characterController.Move(currentMovement * characterSpeed * Time.deltaTime);
+        characterController.Move(inputHandler.currentMovement * characterSpeed * Time.deltaTime);
     }
 
 
@@ -176,24 +130,24 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
     {
         bool isMoving = animator.GetBool(isMovingHash);
 
-        if (isMovementPressed && !isMoving)
+        if (inputHandler.isMovementPressed && !isMoving)
         {
             animator.SetBool(isMovingHash, true);
         }
 
-        if (!isMovementPressed && isMoving)
+        if (!inputHandler.isMovementPressed && isMoving)
         {
             animator.SetBool(isMovingHash, false);
         }
 
         if (!performingAction)
         {
-            if (isAttackedPressed && attackCooldownCurrent <= 0)
+            if (inputHandler.isAttackedPressed && attackCooldownCurrent <= 0)
             {
                 StartCoroutine(Attack());
             }
 
-            if (isDodgePressed && dashCooldownCurrent <= 0)
+            if (inputHandler.isDodgePressed && dashCooldownCurrent <= 0)
             {
                 StartCoroutine(Dash());
             }
@@ -203,14 +157,14 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
             {
                 float distance = Vector3.Distance(transform.position, enemy.focusedTarget.transform.position);
 
-                if (isChargePressed && chargeCooldownCurrent <= 0 && distance >= chargeMinRadius && distance <= chargeMaxRadius)
+                if (inputHandler.isChargePressed && chargeCooldownCurrent <= 0 && distance >= chargeMinRadius && distance <= chargeMaxRadius)
                 {
                     StartCoroutine(Charge());
                 }
 
             }
 
-            if (isUltimatePressed && ultimateCooldownCurrent <= 0)
+            if (inputHandler.isUltimatePressed && ultimateCooldownCurrent <= 0)
             {
                 StartCoroutine(Ultimate());
             }
@@ -226,6 +180,8 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
 
         GameObject focusedEnemy = enemy.focusedTarget;
 
+        if (particleForCharge != null)
+            particleForCharge.Play();
 
         animator.SetBool(isChargingHash, true);
         while (true)
@@ -245,7 +201,12 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
 
             yield return null;
         }
+
         animator.SetBool(isChargingHash, false);
+
+        if (particleForCharge != null)
+            particleForCharge.Stop();
+
         animator.SetBool(isEndCharging, true);
 
         yield return new WaitForSeconds(.4f);
@@ -309,7 +270,7 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
         performingAction = true;
         canMove = false;
 
-        Vector3 dashDir = currentMovement;
+        Vector3 dashDir = inputHandler.currentMovement;
         float startTime = Time.time;
         handleRotation(1);
         animator.SetBool(isDodgingHash, true);
@@ -400,18 +361,6 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
         updateUIAbility(ultimateCooldownCurrent, ultimateAbilityUIObject);
         updateUIAbility(attackCooldownCurrent, attackAbilityUIObject);
         updateUIAbility(chargeCooldownCurrent, chargeAblilityUIObject, chargeAvaliable);
-    }
-
-
-
-
-    void OnEnable()
-    {
-        playerInput.CharacterControlls.Enable();
-    }
-    void OnDisable()
-    {
-        playerInput.CharacterControlls.Disable();
     }
 
 }
