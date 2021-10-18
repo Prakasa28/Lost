@@ -353,6 +353,7 @@ GameObject:
   - component: {fileID: 8793597216354718521}
   - component: {fileID: 8793597216354718522}
   - component: {fileID: 8843697573370396722}
+  - component: {fileID: 2330946399351340324}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -428,12 +429,18 @@ MonoBehaviour:
   characterSpeed: 15
   dashTime: 0.7
   dashSpeed: 25
+  chargeSpeed: 50
+  chargeMinRadius: 20
+  chargeMaxRadius: 40
   rotationFactorPerFrame: 30
   attackCooldown: 0.5
   dashCooldown: 1.5
+  chargeCooldown: 6
   ultimateCooldown: 6
+  particleForCharge: {fileID: 0}
   attackAbilityUIObject: {fileID: 0}
   dashAblilityUIObject: {fileID: 0}
+  chargeAblilityUIObject: {fileID: 0}
   ultimateAbilityUIObject: {fileID: 0}
 --- !u!114 &8843697573370396722
 MonoBehaviour:
@@ -447,6 +454,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 424e8c635eb06da48b1fc2b6ee582fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  range: 60
+  healthBar: {fileID: 0}
+  bosses: []
+  focusedTarget: {fileID: 0}
+--- !u!114 &2330946399351340324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8794507874853032690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03023a484e5c0b449ae0e96e0e6c9fcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMovementInput: {x: 0, y: 0}
+  currentMovement: {x: 0, y: 0, z: 0}
+  isMovementPressed: 0
+  isDodgePressed: 0
+  isAttackedPressed: 0
+  isChargePressed: 0
+  isUltimatePressed: 0
 --- !u!1 &8794531831452534024
 GameObject:
   m_ObjectHideFlags: 0
