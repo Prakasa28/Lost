@@ -190,7 +190,7 @@ public class AnimationAndMovementv2Controller : MonoBehaviour
             var offset = focusedEnemy.transform.position - transform.position;
             offset.y = 0;
 
-            if (offset.magnitude < 4f)
+            if (offset.magnitude < 6f)
             {
                 break;
             }
