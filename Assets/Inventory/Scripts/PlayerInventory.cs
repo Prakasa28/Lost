@@ -6,29 +6,29 @@ using UnityEngine.PlayerLoop;
 public class PlayerInventory : MonoBehaviour
 {
     // placeholders
-    public GameObject shieldPlaceHolder;
-    public GameObject weaponPlaceHolder;
-    
-    
+    private Transform shieldPlaceHolder;
+    private Transform weaponPlaceHolder;
+
     // show text when picking up item
     public GameObject text;
-            
-    
+
+
     // animator
     private Animator animator;
     // private int isPickingUpHash;
 
     private GroundItem followingItem;
     private List<ItemObject> items;
+    public GameObject weaponObject;
+
+    public Mesh armoredMesh;
 
     void Awake()
     {
         items = new List<ItemObject>();
-    }
-
-    private void Start()
-    {
         animator = GetComponent<Animator>();
+        weaponPlaceHolder = GameObject.FindGameObjectWithTag("Axe").transform;
+        shieldPlaceHolder = GameObject.FindGameObjectWithTag("Shield").transform;
         text.SetActive(false);
     }
 
@@ -57,12 +57,11 @@ public class PlayerInventory : MonoBehaviour
         text.SetActive(false);
     }
 
-    void AddItem(ItemObject newItem)
+    void addItem(ItemObject newItem)
     {
-        
         // check if there's already an item with this type if there is remove it replace it with the new one
         ItemObject itemToRemove = null;
-        
+
         foreach (ItemObject oldItem in items)
         {
             if (oldItem.type == newItem.type)
@@ -70,13 +69,12 @@ public class PlayerInventory : MonoBehaviour
                 itemToRemove = oldItem;
             }
         }
-        
+
         if (itemToRemove != null)
             items.Remove(itemToRemove);
 
         // add the object to my list
         items.Add(newItem);
-        // equip and display item
     }
 
 
@@ -86,21 +84,43 @@ public class PlayerInventory : MonoBehaviour
         if (followingItem != null && Input.GetKey(KeyCode.T))
         {
             //TODO set animation to true  
-            // add the new item to my list and destroy the object from the scene
-            AddItem(followingItem.item);
+            // add the new item to my list and then destroy it from the map
+            addItem(followingItem.item);
+            // equip the item
+            equipItems(followingItem.item);
             Destroy(followingItem.gameObject);
             followingItem = null;
             text.SetActive(false);
-            Debug.Log("I have picked up an item!");
         }
     }
 
-    void equipItems()
+    void equipItems(ItemObject item)
     {
-    }
+   
+        if (item.type == ItemType.Weapon)
+        {
+            foreach (Transform child in weaponPlaceHolder) {
+                Destroy(child.gameObject);
+            }
+            // set the weapon
+            Instantiate(item.characterDisplay.gameObject, weaponPlaceHolder);
+        }
+
+        if (item.type == ItemType.Shield)
+        {
+            foreach (Transform child in shieldPlaceHolder) {
+                Destroy(child.gameObject);
+            }
+            // set the shield
+            Instantiate(item.characterDisplay, shieldPlaceHolder);
+        }
 
 
-    void displayUI()
-    {
+        if (item.type == ItemType.Armor)
+        {
+            // set the armor 
+            var skinnedMeshedRenderer = this.GetComponentInChildren<SkinnedMeshRenderer>();
+            skinnedMeshedRenderer.sharedMesh = armoredMesh;
+        }
     }
 }

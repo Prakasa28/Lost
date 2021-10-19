@@ -6,7 +6,6 @@ public class Chest : MonoBehaviour
 {
     // get the children object
     public GameObject chest;
-    public GameObject player;
     public GameObject items;
     public GameObject text;
     private bool opened = false;
@@ -21,7 +20,7 @@ public class Chest : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.transform.gameObject.name == player.name)
+        if (collision.transform.gameObject.CompareTag("Player"))
         {
             text.SetActive(true);
             opened = true;
