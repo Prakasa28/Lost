@@ -8,6 +8,12 @@ public class EnemyStats : MonoBehaviour
     public int maxHealth;
     public int CurrentHealth;
 
+    Animator animator;
+
+    private void Awake()
+    {
+        animator = GetComponentInChildren<Animator>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -26,12 +32,14 @@ public class EnemyStats : MonoBehaviour
     {
         CurrentHealth = CurrentHealth - damage;
 
+        animator.Play("hit_head_front");
         Debug.Log("Health" + CurrentHealth);
 
         if (CurrentHealth <= 0)
         {
             CurrentHealth = 0;
             Debug.Log("EnemyDead");
+            animator.Play("dead_01");
         }
     } 
 

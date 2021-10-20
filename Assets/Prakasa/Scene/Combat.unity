@@ -286,6 +286,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Boss
       objectReference: {fileID: 0}
+    - target: {fileID: 7620234631134563205, guid: ddbdf06de0ddab045889f0a0b59d3412, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 96b97dedd4a318f428f80001b3ec67ea, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ddbdf06de0ddab045889f0a0b59d3412, type: 3}
 --- !u!1 &1462632115
