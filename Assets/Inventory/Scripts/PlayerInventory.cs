@@ -10,17 +10,14 @@ public class PlayerInventory : MonoBehaviour
     private Transform weaponPlaceHolder;
 
     // show text when picking up item
-    public GameObject text;
+    private GameObject itemsText;
 
-
-    // animator
+    // animator    
     private Animator animator;
     // private int isPickingUpHash;
 
     private GroundItem followingItem;
     private List<ItemObject> items;
-    public GameObject weaponObject;
-
     public Mesh armoredMesh;
 
     void Awake()
@@ -29,8 +26,10 @@ public class PlayerInventory : MonoBehaviour
         animator = GetComponent<Animator>();
         weaponPlaceHolder = GameObject.FindGameObjectWithTag("Axe").transform;
         shieldPlaceHolder = GameObject.FindGameObjectWithTag("Shield").transform;
-        text.SetActive(false);
+        itemsText = GameObject.FindGameObjectWithTag("ItemsText");
+        itemsText.SetActive(false);
     }
+
 
     private void Update()
     {
@@ -46,7 +45,7 @@ public class PlayerInventory : MonoBehaviour
         if (groundItem)
         {
             followingItem = groundItem;
-            text.SetActive(true);
+            itemsText.SetActive(true);
         }
     }
 
@@ -54,7 +53,7 @@ public class PlayerInventory : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         followingItem = null;
-        text.SetActive(false);
+        itemsText.SetActive(false);
     }
 
     void addItem(ItemObject newItem)
@@ -90,27 +89,30 @@ public class PlayerInventory : MonoBehaviour
             equipItems(followingItem.item);
             Destroy(followingItem.gameObject);
             followingItem = null;
-            text.SetActive(false);
+            itemsText.SetActive(false);
         }
     }
 
     void equipItems(ItemObject item)
     {
-   
         if (item.type == ItemType.Weapon)
         {
-            foreach (Transform child in weaponPlaceHolder) {
+            foreach (Transform child in weaponPlaceHolder)
+            {
                 Destroy(child.gameObject);
             }
+
             // set the weapon
             Instantiate(item.characterDisplay.gameObject, weaponPlaceHolder);
         }
 
         if (item.type == ItemType.Shield)
         {
-            foreach (Transform child in shieldPlaceHolder) {
+            foreach (Transform child in shieldPlaceHolder)
+            {
                 Destroy(child.gameObject);
             }
+
             // set the shield
             Instantiate(item.characterDisplay, shieldPlaceHolder);
         }

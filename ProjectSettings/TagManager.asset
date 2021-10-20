@@ -8,6 +8,11 @@ TagManager:
   - Weapon
   - Axe
   - Armored
+  - Items
+  - Chest
+  - ItemsText
+  - ChestText
+  - Child
   layers:
   - Default
   - TransparentFX
