@@ -3,7 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Shield
+  - Weapon
+  - Axe
+  - Armored
+  - Items
+  - Chest
+  - ItemsText
+  - ChestText
+  - Child
   layers:
   - Default
   - TransparentFX
