@@ -6,8 +6,11 @@ public class Boss2Controller : MonoBehaviour
 {
 
     Animator animator;
-    public Transform rightHandPosition;
+    public Transform FireballSpawnPosition;
     public GameObject fireballPrefab;
+    public GameObject leftHandPlaceholder;
+    public GameObject rightHandPlaceholder;
+    public ParticleSystem smallFire;
 
     public float walkingSpeed = 5f;
     public float runningSpeed = 10f;
@@ -15,8 +18,9 @@ public class Boss2Controller : MonoBehaviour
     public float aggroRadius = 50f;
     public float attackRadius = 30f;
     public float fireballSpeed = 20f;
-    public float castTime = 1f;
+    public float castTime = 3f;
     public float chargeTime = 5f;
+    public int attacksBeforeCharge = 5;
 
     private Vector3 startPosition;
     private bool playerInRadius = false;
@@ -29,7 +33,6 @@ public class Boss2Controller : MonoBehaviour
     private bool canChase = true;
     private bool canAttack = true;
     private bool canCharge = true;
-
     private int attackCount = 0;
 
     List<GameObject> fireballs = new List<GameObject>();
@@ -64,6 +67,7 @@ public class Boss2Controller : MonoBehaviour
     void Start()
     {
         startPosition = transform.position;
+        
     }
 
     void Update()
@@ -114,11 +118,11 @@ public class Boss2Controller : MonoBehaviour
 
         //count attacks made
         //if 5 do the recharge
-        if (attackCount > 2 && canCharge)
+        if (attackCount > attacksBeforeCharge && canCharge)
             StartCoroutine(Charge());
 
 
-        if (attackCount <= 2 && canAttack)
+        if (attackCount <= attacksBeforeCharge && canAttack)
         {
             StartCoroutine(CastSpell());
         }
@@ -153,10 +157,6 @@ public class Boss2Controller : MonoBehaviour
         float startTime = Time.time;
         animator.SetBool(isCasting, true);
 
-        for (int i = -10; i < 10; i += 5)
-        {
-            instantiateFireball(i);
-        }
 
         while (Time.time < startTime + castTime)
         {
@@ -166,7 +166,11 @@ public class Boss2Controller : MonoBehaviour
 
         animator.SetBool(isCasting, false);
         animator.SetBool(isAttacking, true);
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.7f);
+        for (int i = -10; i < 10; i += 5)
+        {
+            instantiateFireball(i);
+        }
 
         fireAllWaitingFireballs(player.transform);
 
@@ -270,10 +274,8 @@ public class Boss2Controller : MonoBehaviour
 
     private void instantiateFireball(float rotation)
     {
-        Vector3 positionToSpawn = rightHandPosition.position;
-        positionToSpawn.y = 0;
-
-
+        Vector3 positionToSpawn = FireballSpawnPosition.position;
+        // positionToSpawn.y = 0;
         GameObject fireballObj = Instantiate(fireballPrefab, positionToSpawn, Quaternion.identity) as GameObject;
 
         waitingFireballs.Add(fireballObj, rotation);
@@ -285,7 +287,7 @@ public class Boss2Controller : MonoBehaviour
             Vector3 directionToFace = (player.transform.position - fireballEntry.Key.transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToFace.x, 0, directionToFace.z));
 
-            lookRotation *= Quaternion.Euler(0, fireballEntry.Value, 0); // this adds a 90 degrees Y rotation
+            lookRotation *= Quaternion.Euler(1, fireballEntry.Value, 1); 
 
             fireballEntry.Key.transform.rotation = Quaternion.Slerp(fireballEntry.Key.transform.rotation, lookRotation, 1);
             fireballs.Add(fireballEntry.Key);
