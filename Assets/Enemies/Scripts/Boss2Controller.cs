@@ -16,6 +16,7 @@ public class Boss2Controller : MonoBehaviour
     public float attackRadius = 30f;
     public float fireballSpeed = 20f;
     public float castTime = 1f;
+    public float chargeTime = 5f;
 
     private Vector3 startPosition;
     private bool playerInRadius = false;
@@ -27,8 +28,12 @@ public class Boss2Controller : MonoBehaviour
     private bool canLookForATarget = true;
     private bool canChase = true;
     private bool canAttack = true;
+    private bool canCharge = true;
 
-    Dictionary<GameObject, Vector3> fireballs = new Dictionary<GameObject, Vector3>();
+    private int attackCount = 0;
+
+    List<GameObject> fireballs = new List<GameObject>();
+    Dictionary<GameObject, float> waitingFireballs = new Dictionary<GameObject, float>();
 
     private enum Stages
     {
@@ -41,6 +46,7 @@ public class Boss2Controller : MonoBehaviour
     int isRunning;
     int isCasting;
     int isAttacking;
+    int isCharging;
 
     void Awake()
     {
@@ -51,9 +57,9 @@ public class Boss2Controller : MonoBehaviour
         isRunning = Animator.StringToHash("IsRunning");
         isCasting = Animator.StringToHash("IsCasting");
         isAttacking = Animator.StringToHash("IsAttacking");
+        isCharging = Animator.StringToHash("IsCharging");
 
     }
-
 
     void Start()
     {
@@ -68,7 +74,9 @@ public class Boss2Controller : MonoBehaviour
         switch (currentStage)
         {
             case Stages.Chilling:
-                Chilling();
+                attackCount = 0;
+                if (canMoveRandomly)
+                    StartCoroutine(MoveEnemy());
                 break;
             case Stages.Chasing:
                 if (canChase)
@@ -79,66 +87,105 @@ public class Boss2Controller : MonoBehaviour
                 break;
         }
 
-        foreach (KeyValuePair<GameObject, Vector3> fireball in fireballs)
+        MoveFireballs();
+    }
+
+    private void MoveFireballs()
+    {
+        foreach (GameObject fireball in fireballs)
         {
-            fireball.Key.transform.position += fireball.Key.transform.forward * Time.deltaTime * fireballSpeed;
+            float distance = Vector3.Distance(fireball.transform.position, player.transform.position);
+
+            if (distance < 100f)
+            {
+                fireball.transform.position += fireball.transform.forward * Time.deltaTime * fireballSpeed;
+                continue;
+            }
+            fireballs.Remove(fireball);
+            Destroy(fireball);
         }
 
     }
 
+
+
     private void Attack()
     {
-        // if (distanceFromPlayer > attackRadius)
-        //     currentStage = Stages.Chasing;
 
-        if (canAttack)
+        //count attacks made
+        //if 5 do the recharge
+        if (attackCount > 2 && canCharge)
+            StartCoroutine(Charge());
+
+
+        if (attackCount <= 2 && canAttack)
+        {
             StartCoroutine(CastSpell());
+        }
+    }
+
+    IEnumerator Charge()
+    {
+        canCharge = false;
+        float startTime = Time.time;
+
+        animator.SetBool(isAttacking, false);
+        animator.SetBool(isCharging, true);
+        while (Time.time < startTime + chargeTime)
+        {
+            yield return null;
+        }
+        animator.SetBool(isCharging, false);
+        canCharge = true;
+        canAttack = true;
+        attackCount = 0;
+
     }
 
     IEnumerator CastSpell()
     {
+        if (distanceFromPlayer > attackRadius)
+        {
+            currentStage = Stages.Chasing;
+            yield break;
+        }
         canAttack = false;
         float startTime = Time.time;
         animator.SetBool(isCasting, true);
-        Vector3 positionToSpawn = rightHandPosition.position;
-        positionToSpawn.y = 0;
-        GameObject fireballObj = Instantiate(fireballPrefab, positionToSpawn, Quaternion.identity) as GameObject;
-        GameObject fireballObj2 = Instantiate(fireballPrefab, positionToSpawn, Quaternion.identity) as GameObject;
-        GameObject fireballObj3 = Instantiate(fireballPrefab, positionToSpawn, Quaternion.identity) as GameObject;
 
+        for (int i = -10; i < 10; i += 5)
+        {
+            instantiateFireball(i);
+        }
 
         while (Time.time < startTime + castTime)
         {
             FaceEnemy(player.transform.position);
             yield return null;
         }
+
         animator.SetBool(isCasting, false);
         animator.SetBool(isAttacking, true);
-        //spawn projectile
         yield return new WaitForSeconds(.3f);
 
-        Vector3 directionToFace = (player.transform.position - fireballObj.transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToFace.x, 0, directionToFace.z));
-        Quaternion lookRotation2 = lookRotation * Quaternion.Euler(0, 8, 0); // this adds a 90 degrees Y rotation
-        Quaternion lookRotation3 = lookRotation * Quaternion.Euler(0, -8, 0); // this adds a 90 degrees Y rotation
+        fireAllWaitingFireballs(player.transform);
 
-        fireballObj.transform.rotation = Quaternion.Slerp(fireballObj.transform.rotation, lookRotation, 1);
-        fireballObj2.transform.rotation = Quaternion.Slerp(fireballObj.transform.rotation, lookRotation2, 1);
-        fireballObj3.transform.rotation = Quaternion.Slerp(fireballObj.transform.rotation, lookRotation3, 1);
-        fireballs.Add(fireballObj, new Vector3(0, 0, 0));
-        fireballs.Add(fireballObj2, new Vector3(0, 0, 0));
-        fireballs.Add(fireballObj3, new Vector3(0, 0, 0));
         // fireballs.Add(fireballObj2, dir2);
         // fireballs.Add(fireballObj3, dir3);
         animator.SetBool(isAttacking, false);
         canAttack = true;
+        attackCount++;
     }
-
-
 
 
     IEnumerator Chasing()
     {
+        if (distanceFromPlayer > aggroRadius)
+        {
+            currentStage = Stages.Chilling;
+            yield break;
+        }
+
         canChase = false;
 
         animator.SetBool(isRunning, true);
@@ -163,13 +210,6 @@ public class Boss2Controller : MonoBehaviour
         }
 
     }
-    private void Chilling()
-    {
-        if (canMoveRandomly)
-        {
-            StartCoroutine(MoveEnemy());
-        }
-    }
     IEnumerator MoveEnemy()
     {
         canMoveRandomly = false;
@@ -192,9 +232,11 @@ public class Boss2Controller : MonoBehaviour
             var offset = destination - transform.position;
             offset.y = 0;
 
-            if (offset.magnitude < 2f)
+            if (offset.magnitude < 10f)
                 break;
 
+
+            offset = offset.normalized * walkingSpeed;
             transform.position = Vector3.MoveTowards(transform.position, destination, walkingSpeed * Time.deltaTime);
 
             yield return null;
@@ -217,7 +259,7 @@ public class Boss2Controller : MonoBehaviour
         }
         else
         {
-            currentStage = Stages.Chilling;
+            // currentStage = Stages.Chilling;
             playerInRadius = false;
         }
 
@@ -225,15 +267,39 @@ public class Boss2Controller : MonoBehaviour
         canLookForATarget = true;
     }
 
+
+    private void instantiateFireball(float rotation)
+    {
+        Vector3 positionToSpawn = rightHandPosition.position;
+        positionToSpawn.y = 0;
+
+
+        GameObject fireballObj = Instantiate(fireballPrefab, positionToSpawn, Quaternion.identity) as GameObject;
+
+        waitingFireballs.Add(fireballObj, rotation);
+    }
+    private void fireAllWaitingFireballs(Transform position)
+    {
+        foreach (KeyValuePair<GameObject, float> fireballEntry in waitingFireballs)
+        {
+            Vector3 directionToFace = (player.transform.position - fireballEntry.Key.transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToFace.x, 0, directionToFace.z));
+
+            lookRotation *= Quaternion.Euler(0, fireballEntry.Value, 0); // this adds a 90 degrees Y rotation
+
+            fireballEntry.Key.transform.rotation = Quaternion.Slerp(fireballEntry.Key.transform.rotation, lookRotation, 1);
+            fireballs.Add(fireballEntry.Key);
+
+        }
+        waitingFireballs.Clear();
+    }
     void FaceEnemy(Vector3 position)
     {
         //face the target
         Vector3 direction = (position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 1);
-
     }
-
     // draw the range circle
     private void OnDrawGizmosSelected()
     {
@@ -248,27 +314,4 @@ public class Boss2Controller : MonoBehaviour
 
     }
 
-
-    //detection mode
-    //randomly walk around circle
-    // if character near by
-    // - turn on effects
-    // - start attack mode
-
-    //attack mode
-    //- if not in range turn chase mode
-    //- if getting hit too turn teleport mode
-    //- if 10-15sec pass turn special attack mode
-    // spawn attack particles
-
-    //chase mode
-    //- follow target till you are in some range or if he is to far stop
-
-
-
-    //special attack mode
-    // turn on special effect
-    // for 6 seconds
-    // - make the boss invunarable
-    // - spawn big circles which when explode take player damage
 }
