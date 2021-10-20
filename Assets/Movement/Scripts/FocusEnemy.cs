@@ -18,7 +18,10 @@ public class FocusEnemy : MonoBehaviour
 
     private bool maxHealthSetted = false;
 
+    void Start()
+    {
 
+    }
 
     // Update is called once per frame
     void Update()
@@ -77,5 +80,35 @@ public class FocusEnemy : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, range);
     }
+
+
+    // IEnumerator LookForTarget()
+    // {
+
+    //     float distance = Vector3.Distance(transform.position, player.transform.position);
+
+    //     // check if player has entered ui range
+    //     if (distance < aggroRadius)
+    //     {
+    //         playerInRadius = true;
+    //     }
+    //     else
+    //     {
+    //         playerInRadius = false;
+    //     }
+
+    //     yield return new WaitForSeconds(.5f);
+    // }
+
+    // // draw the range circle
+    // private void OnDrawGizmosSelected()
+    // {
+    //     Gizmos.color = Color.blue;
+    //     Gizmos.DrawWireSphere(transform.position, walkingRadius);
+
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawWireSphere(transform.position, aggroRadius);
+
+    // }
 
 }
