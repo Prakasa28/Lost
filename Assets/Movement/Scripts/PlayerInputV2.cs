@@ -49,6 +49,14 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": ""NormalizeVector2"",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Charge"",
+                    ""type"": ""Button"",
+                    ""id"": ""ef4794a4-1268-48d7-8311-a86db01ff7dd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": ""NormalizeVector2"",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -132,11 +140,22 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""2055075a-781e-4096-b412-8c66905ca9a5"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bdd81ba1-8f32-4b50-9542-13215c5f3b92"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Charge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -151,6 +170,7 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
         m_CharacterControlls_Dodge = m_CharacterControlls.FindAction("Dodge", throwIfNotFound: true);
         m_CharacterControlls_Ultimate = m_CharacterControlls.FindAction("Ultimate", throwIfNotFound: true);
         m_CharacterControlls_Attack = m_CharacterControlls.FindAction("Attack", throwIfNotFound: true);
+        m_CharacterControlls_Charge = m_CharacterControlls.FindAction("Charge", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -204,6 +224,7 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
     private readonly InputAction m_CharacterControlls_Dodge;
     private readonly InputAction m_CharacterControlls_Ultimate;
     private readonly InputAction m_CharacterControlls_Attack;
+    private readonly InputAction m_CharacterControlls_Charge;
     public struct CharacterControllsActions
     {
         private @PlayerInputV2 m_Wrapper;
@@ -212,6 +233,7 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
         public InputAction @Dodge => m_Wrapper.m_CharacterControlls_Dodge;
         public InputAction @Ultimate => m_Wrapper.m_CharacterControlls_Ultimate;
         public InputAction @Attack => m_Wrapper.m_CharacterControlls_Attack;
+        public InputAction @Charge => m_Wrapper.m_CharacterControlls_Charge;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControlls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -233,6 +255,9 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
                 @Attack.started -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnAttack;
                 @Attack.performed -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnAttack;
                 @Attack.canceled -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnAttack;
+                @Charge.started -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnCharge;
+                @Charge.performed -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnCharge;
+                @Charge.canceled -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnCharge;
             }
             m_Wrapper.m_CharacterControllsActionsCallbackInterface = instance;
             if (instance != null)
@@ -249,6 +274,9 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
                 @Attack.started += instance.OnAttack;
                 @Attack.performed += instance.OnAttack;
                 @Attack.canceled += instance.OnAttack;
+                @Charge.started += instance.OnCharge;
+                @Charge.performed += instance.OnCharge;
+                @Charge.canceled += instance.OnCharge;
             }
         }
     }
@@ -259,5 +287,6 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
         void OnDodge(InputAction.CallbackContext context);
         void OnUltimate(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+        void OnCharge(InputAction.CallbackContext context);
     }
 }
