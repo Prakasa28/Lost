@@ -285,7 +285,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 776685042}
   m_LocalRotation: {x: 0.23775518, y: -0.6738547, z: 0.24442104, w: 0.65547746}
-  m_LocalPosition: {x: 69.01001, y: 44.6, z: -55.280003}
+  m_LocalPosition: {x: 69.01001, y: 44.6, z: -82.979996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1460194908}
@@ -461,27 +461,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6134695666029670402, guid: 854849a24a1039d40a49833e56ac0e0c, type: 3}
   m_PrefabInstance: {fileID: 1918517712}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1312571230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1312571225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88cc8f8968d031d4a8683252c88b47db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rightHandPosition: {fileID: 1782797020}
-  fireballPrefab: {fileID: 9098523406536406814, guid: 1c03715bc6596bd41b6dd5539a625647, type: 3}
-  walkingSpeed: 5
-  runningSpeed: 10
-  walkingRadius: 20
-  aggroRadius: 50
-  attackRadius: 30
-  fireballSpeed: 90
-  castTime: 3
 --- !u!1 &1459185075
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,7 +539,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1459185075}
   m_LocalRotation: {x: 0.23775518, y: -0.6738547, z: 0.24442104, w: 0.65547746}
-  m_LocalPosition: {x: 69.01001, y: 44.6, z: -55.280003}
+  m_LocalPosition: {x: 69.01001, y: 44.6, z: -82.979996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1710438297}
@@ -833,11 +812,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1782797020 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1802127911219428432, guid: 854849a24a1039d40a49833e56ac0e0c, type: 3}
-  m_PrefabInstance: {fileID: 1918517712}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1823543623 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1233833178630260236, guid: 0a882d7ef7b3c594e858257361dee379, type: 3}
@@ -881,15 +855,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1802127911219428432, guid: 854849a24a1039d40a49833e56ac0e0c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.776
       objectReference: {fileID: 0}
     - target: {fileID: 1802127911219428432, guid: 854849a24a1039d40a49833e56ac0e0c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.154
+      value: -1.304
       objectReference: {fileID: 0}
     - target: {fileID: 1802127911219428432, guid: 854849a24a1039d40a49833e56ac0e0c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.147
+      value: -0.093
       objectReference: {fileID: 0}
     - target: {fileID: 6086502731849873340, guid: 854849a24a1039d40a49833e56ac0e0c, type: 3}
       propertyPath: m_Controller
@@ -902,6 +876,10 @@ PrefabInstance:
     - target: {fileID: 6134695666029670402, guid: 854849a24a1039d40a49833e56ac0e0c, type: 3}
       propertyPath: m_Name
       value: Boss2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134915606183029662, guid: 854849a24a1039d40a49833e56ac0e0c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6140002878008645072, guid: 854849a24a1039d40a49833e56ac0e0c, type: 3}
       propertyPath: m_RootOrder
@@ -1116,7 +1094,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8793190002852883604, guid: f1a531b1a2630724fa55d2e83abadef8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -56.7
+      value: -84.4
       objectReference: {fileID: 0}
     - target: {fileID: 8793190002852883604, guid: f1a531b1a2630724fa55d2e83abadef8, type: 3}
       propertyPath: m_LocalRotation.w
