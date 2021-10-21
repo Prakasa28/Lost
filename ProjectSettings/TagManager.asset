@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Level2Door
+  - DoorCollider
   layers:
   - Default
   - TransparentFX
