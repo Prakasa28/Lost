@@ -13,6 +13,8 @@ TagManager:
   - ItemsText
   - ChestText
   - Child
+  - Portal
+  - PortalPlaceHolder
   layers:
   - Default
   - TransparentFX
