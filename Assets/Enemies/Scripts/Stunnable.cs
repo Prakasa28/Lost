@@ -8,7 +8,7 @@ public class Stunnable : MonoBehaviour
 
     public ParticleSystem stunnedParticle;
     public Transform stunnedPlaceholder;
-    public int duration = 10;
+    public int duration = 4;
 
     private bool justStunned = false;
     private int isStunned;
