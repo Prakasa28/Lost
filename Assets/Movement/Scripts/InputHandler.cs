@@ -28,6 +28,10 @@ public class InputHandler : MonoBehaviour
     [HideInInspector]
     public bool isUltimatePressed;
 
+    [HideInInspector]
+    public bool isChangingEnemy;
+
+
     void Awake()
     {
 
@@ -44,6 +48,9 @@ public class InputHandler : MonoBehaviour
         playerInput.CharacterControlls.Attack.canceled += OnAttack;
         playerInput.CharacterControlls.Charge.started += OnCharge;
         playerInput.CharacterControlls.Charge.canceled += OnCharge;
+        playerInput.CharacterControlls.ChangeEnemy.started += OnEnemyChange;
+        playerInput.CharacterControlls.ChangeEnemy.canceled += OnEnemyChange;
+
     }
 
     void onMovementInput(InputAction.CallbackContext context)
@@ -69,6 +76,11 @@ public class InputHandler : MonoBehaviour
     void OnCharge(InputAction.CallbackContext context)
     {
         isChargePressed = context.ReadValueAsButton();
+    }
+
+    void OnEnemyChange(InputAction.CallbackContext context)
+    {
+        isChangingEnemy = context.ReadValueAsButton();
     }
 
     void OnEnable()

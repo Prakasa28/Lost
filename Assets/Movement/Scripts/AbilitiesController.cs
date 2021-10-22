@@ -16,7 +16,7 @@ public class AbilitiesController : MonoBehaviour
     [Header("Cooldowns")]
     public float attackCooldown = .2f;
     public float dashCooldown = 1.5f;
-    public float chargeCooldown = 6f;
+    public float chargeCooldown = 15f;
     public float ultimateCooldown = 6f;
 
 
@@ -27,8 +27,8 @@ public class AbilitiesController : MonoBehaviour
     [Header("Charge")]
     public float chargeSpeed = 50;
     public float chargeMinRadius = 20;
-    public float chargeMaxRadius = 40;
-    public float hitTargetPoint = 6f;
+    public float chargeMaxRadius = 60;
+    public float hitTargetPoint = 4f;
     public float particleSize = 2f;
     public float particleHeight = .2f;
 
@@ -85,10 +85,6 @@ public class AbilitiesController : MonoBehaviour
         isUltimatingHash = Animator.StringToHash("IsUltimating");
     }
 
-    void Start()
-    {
-        ;
-    }
 
     void Update()
     {
@@ -213,6 +209,7 @@ public class AbilitiesController : MonoBehaviour
     {
         performingAction = true;
         movementController.canMove = false;
+        characterController.detectCollisions = false;
 
         Vector3 dashDir = inputHandler.currentMovement;
         float startTime = Time.time;
@@ -228,6 +225,7 @@ public class AbilitiesController : MonoBehaviour
         dashCooldownCurrent = dashCooldown;
 
         movementController.canMove = true;
+        characterController.detectCollisions = true;
         performingAction = false;
     }
     void FaceEnemy(GameObject enemy)

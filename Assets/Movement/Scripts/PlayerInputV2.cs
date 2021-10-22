@@ -57,6 +57,14 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": ""NormalizeVector2"",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""ChangeEnemy"",
+                    ""type"": ""Button"",
+                    ""id"": ""e9bb4793-3255-46e6-b0e0-ad7a8a2a87b5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": ""NormalizeVector2"",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -158,6 +166,17 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
                     ""action"": ""Charge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea5dd4bf-6811-425e-abfd-8ad2bb60ac1b"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeEnemy"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -171,6 +190,7 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
         m_CharacterControlls_Ultimate = m_CharacterControlls.FindAction("Ultimate", throwIfNotFound: true);
         m_CharacterControlls_Attack = m_CharacterControlls.FindAction("Attack", throwIfNotFound: true);
         m_CharacterControlls_Charge = m_CharacterControlls.FindAction("Charge", throwIfNotFound: true);
+        m_CharacterControlls_ChangeEnemy = m_CharacterControlls.FindAction("ChangeEnemy", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -225,6 +245,7 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
     private readonly InputAction m_CharacterControlls_Ultimate;
     private readonly InputAction m_CharacterControlls_Attack;
     private readonly InputAction m_CharacterControlls_Charge;
+    private readonly InputAction m_CharacterControlls_ChangeEnemy;
     public struct CharacterControllsActions
     {
         private @PlayerInputV2 m_Wrapper;
@@ -234,6 +255,7 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
         public InputAction @Ultimate => m_Wrapper.m_CharacterControlls_Ultimate;
         public InputAction @Attack => m_Wrapper.m_CharacterControlls_Attack;
         public InputAction @Charge => m_Wrapper.m_CharacterControlls_Charge;
+        public InputAction @ChangeEnemy => m_Wrapper.m_CharacterControlls_ChangeEnemy;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControlls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -258,6 +280,9 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
                 @Charge.started -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnCharge;
                 @Charge.performed -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnCharge;
                 @Charge.canceled -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnCharge;
+                @ChangeEnemy.started -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnChangeEnemy;
+                @ChangeEnemy.performed -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnChangeEnemy;
+                @ChangeEnemy.canceled -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnChangeEnemy;
             }
             m_Wrapper.m_CharacterControllsActionsCallbackInterface = instance;
             if (instance != null)
@@ -277,6 +302,9 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
                 @Charge.started += instance.OnCharge;
                 @Charge.performed += instance.OnCharge;
                 @Charge.canceled += instance.OnCharge;
+                @ChangeEnemy.started += instance.OnChangeEnemy;
+                @ChangeEnemy.performed += instance.OnChangeEnemy;
+                @ChangeEnemy.canceled += instance.OnChangeEnemy;
             }
         }
     }
@@ -288,5 +316,6 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
         void OnUltimate(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnCharge(InputAction.CallbackContext context);
+        void OnChangeEnemy(InputAction.CallbackContext context);
     }
 }

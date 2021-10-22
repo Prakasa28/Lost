@@ -44,6 +44,14 @@
                     "expectedControlType": "Button",
                     "processors": "NormalizeVector2",
                     "interactions": "Press"
+                },
+                {
+                    "name": "ChangeEnemy",
+                    "type": "Button",
+                    "id": "e9bb4793-3255-46e6-b0e0-ad7a8a2a87b5",
+                    "expectedControlType": "Button",
+                    "processors": "NormalizeVector2",
+                    "interactions": "Press"
                 }
             ],
             "bindings": [
@@ -143,6 +151,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Charge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ea5dd4bf-6811-425e-abfd-8ad2bb60ac1b",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChangeEnemy",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
