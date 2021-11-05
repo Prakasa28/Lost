@@ -5,7 +5,8 @@ using UnityEngine;
 public class Chest : MonoBehaviour
 {
     // get the children object
-    private GameObject chest;
+    // private GameObject chest;
+    private GameObject childChest;
     private GameObject items;
     private GameObject chestText;
     private bool opened = false;
@@ -14,17 +15,19 @@ public class Chest : MonoBehaviour
     {
         // set objects invisible
         chestText = GameObject.FindGameObjectWithTag("ChestText");
-        chest = GameObject.FindGameObjectWithTag("Chest");
+        // chest = GameObject.FindGameObjectWithTag("Chest");
+        childChest = gameObject.transform.GetChild(0).GetChild(0).gameObject;
         items = GameObject.FindGameObjectWithTag("Items");
-        items.SetActive(false); 
+        items.SetActive(false);
         chestText.SetActive(false);
     }
 
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.transform.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
+            Debug.Log("Collided with player");
             chestText.SetActive(true);
             opened = true;
         }
@@ -34,6 +37,7 @@ public class Chest : MonoBehaviour
     {
         opened = false;
         chestText.SetActive(false);
+        Debug.Log("Exited");
     }
 
     private void Update()
@@ -48,7 +52,8 @@ public class Chest : MonoBehaviour
         if (opened && Input.GetKeyDown(KeyCode.F))
         {
             // rotate chest
-            chest.transform.Rotate(-90, 0, 0);
+            // chest.transform.Rotate(-90, 0, 0);
+            childChest.transform.Rotate(-90, 0, 0);
             // set items visible
             items.SetActive(true);
         }
