@@ -80,7 +80,7 @@ public class PlayerInventory : MonoBehaviour
     void pickUpItem()
     {
         // check if the object is on the ground when i press it 
-        if (followingItem != null && Input.GetKey(KeyCode.T))
+        if (followingItem != null && Input.GetKey(KeyCode.E))
         {
             //TODO set animation to true  
             // add the new item to my list and then destroy it from the map

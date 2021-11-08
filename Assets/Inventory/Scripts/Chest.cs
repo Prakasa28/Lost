@@ -24,14 +24,14 @@ public class Chest : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (collisonOccured)
-        {
+        {           
             return;
         }
         if (other.gameObject.CompareTag("Player"))
         {
             chestText.SetActive(true);
             opened = true;
-            collisonOccured = true;
+            collisonOccured = true; 
         }
     }
 
@@ -50,7 +50,7 @@ public class Chest : MonoBehaviour
     private void openChest()
     {
         // check if chest is opened
-        if (opened && Input.GetKeyDown(KeyCode.F))
+        if (opened && Input.GetKeyDown(KeyCode.E))
         {
             // rotate chest
             // chest.transform.Rotate(-90, 0, 0);

@@ -18,6 +18,12 @@ TagManager:
   - boss
   - playerHealthbar
   - bossHealthbar
+  - ItemsText
+  - Weapon
+  - Undefined
+  - AIText
+  - AIText2
+  - AIText3
   layers:
   - Default
   - TransparentFX

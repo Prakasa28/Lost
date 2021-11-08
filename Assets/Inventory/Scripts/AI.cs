@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class AI : MonoBehaviour
@@ -14,18 +15,27 @@ public class AI : MonoBehaviour
 
     // get player position
     private Transform playerPos;
-    public GameObject player;
+    private GameObject player;
+    private GameObject aiText;
+    private TextMeshProUGUI aiTextPro;
     private Animator animator;
+
+    private float textTime = 9;
 
     // get player position
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        aiText = GameObject.FindGameObjectWithTag("AIText");
+        aiTextPro = GetComponentInChildren<TextMeshProUGUI>();
         // get the player object
         playerPos = player.transform;
         // set the animator
         animator = GetComponent<Animator>();
         // get the animation 
         isWavingHash = Animator.StringToHash("IsWaving");
+        aiText.SetActive(false);
+        // aiText2.SetActive(false);
     }
 
     void Update()
@@ -40,6 +50,28 @@ public class AI : MonoBehaviour
         if (distance < range)
         {
             animator.SetBool(isWavingHash, true);
+            handleText();
+        }
+    }
+
+    void handleText()
+    {
+        aiText.SetActive(true);
+        textTime -= Time.deltaTime;
+        
+        if (textTime <= 6)
+        {
+            aiTextPro.text = "They took my wife too..";
+        }
+        
+        if (textTime <= 3)
+        {
+            aiTextPro.text = "You have to save us use the chest!";
+        }
+
+        if (textTime <= 0)
+        {
+            aiText.SetActive(false);
         }
     }
 
