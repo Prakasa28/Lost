@@ -5,16 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - Shield
-  - Weapon
   - Axe
-  - Armored
-  - Items
   - Chest
-  - ItemsText
-  - ChestText
   - Child
   - Portal
-  - PortalPlaceHolder
+  - ChestText
+  - ItemText
+  - Items
   layers:
   - Default
   - TransparentFX
