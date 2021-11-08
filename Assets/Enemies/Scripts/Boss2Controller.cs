@@ -6,21 +6,27 @@ public class Boss2Controller : MonoBehaviour
 {
 
     Animator animator;
-    public Transform FireballSpawnPosition;
-    public GameObject fireballPrefab;
-    public GameObject leftHandPlaceholder;
-    public GameObject rightHandPlaceholder;
-    public ParticleSystem smallFire;
+    FireballsController fireballController;
+    CapsuleCollider capsuleCollider;
 
-    public float walkingSpeed = 5f;
-    public float runningSpeed = 10f;
-    public float walkingRadius = 20f;
-    public float aggroRadius = 50f;
-    public float attackRadius = 30f;
-    public float fireballSpeed = 20f;
-    public float castTime = 3f;
-    public float chargeTime = 5f;
+    public Transform leftHandPlaceholder;
+    public Transform rightHandPlaceholder;
+    public ParticleSystem smallFire;
+    public ParticleSystem teleportParticle;
+    public List<GameObject> teleportLocations;
+
+    public float walkingSpeed = 8f;
+    public float runningSpeed = 14f;
+    public float walkingRadius = 35f;
+    public float aggroRadius = 70f;
+    public float attackRadius = 60f;
+    public float castTime = 2.2f;
+    public float chargeTime = 4f;
     public int attacksBeforeCharge = 5;
+    [HideInInspector]
+    public bool stunned = false;
+    [HideInInspector]
+    public bool dead = false;
 
     private Vector3 startPosition;
     private bool playerInRadius = false;
@@ -29,14 +35,14 @@ public class Boss2Controller : MonoBehaviour
     private float distanceFromPlayer = Mathf.Infinity;
 
     private bool canMoveRandomly = true;
-    private bool canLookForATarget = true;
     private bool canChase = true;
     private bool canAttack = true;
     private bool canCharge = true;
+    private bool canTeleport = true;
     private int attackCount = 0;
 
-    List<GameObject> fireballs = new List<GameObject>();
-    Dictionary<GameObject, float> waitingFireballs = new Dictionary<GameObject, float>();
+
+
 
     private enum Stages
     {
@@ -54,6 +60,8 @@ public class Boss2Controller : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
+        fireballController = GetComponent<FireballsController>();
         player = GameObject.FindGameObjectWithTag("Player");
 
         isWalking = Animator.StringToHash("IsWalking");
@@ -67,13 +75,15 @@ public class Boss2Controller : MonoBehaviour
     void Start()
     {
         startPosition = transform.position;
-        
+
+        //spawn particle
+        Instantiate(smallFire, rightHandPlaceholder);
+        Instantiate(smallFire, leftHandPlaceholder);
     }
 
     void Update()
     {
-        if (canLookForATarget)
-            StartCoroutine(LookForTarget());
+        LookForTarget();
 
         switch (currentStage)
         {
@@ -90,27 +100,7 @@ public class Boss2Controller : MonoBehaviour
                 Attack();
                 break;
         }
-
-        MoveFireballs();
     }
-
-    private void MoveFireballs()
-    {
-        foreach (GameObject fireball in fireballs)
-        {
-            float distance = Vector3.Distance(fireball.transform.position, player.transform.position);
-
-            if (distance < 100f)
-            {
-                fireball.transform.position += fireball.transform.forward * Time.deltaTime * fireballSpeed;
-                continue;
-            }
-            fireballs.Remove(fireball);
-            Destroy(fireball);
-        }
-
-    }
-
 
 
     private void Attack()
@@ -153,6 +143,18 @@ public class Boss2Controller : MonoBehaviour
             currentStage = Stages.Chasing;
             yield break;
         }
+
+        if (dead)
+            yield break;
+
+        if (distanceFromPlayer < 15 && !stunned)
+        {
+            if (canTeleport)
+            {
+                StartCoroutine(Teleport());
+            }
+            yield break;
+        }
         canAttack = false;
         float startTime = Time.time;
         animator.SetBool(isCasting, true);
@@ -160,25 +162,79 @@ public class Boss2Controller : MonoBehaviour
 
         while (Time.time < startTime + castTime)
         {
+            if (dead)
+            {
+                break;
+            }
             FaceEnemy(player.transform.position);
             yield return null;
         }
 
+        if (dead)
+            yield break;
+
         animator.SetBool(isCasting, false);
         animator.SetBool(isAttacking, true);
         yield return new WaitForSeconds(.7f);
-        for (int i = -10; i < 10; i += 5)
+        if (!stunned)
         {
-            instantiateFireball(i);
+            for (int i = -16; i < 16; i += 8)
+            {
+                fireballController.instantiateFireball(i);
+            }
+
+            fireballController.fireAllWaitingFireballs(player.transform);
+
         }
 
-        fireAllWaitingFireballs(player.transform);
-
-        // fireballs.Add(fireballObj2, dir2);
-        // fireballs.Add(fireballObj3, dir3);
         animator.SetBool(isAttacking, false);
         canAttack = true;
         attackCount++;
+    }
+
+    IEnumerator Teleport()
+    {
+        canTeleport = false;
+
+        GameObject farthestTeleportLocation = null;
+        float farthestTeleportPosition = 0;
+
+        //find the farthest teleport position
+        foreach (GameObject teleportLocation in teleportLocations)
+        {
+            float distance = Vector3.Distance(transform.position, teleportLocation.transform.position);
+            if (distance > farthestTeleportPosition)
+            {
+                farthestTeleportLocation = teleportLocation;
+                farthestTeleportPosition = distance;
+            }
+        }
+
+        ParticleSystem instantiatedTeleport = Instantiate(teleportParticle);
+        Vector3 positionToSpawn = transform.position;
+        positionToSpawn.y = transform.position.y + .5f;
+        instantiatedTeleport.transform.position = positionToSpawn;
+
+        yield return new WaitForSeconds(1);
+        capsuleCollider.enabled = false;
+
+        float axisY = transform.position.y;
+
+        while (axisY > -10)
+        {
+            transform.position -= new Vector3(0, 10 * Time.deltaTime, 0);
+            axisY = transform.position.y;
+
+            yield return null;
+        }
+
+
+        Destroy(instantiatedTeleport.gameObject);
+        this.transform.position = farthestTeleportLocation.transform.position;
+        capsuleCollider.enabled = true;
+        LookForTarget();
+        yield return new WaitForSeconds(.2f);
+        canTeleport = true;
     }
 
 
@@ -250,9 +306,8 @@ public class Boss2Controller : MonoBehaviour
         yield return new WaitForSeconds(2);
         canMoveRandomly = true;
     }
-    IEnumerator LookForTarget()
+    void LookForTarget()
     {
-        canLookForATarget = false;
         float distance = Vector3.Distance(transform.position, player.transform.position);
         distanceFromPlayer = distance;
 
@@ -267,34 +322,10 @@ public class Boss2Controller : MonoBehaviour
             playerInRadius = false;
         }
 
-        yield return new WaitForSeconds(.1f);
-        canLookForATarget = true;
     }
 
 
-    private void instantiateFireball(float rotation)
-    {
-        Vector3 positionToSpawn = FireballSpawnPosition.position;
-        // positionToSpawn.y = 0;
-        GameObject fireballObj = Instantiate(fireballPrefab, positionToSpawn, Quaternion.identity) as GameObject;
 
-        waitingFireballs.Add(fireballObj, rotation);
-    }
-    private void fireAllWaitingFireballs(Transform position)
-    {
-        foreach (KeyValuePair<GameObject, float> fireballEntry in waitingFireballs)
-        {
-            Vector3 directionToFace = (player.transform.position - fireballEntry.Key.transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToFace.x, 0, directionToFace.z));
-
-            lookRotation *= Quaternion.Euler(1, fireballEntry.Value, 1); 
-
-            fireballEntry.Key.transform.rotation = Quaternion.Slerp(fireballEntry.Key.transform.rotation, lookRotation, 1);
-            fireballs.Add(fireballEntry.Key);
-
-        }
-        waitingFireballs.Clear();
-    }
     void FaceEnemy(Vector3 position)
     {
         //face the target

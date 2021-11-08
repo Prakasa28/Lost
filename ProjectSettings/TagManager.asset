@@ -12,6 +12,12 @@ TagManager:
   - ChestText
   - ItemText
   - Items
+  - PortalPlaceHolder
+  - enemy
+  - bullet
+  - boss
+  - playerHealthbar
+  - bossHealthbar
   layers:
   - Default
   - TransparentFX

@@ -5,72 +5,166 @@ using UnityEngine;
 public class FocusEnemy : MonoBehaviour
 {
     // range for the UI
-    public float range = 60f;
+    public float bossRange = 60f;
+    public float enemyRange = 60f;
     private float distance;
 
+    private HealthBar BossHealthBar;
+    InputHandler inputHandler;
 
-    public HealthBar healthBar;
+    private GameObject[] bosses;
+    private GameObject[] enemies;
+    private List<GameObject> enemiesInRange;
 
-    public List<GameObject> bosses;
-
+    private GameObject focusedBoss;
     [HideInInspector]
     public GameObject focusedTarget;
 
-    private bool maxHealthSetted = false;
+    private bool canChangeEnemy = true;
 
-    void Start()
+    void Awake()
     {
-
+        inputHandler = GetComponent<InputHandler>();
+        bosses = GameObject.FindGameObjectsWithTag("boss");
+        enemies = GameObject.FindGameObjectsWithTag("enemy");
+        enemiesInRange = new List<GameObject>();
+        BossHealthBar = GameObject.FindGameObjectWithTag("bossHealthbar").GetComponent<HealthBar>();
     }
+
 
     // Update is called once per frame
     void Update()
     {
-        //look for target every .5 seconds
-        StartCoroutine("LookForTargets");
+        lookForBosses();
+        lookForEnemies();
+        triggerBossHealthBar();
 
-        //if focused target not null > show hp canvas
-
-        if (focusedTarget != null)
+        if (focusedTarget == null && enemiesInRange.Count > 0 && focusedBoss == null)
         {
-            //spawn the canvas
-            healthBar.gameObject.SetActive(true);
-
-            if (!maxHealthSetted)
-            {
-                healthBar.SetMaxHealth(100); // set from enemy stats
-                maxHealthSetted = true;
-            }
-
-            healthBar.SetHealth(30); // set from enemy stats
+            focusedTarget = enemiesInRange[0];
+            controlUI();
         }
-        else
+
+        if (focusedTarget == null && focusedBoss != null)
         {
-            maxHealthSetted = false;
-            healthBar.gameObject.SetActive(false);
+            focusedTarget = focusedBoss;
+            controlUI();
+        }
+
+
+        //change targets
+        if (inputHandler.isChangingEnemy && canChangeEnemy)
+        {
+            StartCoroutine(ChangeEnemy());
         }
     }
 
-    IEnumerator LookForTargets()
+    private void controlUI()
     {
-        bool found = false;
+
+        foreach (GameObject enemy in enemiesInRange)
+        {
+            if (enemy == focusedTarget)
+            {
+                enemy.GetComponent<Selectable>().AddRing();
+            }
+            else
+            {
+                enemy.GetComponent<Selectable>().RemoveRing();
+            }
+
+
+        }
+    }
+
+
+
+    IEnumerator ChangeEnemy()
+    {
+        int enemiesCount = enemiesInRange.Count;
+        if (enemiesCount == 0 || enemiesCount == 1)
+        {
+            yield break;
+        }
+
+        canChangeEnemy = false;
+
+        int selectedIndex = enemiesInRange.IndexOf(focusedTarget);
+
+        if (selectedIndex == enemiesCount - 1)
+        {
+            //its the last element
+            focusedTarget = enemiesInRange[0];
+        }
+        else
+        {
+            focusedTarget = enemiesInRange[selectedIndex + 1];
+        }
+
+        controlUI();
+        //if its the last change it to the first
+        //otherwise just get the
+        yield return new WaitForSeconds(.5f);
+        canChangeEnemy = true;
+
+    }
+
+    private void triggerBossHealthBar()
+    {
+        //if focused target not null > show hp canvas
+        if (focusedBoss != null)
+        {
+            //spawn the canvas
+            EnemyStats enemyStats = focusedBoss.GetComponent<EnemyStats>();
+            BossHealthBar.gameObject.SetActive(true);
+            return;
+        }
+        BossHealthBar.gameObject.SetActive(false);
+    }
+
+    private void lookForEnemies()
+    {
+        foreach (GameObject enemy in enemies)
+        {
+            distance = Vector3.Distance(transform.position, enemy.transform.position);
+
+            // check if player has entered ui range
+            if (distance < enemyRange && enemy.GetComponent<Selectable>().isActiveAndEnabled == true)
+            {
+                if (!enemiesInRange.Contains(enemy))
+                    enemiesInRange.Add(enemy);
+            }
+            else
+            {
+                if (focusedTarget == enemy)
+                    focusedTarget = null;
+                enemiesInRange.Remove(enemy);
+            }
+
+        }
+
+    }
+    private void lookForBosses()
+    {
         foreach (GameObject boss in bosses)
         {
             distance = Vector3.Distance(transform.position, boss.transform.position);
 
             // check if player has entered ui range
-            if (distance < range)
+            if (distance < bossRange && boss.GetComponent<Selectable>().isActiveAndEnabled == true)
             {
-                focusedTarget = boss;
-                found = true;
+                if (!enemiesInRange.Contains(boss))
+                    enemiesInRange.Add(boss);
+
+                focusedBoss = boss;
+            }
+            else
+            {
+                enemiesInRange.Remove(boss);
+                focusedBoss = null;
             }
 
         }
-
-        if (!found)
-            focusedTarget = null;
-
-        yield return new WaitForSeconds(.5f);
 
     }
 
@@ -78,37 +172,9 @@ public class FocusEnemy : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, range);
+        Gizmos.DrawWireSphere(transform.position, bossRange);
     }
 
 
-    // IEnumerator LookForTarget()
-    // {
-
-    //     float distance = Vector3.Distance(transform.position, player.transform.position);
-
-    //     // check if player has entered ui range
-    //     if (distance < aggroRadius)
-    //     {
-    //         playerInRadius = true;
-    //     }
-    //     else
-    //     {
-    //         playerInRadius = false;
-    //     }
-
-    //     yield return new WaitForSeconds(.5f);
-    // }
-
-    // // draw the range circle
-    // private void OnDrawGizmosSelected()
-    // {
-    //     Gizmos.color = Color.blue;
-    //     Gizmos.DrawWireSphere(transform.position, walkingRadius);
-
-    //     Gizmos.color = Color.red;
-    //     Gizmos.DrawWireSphere(transform.position, aggroRadius);
-
-    // }
 
 }
