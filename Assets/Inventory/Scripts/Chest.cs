@@ -5,19 +5,17 @@ using UnityEngine;
 public class Chest : MonoBehaviour
 {
     // get the children object
-    // private GameObject chest;
-    private GameObject childChest;
-    private GameObject items;
+    private GameObject chest;
+    // private GameObject childChest;
+    public GameObject items;
     private GameObject chestText;
     private bool opened = false;
+    private bool collisonOccured = false;
 
     void Start()
     {
-        // set objects invisible
         chestText = GameObject.FindGameObjectWithTag("ChestText");
-        // chest = GameObject.FindGameObjectWithTag("Chest");
-        childChest = gameObject.transform.GetChild(0).GetChild(0).gameObject;
-        items = GameObject.FindGameObjectWithTag("Items");
+        chest = GameObject.FindGameObjectWithTag("Chest");
         items.SetActive(false);
         chestText.SetActive(false);
     }
@@ -25,11 +23,15 @@ public class Chest : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (collisonOccured)
+        {
+            return;
+        }
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Collided with player");
             chestText.SetActive(true);
             opened = true;
+            collisonOccured = true;
         }
     }
 
@@ -37,7 +39,6 @@ public class Chest : MonoBehaviour
     {
         opened = false;
         chestText.SetActive(false);
-        Debug.Log("Exited");
     }
 
     private void Update()
@@ -53,9 +54,10 @@ public class Chest : MonoBehaviour
         {
             // rotate chest
             // chest.transform.Rotate(-90, 0, 0);
-            childChest.transform.Rotate(-90, 0, 0);
+            chest.transform.Rotate(-90, 0, 0);
             // set items visible
             items.SetActive(true);
+            chestText.SetActive(false);
         }
     }
 }

@@ -30,7 +30,6 @@ public class Child : MonoBehaviour
         animator = GetComponent<Animator>();
         isFollowingHash = Animator.StringToHash("IsFollowing");
         isDuyingHash = Animator.StringToHash("IsSucked");
-        // get portal placeholder object
 
     }
 

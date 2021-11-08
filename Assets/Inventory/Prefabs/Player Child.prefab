@@ -857,7 +857,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2978127051910796845
 Transform:
   m_ObjectHideFlags: 0
@@ -906,9 +906,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  followRange: 2
-  timeRemaining: 10
-  portalEffect: {fileID: 0}
+  followRange: 2.8
+  timeRemaining: 5
+  portalEffect: {fileID: 1982683011660828771, guid: 3e1f9c2ae2226cc4fa056092317cddcf, type: 3}
 --- !u!136 &2978127051910796847
 CapsuleCollider:
   m_ObjectHideFlags: 0
