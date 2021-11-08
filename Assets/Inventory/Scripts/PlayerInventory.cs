@@ -26,7 +26,7 @@ public class PlayerInventory : MonoBehaviour
         animator = GetComponent<Animator>();
         weaponPlaceHolder = GameObject.FindGameObjectWithTag("Axe").transform;
         shieldPlaceHolder = GameObject.FindGameObjectWithTag("Shield").transform;
-        itemsText = GameObject.FindGameObjectWithTag("ItemsText");
+        itemsText = GameObject.FindGameObjectWithTag("ItemText");
         itemsText.SetActive(false);
     }
 

@@ -6,27 +6,32 @@ public class Chest : MonoBehaviour
 {
     // get the children object
     private GameObject chest;
-    private GameObject items;
+    // private GameObject childChest;
+    public GameObject items;
     private GameObject chestText;
     private bool opened = false;
+    private bool collisonOccured = false;
 
     void Start()
     {
-        // set objects invisible
         chestText = GameObject.FindGameObjectWithTag("ChestText");
         chest = GameObject.FindGameObjectWithTag("Chest");
-        items = GameObject.FindGameObjectWithTag("Items");
-        items.SetActive(false); 
+        items.SetActive(false);
         chestText.SetActive(false);
     }
 
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.transform.gameObject.CompareTag("Player"))
+        if (collisonOccured)
+        {
+            return;
+        }
+        if (other.gameObject.CompareTag("Player"))
         {
             chestText.SetActive(true);
             opened = true;
+            collisonOccured = true;
         }
     }
 
@@ -48,9 +53,11 @@ public class Chest : MonoBehaviour
         if (opened && Input.GetKeyDown(KeyCode.F))
         {
             // rotate chest
+            // chest.transform.Rotate(-90, 0, 0);
             chest.transform.Rotate(-90, 0, 0);
             // set items visible
             items.SetActive(true);
+            chestText.SetActive(false);
         }
     }
 }
