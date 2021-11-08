@@ -140010,15 +140010,15 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.7666667
-    functionName: LoadRightHandCollider
+  - time: 1.8
+    functionName: LoadLeftHandCollider
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.7666667
-    functionName: LoadLeftHandCollider
+  - time: 1.8
+    functionName: LoadRightHandCollider
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
