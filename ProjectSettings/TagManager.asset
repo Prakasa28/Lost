@@ -4,11 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - enemy
-  - bullet
-  - boss
-  - playerHealthbar
-  - bossHealthbar
+  - Level2Door
+  - DoorCollider
   layers:
   - Default
   - TransparentFX
