@@ -39,6 +39,7 @@ public class Stunnable : MonoBehaviour
         spawnedParticle.Play();
 
         AbilitiesController abilitiesController = GetComponent<AbilitiesController>();
+        FireballsController fireballsController = GetComponent<FireballsController>();
         MovementController movementController = GetComponent<MovementController>();
         Boss2Controller boss2Controller = GetComponent<Boss2Controller>();
         OrcController orcController = GetComponent<OrcController>();
@@ -49,13 +50,15 @@ public class Stunnable : MonoBehaviour
             abilitiesController.enabled = false;
         if (orcController != null)
             orcController.enabled = false;
+        // if (fireballsController != null)
+            // fireballsController.enabled = false;
+
 
         if (boss2Controller != null)
         {
             boss2Controller.stunned = true;
             boss2Controller.enabled = false;
         }
-
 
 
         yield return new WaitForSeconds(duration);
@@ -73,6 +76,8 @@ public class Stunnable : MonoBehaviour
                 abilitiesController.enabled = true;
             if (orcController != null)
                 orcController.enabled = true;
+            // if (fireballsController != null)
+                // fireballsController.enabled = true;
 
             if (boss2Controller != null)
             {
