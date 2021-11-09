@@ -10,7 +10,7 @@ public class Chest : MonoBehaviour
     public GameObject items;
     private GameObject chestText;
     private bool opened = false;
-    private bool collisonOccured = false;
+    private bool collisionOccured = false;
 
     void Start()
     {
@@ -23,7 +23,7 @@ public class Chest : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (collisonOccured)
+        if (collisionOccured)
         {           
             return;
         }
@@ -31,7 +31,7 @@ public class Chest : MonoBehaviour
         {
             chestText.SetActive(true);
             opened = true;
-            collisonOccured = true; 
+            collisionOccured = true; 
         }
     }
 
@@ -53,7 +53,6 @@ public class Chest : MonoBehaviour
         if (opened && Input.GetKeyDown(KeyCode.E))
         {
             // rotate chest
-            // chest.transform.Rotate(-90, 0, 0);
             chest.transform.Rotate(-90, 0, 0);
             // set items visible
             items.SetActive(true);

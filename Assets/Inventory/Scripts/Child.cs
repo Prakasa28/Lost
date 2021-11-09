@@ -14,7 +14,7 @@ public class Child : MonoBehaviour
     private Animator animator;
     private int isFollowingHash;
     private int isDuyingHash;
-    public float timeRemaining = 10;
+    public float timeRemaining = 6;
     public GameObject portalEffect;
     private bool isSpawned = false;
     private bool canMove = true;
@@ -87,7 +87,7 @@ public class Child : MonoBehaviour
 
     IEnumerator SuckPlayer()
     {
-        float suckingTime = 10;
+        float suckingTime = 6;
         animator.SetBool(isFollowingHash, false);
         animator.SetBool(isDuyingHash, true);
         while (true)
@@ -95,8 +95,8 @@ public class Child : MonoBehaviour
             if (suckingTime <= 0)
                 break;
             suckingTime -= Time.deltaTime;
-            transform.position += new Vector3(0, -0.2f, 0) * Time.deltaTime;
-            childCanvas.SetActive(true);
+            transform.position += new Vector3(0, -0.8f, 0) * Time.deltaTime;
+            childCanvas.SetActive(true);    
             yield return null;
         }
         childCanvas.SetActive(false);
