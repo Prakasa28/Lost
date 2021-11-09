@@ -4,6 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Level2Door
+  - DoorCollider
   - Shield
   - Axe
   - Chest
