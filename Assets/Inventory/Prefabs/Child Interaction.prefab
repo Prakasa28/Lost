@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &8378980827909570129
+--- !u!1001 &6913975037529688363
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -9,24 +9,24 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_text
-      value: press f to open
+      value: press e to collect
       objectReference: {fileID: 0}
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_fontSize
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_margin.x
-      value: -34.6606
+      value: -39.684402
       objectReference: {fileID: 0}
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_margin.z
-      value: -34.4461
+      value: -38.21398
       objectReference: {fileID: 0}
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+      objectReference: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_fontStyle
       value: 0
@@ -45,12 +45,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_fontSizeBase
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+      objectReference: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_enableAutoSizing
       value: 0
@@ -133,7 +133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4693582487920172615, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 140
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4693582487920172615, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_SizeDelta.y
@@ -201,7 +201,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6600780117523463902, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_Name
-      value: Chest Text
+      value: Item Text
       objectReference: {fileID: 0}
     - target: {fileID: 6600780117523463902, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_IsActive
@@ -209,7 +209,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6600780117523463902, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: ItemText
       objectReference: {fileID: 0}
     - target: {fileID: 6698228971789168166, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -233,7 +233,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8302430162468873631, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_Name
-      value: Chest Interaction
+      value: Child Interaction
       objectReference: {fileID: 0}
     - target: {fileID: 8302430162468873631, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_IsActive
@@ -241,7 +241,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8302430162468873631, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_TagString
-      value: ChestText
+      value: ItemText
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
