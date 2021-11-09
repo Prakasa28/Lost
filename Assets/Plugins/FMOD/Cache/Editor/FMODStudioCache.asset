@@ -120,6 +120,8 @@ MonoBehaviour:
   - {fileID: 3771730155411670808}
   - {fileID: 891731693033179258}
   - {fileID: 5822241009742124912}
+  - {fileID: 3525942762061365936}
+  - {fileID: 5287948699384796742}
   EditorEvents:
   - {fileID: -7176930882046931736}
   - {fileID: 5100366075211184986}
@@ -130,7 +132,8 @@ MonoBehaviour:
   - {fileID: 5822241009742124912}
   StringsBanks:
   - {fileID: 3771730155411670808}
-  cacheTime: 637720150394818703
+  - {fileID: 3525942762061365936}
+  cacheTime: 637720709646797457
   cacheVersion: 9
 --- !u!114 &891731693033179258
 MonoBehaviour:
@@ -151,7 +154,7 @@ MonoBehaviour:
   FileSizes:
   - Name: Desktop
     Value: 2723776
-  Exists: 1
+  Exists: 0
 --- !u!114 &1295224075326147037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,6 +206,27 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1087
+--- !u!114 &3525942762061365936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master Bank.strings.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/Prakasa/Juhani Junkala - Adaptive Game Music Demo/Build/Desktop/Master
+    Bank.strings.bank
+  Name: Master Bank.strings
+  StudioPath: bank:/Master Bank.strings
+  lastModified: 637720709646797457
+  FileSizes:
+  - Name: Desktop
+    Value: 1036
+  Exists: 1
 --- !u!114 &3771730155411670808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,7 +246,7 @@ MonoBehaviour:
   FileSizes:
   - Name: Desktop
     Value: 1036
-  Exists: 1
+  Exists: 0
 --- !u!114 &5100366075211184986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,6 +274,24 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1115
+--- !u!114 &5287948699384796742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Lost.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/Prakasa/Juhani Junkala - Adaptive Game Music Demo/Build/Desktop/Lost.bank
+  Name: Lost
+  StudioPath: 
+  lastModified: 637720709646626410
+  FileSizes: []
+  Exists: 1
 --- !u!114 &5822241009742124912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,7 +311,7 @@ MonoBehaviour:
   FileSizes:
   - Name: Desktop
     Value: 2763840
-  Exists: 1
+  Exists: 0
 --- !u!114 &8216085309414621607
 MonoBehaviour:
   m_ObjectHideFlags: 0

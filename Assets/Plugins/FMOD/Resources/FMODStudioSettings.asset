@@ -271,9 +271,9 @@ MonoBehaviour:
   SwitchSettingsMigration: 1
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: ../Juhani Junkala - Adaptive Game Music Demo/Juhani Junkala
-    - Adaptive Game Music Demo.fspro
-  sourceBankPath: ../Juhani Junkala - Adaptive Game Music Demo/Build
+  sourceProjectPath: Assets/Prakasa/Juhani Junkala - Adaptive Game Music Demo/Juhani
+    Junkala - Adaptive Game Music Demo.fspro
+  sourceBankPath: Assets/Prakasa/Juhani Junkala - Adaptive Game Music Demo/Build
   SourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
@@ -298,6 +298,7 @@ MonoBehaviour:
   MasterBanks:
   - Master Bank
   Banks:
+  - Lost
   - Lost
   BanksToLoad: []
   LiveUpdatePort: 9264
