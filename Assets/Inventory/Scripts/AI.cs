@@ -58,15 +58,15 @@ public class AI : MonoBehaviour
     {
         aiText.SetActive(true);
         textTime -= Time.deltaTime;
-        
+
         if (textTime <= 6)
         {
             aiTextPro.text = "They took my wife too..";
         }
-        
+
         if (textTime <= 3)
         {
-            aiTextPro.text = "You have to save us use the chest!";
+            aiTextPro.text = "Save us use the chest!";
         }
 
         if (textTime <= 0)

@@ -19,18 +19,20 @@ public class Child : MonoBehaviour
     private bool isSpawned = false;
     private bool canMove = true;
     private GameObject newPortal;
+    private GameObject childCanvas;
 
     // Start is called before the first frame update
     void Start()
     {
         // get our player
         player = GameObject.FindGameObjectWithTag("Player");
+        childCanvas = GameObject.FindGameObjectWithTag("ChildText");
         playerPos = player.transform;
         // set the animator
         animator = GetComponent<Animator>();
         isFollowingHash = Animator.StringToHash("IsFollowing");
         isDuyingHash = Animator.StringToHash("IsSucked");
-
+        childCanvas.SetActive(false);
     }
 
     // Update is called once per frame
@@ -38,13 +40,12 @@ public class Child : MonoBehaviour
     {
         if (canMove)
             moveToPlayer();
-        
+
         timeRemaining -= Time.deltaTime;
         if (timeRemaining <= 0)
         {
             if (!isSpawned)
                 StartCoroutine(spawnPortal());
-            
         }
     }
 
@@ -79,32 +80,29 @@ public class Child : MonoBehaviour
         canMove = false;
         Vector3 spawnPosition = transform.position;
         spawnPosition.y += .4f;
-        newPortal = Instantiate (portalEffect, spawnPosition, Quaternion.Euler(new Vector3(90, 0, 0)));
+        newPortal = Instantiate(portalEffect, spawnPosition, Quaternion.Euler(new Vector3(90, 0, 0)));
         yield return new WaitForSeconds(1f);
         StartCoroutine(SuckPlayer());
-        
-        
-
     }
 
     IEnumerator SuckPlayer()
     {
         float suckingTime = 10;
-        animator.SetBool(isFollowingHash,false);
-        animator.SetBool(isDuyingHash,true);
+        animator.SetBool(isFollowingHash, false);
+        animator.SetBool(isDuyingHash, true);
         while (true)
         {
             if (suckingTime <= 0)
                 break;
-            
             suckingTime -= Time.deltaTime;
             transform.position += new Vector3(0, -0.2f, 0) * Time.deltaTime;
+            childCanvas.SetActive(true);
             yield return null;
         }
+        childCanvas.SetActive(false);
         Destroy(gameObject);
         Destroy(newPortal);
-        animator.SetBool(isDuyingHash,false);
-        
+        animator.SetBool(isDuyingHash, false);
     }
 
 

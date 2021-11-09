@@ -20,10 +20,8 @@ TagManager:
   - bossHealthbar
   - ItemsText
   - Weapon
-  - Undefined
   - AIText
-  - AIText2
-  - AIText3
+  - ChildText
   layers:
   - Default
   - TransparentFX
