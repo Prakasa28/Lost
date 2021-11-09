@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{ecd73ba1-3684-40c3-8fdf-3e70b1319954}">
+		<property name="assetPath">
+			<value>smartsound_IMPACT_BODY_FALL_Leather_Snow_02.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.86399999999999999</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{50edfb25-7476-4c14-b917-f0c7a8f2b703}</destination>
+		</relationship>
+	</object>
+</objects>

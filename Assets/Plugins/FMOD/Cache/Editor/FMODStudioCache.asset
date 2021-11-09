@@ -1,5 +1,56 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8710612321826639846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/EnemySounds/Ass_Dead
+  m_EditorClassIdentifier: 
+  Path: event:/EnemySounds/Ass_Dead
+  Guid:
+    Data1: 520362031
+    Data2: 1089463151
+    Data3: -2070506870
+    Data4: 1135433749
+  Banks:
+  - {fileID: 4132131409670617937}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 864
+--- !u!114 &-8639859498481385015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Juhani Junkala - Adaptive Game Music/State
+  m_EditorClassIdentifier: 
+  Name: State
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &-8560643488760200644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42,8 +93,7 @@ MonoBehaviour:
     Data2: 1161104546
     Data3: 1007872655
     Data4: -1001319109
-  Banks:
-  - {fileID: 5822241009742124912}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -70,13 +120,12 @@ MonoBehaviour:
     Data3: 1655594939
     Data4: -234459204
   Banks:
-  - {fileID: 891731693033179258}
-  - {fileID: 5822241009742124912}
+  - {fileID: 4132131409670617937}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 8216085309414621607}
+  - {fileID: -8639859498481385015}
   MinDistance: 1
   MaxDistance: 20
   Length: 168000
@@ -104,6 +153,83 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &-4386583704580604651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/EnemySounds/Attack
+  m_EditorClassIdentifier: 
+  Path: event:/EnemySounds/Attack
+  Guid:
+    Data1: -1243942158
+    Data2: 1187453742
+    Data3: 1616726703
+    Data4: -1502146409
+  Banks: []
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 480
+--- !u!114 &-2133915888168359749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/OrcSounds/GetHit
+  m_EditorClassIdentifier: 
+  Path: event:/OrcSounds/GetHit
+  Guid:
+    Data1: 1896230556
+    Data2: 1161104546
+    Data3: 1007872655
+    Data4: -1001319109
+  Banks:
+  - {fileID: 4132131409670617937}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1700
+--- !u!114 &-1431817623116338073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Juhani Junkala - Adaptive Game Music/State
+  m_EditorClassIdentifier: 
+  Name: State
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,23 +243,23 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
   EditorBanks:
-  - {fileID: 3771730155411670808}
-  - {fileID: 891731693033179258}
-  - {fileID: 5822241009742124912}
   - {fileID: 3525942762061365936}
   - {fileID: 5287948699384796742}
+  - {fileID: 4132131409670617937}
   EditorEvents:
   - {fileID: -7176930882046931736}
   - {fileID: 5100366075211184986}
   - {fileID: 3051436802394601089}
-  - {fileID: -8365064734172219326}
+  - {fileID: -8710612321826639846}
+  - {fileID: -2133915888168359749}
+  - {fileID: 4843017134037507492}
+  - {fileID: 1463584314683251359}
   EditorParameters: []
   MasterBanks:
-  - {fileID: 5822241009742124912}
+  - {fileID: 4132131409670617937}
   StringsBanks:
-  - {fileID: 3771730155411670808}
   - {fileID: 3525942762061365936}
-  cacheTime: 637720725872589104
+  cacheTime: 637721013832668304
   cacheVersion: 9
 --- !u!114 &891731693033179258
 MonoBehaviour:
@@ -179,6 +305,33 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &1463584314683251359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/OrcSounds/OrcDead
+  m_EditorClassIdentifier: 
+  Path: event:/OrcSounds/OrcDead
+  Guid:
+    Data1: -623543563
+    Data2: 1238314017
+    Data3: -1688916052
+    Data4: 110228091
+  Banks:
+  - {fileID: 4132131409670617937}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1368
 --- !u!114 &3051436802394601089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,7 +351,7 @@ MonoBehaviour:
     Data3: -1162534993
     Data4: 602627196
   Banks:
-  - {fileID: 5822241009742124912}
+  - {fileID: 4132131409670617937}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -222,10 +375,10 @@ MonoBehaviour:
     Bank.strings.bank
   Name: Master Bank.strings
   StudioPath: bank:/Master Bank.strings
-  lastModified: 637720725872589104
+  lastModified: 637721013832668304
   FileSizes:
   - Name: Desktop
-    Value: 1036
+    Value: 1172
   Exists: 1
 --- !u!114 &3771730155411670808
 MonoBehaviour:
@@ -247,6 +400,54 @@ MonoBehaviour:
   - Name: Desktop
     Value: 1036
   Exists: 0
+--- !u!114 &4132131409670617937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master Bank.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/Prakasa/Juhani Junkala - Adaptive Game Music Demo/Build/Desktop/Master
+    Bank.bank
+  Name: Master Bank
+  StudioPath: bank:/Master Bank
+  lastModified: 637720839868043498
+  FileSizes:
+  - Name: Desktop
+    Value: 2794528
+  Exists: 0
+--- !u!114 &4843017134037507492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/OrcSounds/Attack
+  m_EditorClassIdentifier: 
+  Path: event:/OrcSounds/Attack
+  Guid:
+    Data1: -1243942158
+    Data2: 1187453742
+    Data3: 1616726703
+    Data4: -1502146409
+  Banks:
+  - {fileID: 4132131409670617937}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 480
 --- !u!114 &5100366075211184986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,7 +467,7 @@ MonoBehaviour:
     Data3: -809165924
     Data4: 372519173
   Banks:
-  - {fileID: 5822241009742124912}
+  - {fileID: 4132131409670617937}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -290,7 +491,9 @@ MonoBehaviour:
   Name: Lost
   StudioPath: 
   lastModified: 637720725872399790
-  FileSizes: []
+  FileSizes:
+  - Name: Desktop
+    Value: 2723776
   Exists: 1
 --- !u!114 &5822241009742124912
 MonoBehaviour:
@@ -311,6 +514,30 @@ MonoBehaviour:
   FileSizes:
   - Name: Desktop
     Value: 2763840
+  Exists: 0
+--- !u!114 &7662003743811918282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Juhani Junkala - Adaptive Game Music/State
+  m_EditorClassIdentifier: 
+  Name: State
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
   Exists: 0
 --- !u!114 &8216085309414621607
 MonoBehaviour:

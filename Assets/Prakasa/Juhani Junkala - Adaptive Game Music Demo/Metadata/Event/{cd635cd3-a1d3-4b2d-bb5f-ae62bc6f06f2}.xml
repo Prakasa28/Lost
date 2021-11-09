@@ -178,6 +178,9 @@ Music &amp; Programming by Juhani Junkala 19/10/2015</value>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{6a885e0b-bed4-4ad7-b566-b045dc8de008}">
+		<property name="volume">
+			<value>-17.5</value>
+		</property>
 		<property name="name">
 			<value>Audio 1</value>
 		</property>
@@ -229,6 +232,9 @@ Music &amp; Programming by Juhani Junkala 19/10/2015</value>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{eccddc49-d653-4e42-bea5-8cf2eabed8cb}">
+		<property name="volume">
+			<value>-17</value>
+		</property>
 		<property name="name">
 			<value>Audio 2</value>
 		</property>
