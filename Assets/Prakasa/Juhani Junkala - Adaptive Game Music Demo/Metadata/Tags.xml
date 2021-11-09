@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.09.00">
+    <object class="MasterTagFolder" id="{d01dc725-2ae8-42e1-bb19-a420fdd20ebc}">
+        <property name="name">
+            <value>Master</value>
+        </property>
+        <relationship name="items">
+            <destination>{37675bad-a0a8-498c-9d2f-d9efb202a496}</destination>
+            <destination>{324c06c5-0df5-4414-8268-fb14c126c136}</destination>
+            <destination>{4589abc7-f0da-40ef-8108-bbb133d5b3ba}</destination>
+            <destination>{e0152f9b-0967-4f13-96ed-ed5f9627d2f6}</destination>
+        </relationship>
+    </object>
+    <object class="Tag" id="{37675bad-a0a8-498c-9d2f-d9efb202a496}">
+        <property name="name">
+            <value>Adaptive</value>
+        </property>
+        <relationship name="folder">
+            <destination>{d01dc725-2ae8-42e1-bb19-a420fdd20ebc}</destination>
+        </relationship>
+    </object>
+    <object class="Tag" id="{324c06c5-0df5-4414-8268-fb14c126c136}">
+        <property name="name">
+            <value>Interactive</value>
+        </property>
+        <relationship name="folder">
+            <destination>{d01dc725-2ae8-42e1-bb19-a420fdd20ebc}</destination>
+        </relationship>
+    </object>
+    <object class="Tag" id="{4589abc7-f0da-40ef-8108-bbb133d5b3ba}">
+        <property name="name">
+            <value>Game</value>
+        </property>
+        <relationship name="folder">
+            <destination>{d01dc725-2ae8-42e1-bb19-a420fdd20ebc}</destination>
+        </relationship>
+    </object>
+    <object class="Tag" id="{e0152f9b-0967-4f13-96ed-ed5f9627d2f6}">
+        <property name="name">
+            <value>Music</value>
+        </property>
+        <relationship name="folder">
+            <destination>{d01dc725-2ae8-42e1-bb19-a420fdd20ebc}</destination>
+        </relationship>
+    </object>
+</objects>

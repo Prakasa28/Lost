@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.09.00">
+    <object class="EncodableAsset" id="{ba118a47-7fb7-48ff-8334-ea29de3828a4}">
+        <property name="assetPath">
+            <value>Juhani Junkala - Adaptive Game Music Demo/</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{50edfb25-7476-4c14-b917-f0c7a8f2b703}</destination>
+        </relationship>
+    </object>
+</objects>
