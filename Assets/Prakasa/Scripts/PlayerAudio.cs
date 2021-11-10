@@ -6,7 +6,7 @@ public class PlayerAudio : MonoBehaviour
 {
     FMOD.Studio.EventInstance Event;
 
-    void PlayEvent(string path)
+    public void PlayEvent(string path)
     {
         FMODUnity.RuntimeManager.PlayOneShotAttached(path, gameObject);
     }

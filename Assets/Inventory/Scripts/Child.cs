@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 public class Child : MonoBehaviour
 {
+    private PlayerAudio audioController;
     private GameObject player;
     public float moveSpeed = 5; //move speed
     public float followRange = 2; //follow range
@@ -24,6 +25,7 @@ public class Child : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioController = GetComponent<PlayerAudio>();
         // get our player
         player = GameObject.FindGameObjectWithTag("Player");
         childCanvas = GameObject.FindGameObjectWithTag("ChildText");
@@ -87,6 +89,7 @@ public class Child : MonoBehaviour
 
     IEnumerator SuckPlayer()
     {
+        audioController.PlayEvent("event:/MiniBart/Screaming");
         float suckingTime = 6;
         animator.SetBool(isFollowingHash, false);
         animator.SetBool(isDuyingHash, true);

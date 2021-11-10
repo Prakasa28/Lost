@@ -128,4 +128,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdf06a728d202e74899c50f555511837, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blood: {fileID: 1916167546114891411, guid: d0acb60290765de41828c1bd4f35738e, type: 3}
   currentWeaponDamage: 25

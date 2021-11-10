@@ -27786,7 +27786,7 @@ AnimationClip:
   m_Events:
   - time: 0
     functionName: PlayEvent
-    data: event:/EnemySounds/GetHit
+    data: event:/PlayerSounds/GetHit
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

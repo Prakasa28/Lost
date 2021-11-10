@@ -16,7 +16,7 @@ Music &amp; Programming by Juhani Junkala 19/10/2015</value>
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{d35e9bcc-981e-4522-a38d-37756ac929ce}</destination>
+			<destination>{3804fcaf-ab5a-49bb-b457-5bc8b2698ff3}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{12db7f61-4b1a-4e1c-ba65-ff9a06850810}</destination>
@@ -178,6 +178,9 @@ Music &amp; Programming by Juhani Junkala 19/10/2015</value>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{6a885e0b-bed4-4ad7-b566-b045dc8de008}">
+		<property name="volume">
+			<value>-8</value>
+		</property>
 		<property name="name">
 			<value>Audio 1</value>
 		</property>
@@ -229,6 +232,9 @@ Music &amp; Programming by Juhani Junkala 19/10/2015</value>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{eccddc49-d653-4e42-bea5-8cf2eabed8cb}">
+		<property name="volume">
+			<value>-8</value>
+		</property>
 		<property name="name">
 			<value>Audio 2</value>
 		</property>

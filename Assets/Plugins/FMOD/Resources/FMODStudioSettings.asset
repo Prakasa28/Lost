@@ -299,7 +299,6 @@ MonoBehaviour:
   - Master Bank
   Banks:
   - Lost
-  - Lost
   BanksToLoad: []
   LiveUpdatePort: 9264
   EnableMemoryTracking: 0

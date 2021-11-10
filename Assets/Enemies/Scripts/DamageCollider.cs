@@ -5,6 +5,7 @@ using UnityEngine;
 public class DamageCollider : MonoBehaviour
 {
     Collider damageCollider;
+    public ParticleSystem blood;
     private bool stun = false;
 
     public int currentWeaponDamage = 25;
@@ -25,6 +26,7 @@ public class DamageCollider : MonoBehaviour
         stun = false;
         damageCollider.enabled = false;
     }
+
     public void EnableStun()
     {
         stun = true;
@@ -34,7 +36,6 @@ public class DamageCollider : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            //TODO ONLY FOR FIREBALL
             if (this.gameObject.tag == "bullet")
                 Destroy(this.gameObject);
 
@@ -50,7 +51,7 @@ public class DamageCollider : MonoBehaviour
         {
             EnemyStats enemyStats = collision.GetComponent<EnemyStats>();
             Stunnable stunnable = collision.GetComponent<Stunnable>();
-
+            ParticleSystem spawnedBlood = Instantiate(blood, this.gameObject.transform.position, Quaternion.identity);
 
             if (stun && stunnable != null)
             {
@@ -64,4 +65,6 @@ public class DamageCollider : MonoBehaviour
         }
 
     }
+
+   
 }
