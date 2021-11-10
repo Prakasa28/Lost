@@ -98,8 +98,11 @@ public class Child : MonoBehaviour
             if (suckingTime <= 0)
                 break;
             suckingTime -= Time.deltaTime;
+            if (suckingTime <= 5)
+            {
+                childCanvas.SetActive(true);
+            }
             transform.position += new Vector3(0, -0.8f, 0) * Time.deltaTime;
-            childCanvas.SetActive(true);    
             yield return null;
         }
         childCanvas.SetActive(false);

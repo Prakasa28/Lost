@@ -20,10 +20,13 @@ TagManager:
   - boss
   - playerHealthbar
   - bossHealthbar
-  - Weapon
   - AIText
   - ChildText
   - Camera
+  - ChestEffect
+  - ItemsEffect
+  - WeaponEffects
+  - Weapon
   layers:
   - Default
   - TransparentFX

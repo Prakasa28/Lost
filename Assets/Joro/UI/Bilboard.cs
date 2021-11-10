@@ -7,13 +7,13 @@ public class Bilboard : MonoBehaviour
 {
     private Camera cameraPos;
 
-    private GameObject camera;
+    private GameObject gameCamera;
     // Update is called once per frame
 
     private void Awake()
     {
-        camera = GameObject.FindGameObjectWithTag("Camera");
-        cameraPos = camera.gameObject.GetComponent<Camera>();
+        gameCamera = GameObject.FindGameObjectWithTag("Camera");
+        cameraPos = gameCamera.gameObject.GetComponent<Camera>();
     }
 
     void LateUpdate()

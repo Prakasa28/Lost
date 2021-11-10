@@ -9,15 +9,18 @@ public class Chest : MonoBehaviour
     // private GameObject childChest;
     public GameObject items;
     private GameObject chestText;
-    private bool opened = false;
     private bool collisionOccured = false;
-
+    private ParticleSystem chestEffectParticleSystem;
+    private GameObject chestEffect;
     void Start()
     {
         chestText = GameObject.FindGameObjectWithTag("ChestText");
         chest = GameObject.FindGameObjectWithTag("Chest");
+        chestEffect = GameObject.FindGameObjectWithTag("ChestEffect");
+        chestEffectParticleSystem = chestEffect.GetComponent<ParticleSystem>();
         items.SetActive(false);
         chestText.SetActive(false);
+        chestEffectParticleSystem.Play();
     }
 
 
@@ -27,17 +30,16 @@ public class Chest : MonoBehaviour
         {           
             return;
         }
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))  
         {
             chestText.SetActive(true);
-            opened = true;
             collisionOccured = true; 
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        opened = false;
+        collisionOccured = false;
         chestText.SetActive(false);
     }
 
@@ -50,10 +52,12 @@ public class Chest : MonoBehaviour
     private void openChest()
     {
         // check if chest is opened
-        if (opened && Input.GetKeyDown(KeyCode.E))
+        if (collisionOccured && Input.GetKeyDown(KeyCode.E))
         {
             // rotate chest
             chest.transform.Rotate(-90, 0, 0);
+            // stop the particles
+            Destroy(chestEffectParticleSystem, 0.5f);
             // set items visible
             items.SetActive(true);
             chestText.SetActive(false);
