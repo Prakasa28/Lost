@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Prakasa/Menu/Scenes/Start_Game.unity
     guid: 380a28f99649ca74fbc628474cd88fcf
   - enabled: 1
-    path: Assets/PolygonNature/Main Map.unity
-    guid: 085ab88a4f0bc954084106f3e3ac93ac
+    path: Assets/Prakasa/Map/Scenes/Map.unity
+    guid: ec2e7a64b54aac047aac5fd87eb6da6b
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 3111e449d1f7bce49ba0f0cbd58a6672, type: 2}
