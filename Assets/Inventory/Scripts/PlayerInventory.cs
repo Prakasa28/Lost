@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
@@ -14,21 +15,24 @@ public class PlayerInventory : MonoBehaviour
 
     // animator    
     private Animator animator;
-    // private int isPickingUpHash;
+    private int isPickingUpHash;
 
     private GroundItem followingItem;
     private List<ItemObject> items;
     public Mesh armoredMesh;
+    private MovementController characterController;
+
     void Awake()
     {
+        characterController = GetComponent<MovementController>();
         items = new List<ItemObject>();
         animator = GetComponent<Animator>();
+        isPickingUpHash = Animator.StringToHash("IsPickingUp");
         weaponPlaceHolder = GameObject.FindGameObjectWithTag("Axe").transform;
         shieldPlaceHolder = GameObject.FindGameObjectWithTag("Shield").transform;
         itemsText = GameObject.FindGameObjectWithTag("ItemText");
         itemsText.SetActive(false);
     }
-
 
     private void Update()
     {
@@ -81,15 +85,29 @@ public class PlayerInventory : MonoBehaviour
         // check if the object is on the ground when i press it 
         if (followingItem != null && Input.GetKey(KeyCode.E))
         {
-            //TODO set animation to true  
-            // add the new item to my list and then destroy it from the map
-            addItem(followingItem.item);
-            // equip the item
-            equipItems(followingItem.item);
-            Destroy(followingItem.gameObject);
-            followingItem = null;
-            itemsText.SetActive(false);
+            StartCoroutine(handleAnimation(followingItem));
         }
+    }
+
+    IEnumerator handleAnimation(GroundItem weapon)
+    {
+        animator.SetBool(isPickingUpHash, true);
+        characterController.enabled = false;
+        yield return new WaitForSeconds(0.5f);
+        // add the new item to my list and then destroy it from the map
+        addItem(weapon.item);
+        // equip the item
+        equipItems(weapon.item);
+        if (weapon != null)
+        {
+            Destroy(weapon.gameObject);
+        }
+
+        weapon = null;
+        itemsText.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        animator.SetBool(isPickingUpHash, false);
+        characterController.enabled = true;
     }
 
     void equipItems(ItemObject item)

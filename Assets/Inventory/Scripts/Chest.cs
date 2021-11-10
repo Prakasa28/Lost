@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 // ReSharper disable once CheckNamespace
@@ -6,16 +7,26 @@ public class Chest : MonoBehaviour
 {
     // get the children object
     private GameObject chest;
+
     // private GameObject childChest;
     public GameObject items;
     private GameObject chestText;
     private bool collisionOccured = false;
     private ParticleSystem chestEffectParticleSystem;
     private GameObject chestEffect;
+    private Animator animator;
+    private int isOpeningHash;
+    private GameObject player;
+    private MovementController characterController;
+
     void Start()
     {
         chestText = GameObject.FindGameObjectWithTag("ChestText");
+        player = GameObject.FindGameObjectWithTag("Player");
+        animator = player.GetComponent<Animator>();
+        characterController = player.GetComponent<MovementController>();
         chest = GameObject.FindGameObjectWithTag("Chest");
+        isOpeningHash = Animator.StringToHash("IsOpening");
         chestEffect = GameObject.FindGameObjectWithTag("ChestEffect");
         chestEffectParticleSystem = chestEffect.GetComponent<ParticleSystem>();
         items.SetActive(false);
@@ -27,13 +38,14 @@ public class Chest : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (collisionOccured)
-        {           
+        {
             return;
         }
-        if (other.gameObject.CompareTag("Player"))  
+
+        if (other.gameObject.CompareTag("Player"))
         {
             chestText.SetActive(true);
-            collisionOccured = true; 
+            collisionOccured = true;
         }
     }
 
@@ -54,13 +66,26 @@ public class Chest : MonoBehaviour
         // check if chest is opened
         if (collisionOccured && Input.GetKeyDown(KeyCode.E))
         {
-            // rotate chest
-            chest.transform.Rotate(-90, 0, 0);
-            // stop the particles
-            Destroy(chestEffectParticleSystem, 0.5f);
-            // set items visible
-            items.SetActive(true);
-            chestText.SetActive(false);
+            StartCoroutine(handleAnimation());
         }
+    }
+
+    IEnumerator handleAnimation()
+    {
+        animator.SetBool(isOpeningHash, true);
+        characterController.enabled = false;
+        yield return new WaitForSeconds(0.5f);
+        //disable character controller
+        // rotate chest
+        chest.transform.Rotate(-90, 0, 0);
+        // stop the particles
+        Destroy(chestEffectParticleSystem, 0.5f);
+        // set items visible
+        items.SetActive(true);
+        chestText.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        animator.SetBool(isOpeningHash, false);
+        //enable character controller
+        characterController.enabled = true;
     }
 }
