@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 783f5d8fe3e4b90469a4760edc47f083, type: 3}
-  m_Name: Axe
+  m_Name: AxesSecond
   m_EditorClassIdentifier: 
   uiDisplay: {fileID: 21300000, guid: 754e20e08e343284caadfa2540becad6, type: 3}
   characterDisplay: {fileID: 1587635075443610340, guid: 5aa05f7b91b56bd4b80c6eded793834d, type: 3}
-  type: 1
+  type: 2
   stackable: 0
   description: 
   data:
