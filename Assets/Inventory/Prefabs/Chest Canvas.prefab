@@ -137,11 +137,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4693582487920172615, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 90
+      value: 110
       objectReference: {fileID: 0}
     - target: {fileID: 4693582487920172615, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 20
+      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 4693582487920172615, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_LocalScale.x
@@ -237,7 +237,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8302430162468873631, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_Name
-      value: Chest Interaction Variant 1
+      value: Chest Canvas
       objectReference: {fileID: 0}
     - target: {fileID: 8302430162468873631, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_IsActive

@@ -20,7 +20,7 @@ public class AI : MonoBehaviour
     private TextMeshProUGUI aiTextPro;
     private Animator animator;
 
-    private float textTime = 7;
+    private float textTime = 10;
 
     // get player position
     void Start()
@@ -61,15 +61,15 @@ public class AI : MonoBehaviour
 
         if (textTime <= 5)
         {
-            aiTextPro.text = "They took my wife aswell..";
+            aiTextPro.text = "My wife disappeared aswell..";
         }
 
-        if (textTime <= 3)
+        if (textTime <= 2)
         {
             aiTextPro.text = "You have to save us use the chest!";
         }
 
-        if (textTime <= 1)
+        if (textTime <= -1)
         {
             aiText.SetActive(false);
         }

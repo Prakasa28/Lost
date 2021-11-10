@@ -19,6 +19,7 @@ public class Chest : MonoBehaviour
     private GameObject player;
     private MovementController characterController;
     private InputHandler inputHandler;
+    private int counter = 0;
     void Start()
     {
         chestText = GameObject.FindGameObjectWithTag("ChestText");
@@ -67,8 +68,11 @@ public class Chest : MonoBehaviour
         // check if chest is opened
         if (collisionOccured && inputHandler.isOpening)
         {
-            chest.transform.Rotate(-90, 0, 0);
-            StartCoroutine(handleAnimation());
+            counter++;
+            if(counter == 1){
+                chest.transform.Rotate(-70, 0, 0);
+            }
+        StartCoroutine(handleAnimation());
         }
     }
 
