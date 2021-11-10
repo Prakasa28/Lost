@@ -20,9 +20,11 @@ public class PlayerInventory : MonoBehaviour
     private GroundItem followingItem;
     private List<ItemObject> items;
     public Mesh armoredMesh;
+    private MovementController characterController;
 
     void Awake()
     {
+        characterController = GetComponent<MovementController>();
         items = new List<ItemObject>();
         animator = GetComponent<Animator>();
         isPickingUpHash = Animator.StringToHash("IsPickingUp");
@@ -90,6 +92,7 @@ public class PlayerInventory : MonoBehaviour
     IEnumerator handleAnimation(GroundItem weapon)
     {
         animator.SetBool(isPickingUpHash, true);
+        characterController.enabled = false;
         yield return new WaitForSeconds(0.5f);
         // add the new item to my list and then destroy it from the map
         addItem(weapon.item);
@@ -99,10 +102,12 @@ public class PlayerInventory : MonoBehaviour
         {
             Destroy(weapon.gameObject);
         }
+
         weapon = null;
         itemsText.SetActive(false);
         yield return new WaitForSeconds(0.5f);
         animator.SetBool(isPickingUpHash, false);
+        characterController.enabled = true;
     }
 
     void equipItems(ItemObject item)

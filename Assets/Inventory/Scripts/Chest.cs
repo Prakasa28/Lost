@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 // ReSharper disable once CheckNamespace
@@ -15,12 +16,16 @@ public class Chest : MonoBehaviour
     private GameObject chestEffect;
     private Animator animator;
     private int isOpeningHash;
+    private GameObject player;
+    private MovementController characterController;
 
     void Start()
     {
         chestText = GameObject.FindGameObjectWithTag("ChestText");
+        player = GameObject.FindGameObjectWithTag("Player");
+        animator = player.GetComponent<Animator>();
+        characterController = player.GetComponent<MovementController>();
         chest = GameObject.FindGameObjectWithTag("Chest");
-        animator = GetComponent<Animator>();
         isOpeningHash = Animator.StringToHash("IsOpening");
         chestEffect = GameObject.FindGameObjectWithTag("ChestEffect");
         chestEffectParticleSystem = chestEffect.GetComponent<ParticleSystem>();
@@ -61,14 +66,26 @@ public class Chest : MonoBehaviour
         // check if chest is opened
         if (collisionOccured && Input.GetKeyDown(KeyCode.E))
         {
-            animator.SetBool(isOpeningHash, true);
-            // rotate chest
-            chest.transform.Rotate(-90, 0, 0);
-            // stop the particles
-            Destroy(chestEffectParticleSystem, 0.5f);
-            // set items visible
-            items.SetActive(true);
-            chestText.SetActive(false);
+            StartCoroutine(handleAnimation());
         }
+    }
+
+    IEnumerator handleAnimation()
+    {
+        animator.SetBool(isOpeningHash, true);
+        characterController.enabled = false;
+        yield return new WaitForSeconds(0.5f);
+        //disable character controller
+        // rotate chest
+        chest.transform.Rotate(-90, 0, 0);
+        // stop the particles
+        Destroy(chestEffectParticleSystem, 0.5f);
+        // set items visible
+        items.SetActive(true);
+        chestText.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        animator.SetBool(isOpeningHash, false);
+        //enable character controller
+        characterController.enabled = true;
     }
 }

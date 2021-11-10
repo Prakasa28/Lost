@@ -9,11 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_text
-      value: press e to open
+      value: press E to open
       objectReference: {fileID: 0}
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_fontSize
-      value: 12
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_margin.x
@@ -29,7 +29,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_fontStyle
-      value: 0
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_fontColor.b
@@ -45,7 +45,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_fontSizeBase
-      value: 12
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_sharedMaterial
@@ -137,7 +137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4693582487920172615, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4693582487920172615, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_LocalScale.x
@@ -233,7 +233,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8302430162468873631, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_Name
-      value: Chest Interaction Variant
+      value: Chest Interaction Variant 1
       objectReference: {fileID: 0}
     - target: {fileID: 8302430162468873631, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_IsActive
