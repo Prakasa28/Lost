@@ -67,7 +67,7 @@ public class Chest : MonoBehaviour
         // check if chest is opened
         if (collisionOccured && inputHandler.isOpening)
         {
-            chest.transform.Rotate(-90, 0, 0);
+            chest.transform.Rotate(-120, 0, 0);
             StartCoroutine(handleAnimation());
         }
     }

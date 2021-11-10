@@ -21,11 +21,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_text
-      value: They took your son didn't they?
+      value: Oh no your child!
       objectReference: {fileID: 0}
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_fontSize
-      value: 0.47
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_margin.x
@@ -57,7 +57,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_fontSizeBase
-      value: 0.47
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_sharedMaterial
@@ -70,6 +70,10 @@ PrefabInstance:
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4281874488
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: 93368250
       objectReference: {fileID: 0}
     - target: {fileID: 1929254787407760988, guid: 3e946529f948dd348a64d1e16b7591a5, type: 3}
       propertyPath: m_VerticalAlignment

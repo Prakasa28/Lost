@@ -19,8 +19,7 @@ public class AI : MonoBehaviour
     private GameObject aiText;
     private TextMeshProUGUI aiTextPro;
     private Animator animator;
-
-    private float textTime = 7;
+    private float textTime = 9;
 
     // get player position
     void Start()
@@ -59,9 +58,9 @@ public class AI : MonoBehaviour
         aiText.SetActive(true);
         textTime -= Time.deltaTime;
 
-        if (textTime <= 5)
+        if (textTime <= 6)
         {
-            aiTextPro.text = "They took my wife aswell..";
+            aiTextPro.text = "My wife disappeared aswell..";
         }
 
         if (textTime <= 3)
@@ -73,6 +72,7 @@ public class AI : MonoBehaviour
         {
             aiText.SetActive(false);
         }
+        
     }
 
     // draw the range circle

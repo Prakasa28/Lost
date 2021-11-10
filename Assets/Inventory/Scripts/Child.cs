@@ -90,7 +90,7 @@ public class Child : MonoBehaviour
     IEnumerator SuckPlayer()
     {
         audioController.PlayEvent("event:/MiniBart/Screaming");
-        float suckingTime = 5;
+        float suckingTime = 6;
         animator.SetBool(isFollowingHash, false);
         animator.SetBool(isDuyingHash, true);
         while (true)
@@ -98,13 +98,19 @@ public class Child : MonoBehaviour
             if (suckingTime <= 0)
                 break;
             suckingTime -= Time.deltaTime;
-            if (suckingTime <= 4)
+            if (suckingTime <= 6)
             {
                 childCanvas.SetActive(true);
+                if (suckingTime <= 1)
+                {
+                    childCanvas.SetActive(false);
+                }
             }
-            transform.position += new Vector3(0, -0.8f, 0) * Time.deltaTime;
+
+            transform.position += new Vector3(0, -0.6f, 0) * Time.deltaTime;
             yield return null;
         }
+
         childCanvas.SetActive(false);
         Destroy(gameObject);
         Destroy(newPortal);
