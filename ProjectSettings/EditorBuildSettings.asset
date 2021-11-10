@@ -11,5 +11,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Prakasa/Map/Scenes/Map.unity
     guid: ec2e7a64b54aac047aac5fd87eb6da6b
+  - enabled: 1
+    path: Assets/Prakasa/Menu/Scenes/Lose.unity
+    guid: e78b96dbc7c2e5f4da88bce36cc0d27d
+  - enabled: 1
+    path: Assets/Prakasa/Menu/Scenes/Win.unity
+    guid: 7e362af510476074bbd7f04da9edaccc
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 3111e449d1f7bce49ba0f0cbd58a6672, type: 2}

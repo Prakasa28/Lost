@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyStats : MonoBehaviour
 {
@@ -92,8 +93,10 @@ public class EnemyStats : MonoBehaviour
                 selectable.RemoveRing();
                 selectable.enabled = false;
             }
+
+            if (this.gameObject.CompareTag("boss"))
+                SceneManager.LoadScene(3);
             return;
-            //FINISh
         }
         StartCoroutine(HitAnimation());
     }

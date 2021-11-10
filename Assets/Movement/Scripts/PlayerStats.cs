@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -48,6 +49,7 @@ public class PlayerStats : MonoBehaviour
             movementController.enabled = false;
             abilitiesController.enabled = false;
             animator.SetBool(isDyingHash, true);
+            SceneManager.LoadScene(2);
             return;
             //FINISH
         }
