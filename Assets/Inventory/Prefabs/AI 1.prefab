@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5792c3a55641aae4c8674f3c9f494e50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 25
+  range: 17
 --- !u!95 &3853520683397444310
 Animator:
   serializedVersion: 3
@@ -3080,7 +3080,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 142759022218912036, guid: b9cd352a90c93724dab68abcb135b7ce, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 6.3
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 142759022218912036, guid: b9cd352a90c93724dab68abcb135b7ce, type: 3}
       propertyPath: m_SizeDelta.y
@@ -3157,6 +3157,10 @@ PrefabInstance:
     - target: {fileID: 6494135641436565823, guid: b9cd352a90c93724dab68abcb135b7ce, type: 3}
       propertyPath: m_text
       value: They took your son didn't they?
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494135641436565823, guid: b9cd352a90c93724dab68abcb135b7ce, type: 3}
+      propertyPath: m_fontStyle
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 9169146201645371382, guid: b9cd352a90c93724dab68abcb135b7ce, type: 3}
       propertyPath: _camera

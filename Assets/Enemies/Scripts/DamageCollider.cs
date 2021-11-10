@@ -51,7 +51,9 @@ public class DamageCollider : MonoBehaviour
         {
             EnemyStats enemyStats = collision.GetComponent<EnemyStats>();
             Stunnable stunnable = collision.GetComponent<Stunnable>();
-            ParticleSystem spawnedBlood = Instantiate(blood, this.gameObject.transform.position, Quaternion.identity);
+
+            if (blood != null)
+                Instantiate(blood, this.gameObject.transform.position, Quaternion.identity);
 
             if (stun && stunnable != null)
             {
