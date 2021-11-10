@@ -5,36 +5,29 @@ using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
-
-
-    [HideInInspector]
-    public Vector2 currentMovementInput;
-    [HideInInspector]
-    public Vector3 currentMovement;
+    [HideInInspector] public Vector2 currentMovementInput;
+    [HideInInspector] public Vector3 currentMovement;
     private PlayerInputV2 playerInput;
 
-    [HideInInspector]
-    public bool isMovementPressed;
+    [HideInInspector] public bool isMovementPressed;
 
-    [HideInInspector]
-    public bool isDodgePressed;
+    [HideInInspector] public bool isDodgePressed;
 
-    [HideInInspector]
-    public bool isAttackedPressed;
+    [HideInInspector] public bool isAttackedPressed;
 
-    [HideInInspector]
-    public bool isChargePressed;
+    [HideInInspector] public bool isChargePressed;
 
-    [HideInInspector]
-    public bool isUltimatePressed;
+    [HideInInspector] public bool isUltimatePressed;
 
-    [HideInInspector]
-    public bool isChangingEnemy;
+    [HideInInspector] public bool isChangingEnemy;
+
+    [HideInInspector] public bool isPickingUp;
+
+    [HideInInspector] public bool isOpening;
 
 
     void Awake()
     {
-
         playerInput = new PlayerInputV2();
 
         playerInput.CharacterControlls.Move.started += onMovementInput;
@@ -50,7 +43,10 @@ public class InputHandler : MonoBehaviour
         playerInput.CharacterControlls.Charge.canceled += OnCharge;
         playerInput.CharacterControlls.ChangeEnemy.started += OnEnemyChange;
         playerInput.CharacterControlls.ChangeEnemy.canceled += OnEnemyChange;
-
+        playerInput.CharacterControlls.PickUp.performed += OnPickUp;
+        playerInput.CharacterControlls.PickUp.canceled += OnPickUp;
+        playerInput.CharacterControlls.Open.performed += OnOpen;
+        playerInput.CharacterControlls.Open.canceled += OnOpen;
     }
 
     void onMovementInput(InputAction.CallbackContext context)
@@ -60,14 +56,17 @@ public class InputHandler : MonoBehaviour
         currentMovement.x = -currentMovementInput.y;
         isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
     }
+
     void OnDodge(InputAction.CallbackContext context)
     {
         isDodgePressed = context.ReadValueAsButton();
     }
+
     void OnUltimate(InputAction.CallbackContext context)
     {
         isUltimatePressed = context.ReadValueAsButton();
     }
+
     void OnAttack(InputAction.CallbackContext context)
     {
         isAttackedPressed = context.ReadValueAsButton();
@@ -83,13 +82,23 @@ public class InputHandler : MonoBehaviour
         isChangingEnemy = context.ReadValueAsButton();
     }
 
+    void OnPickUp(InputAction.CallbackContext context)
+    {
+        isPickingUp = context.ReadValueAsButton();
+    }
+
+    void OnOpen(InputAction.CallbackContext context)
+    {
+        isOpening = context.ReadValueAsButton();
+    }
+
     void OnEnable()
     {
         playerInput.CharacterControlls.Enable();
     }
+
     void OnDisable()
     {
         playerInput.CharacterControlls.Disable();
     }
-
 }

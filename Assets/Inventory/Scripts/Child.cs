@@ -15,7 +15,7 @@ public class Child : MonoBehaviour
     private Animator animator;
     private int isFollowingHash;
     private int isDuyingHash;
-    public float timeRemaining = 6;
+    public float timeRemaining = 5;
     public GameObject portalEffect;
     private bool isSpawned = false;
     private bool canMove = true;
@@ -90,7 +90,7 @@ public class Child : MonoBehaviour
     IEnumerator SuckPlayer()
     {
         audioController.PlayEvent("event:/MiniBart/Screaming");
-        float suckingTime = 6;
+        float suckingTime = 5;
         animator.SetBool(isFollowingHash, false);
         animator.SetBool(isDuyingHash, true);
         while (true)
@@ -98,7 +98,7 @@ public class Child : MonoBehaviour
             if (suckingTime <= 0)
                 break;
             suckingTime -= Time.deltaTime;
-            if (suckingTime <= 5)
+            if (suckingTime <= 4)
             {
                 childCanvas.SetActive(true);
             }

@@ -21,6 +21,7 @@ public class PlayerInventory : MonoBehaviour
     private List<ItemObject> items;
     public Mesh armoredMesh;
     private MovementController characterController;
+    private InputHandler inputHandler;
 
     void Awake()
     {
@@ -28,6 +29,7 @@ public class PlayerInventory : MonoBehaviour
         items = new List<ItemObject>();
         animator = GetComponent<Animator>();
         isPickingUpHash = Animator.StringToHash("IsPickingUp");
+        inputHandler = GetComponent<InputHandler>();
         weaponPlaceHolder = GameObject.FindGameObjectWithTag("Axe").transform;
         shieldPlaceHolder = GameObject.FindGameObjectWithTag("Shield").transform;
         itemsText = GameObject.FindGameObjectWithTag("ItemText");
@@ -83,7 +85,7 @@ public class PlayerInventory : MonoBehaviour
     void pickUpItem()
     {
         // check if the object is on the ground when i press it 
-        if (followingItem != null && Input.GetKey(KeyCode.E))
+        if (followingItem != null && inputHandler.isPickingUp)
         {
             StartCoroutine(handleAnimation(followingItem));
         }
@@ -102,7 +104,6 @@ public class PlayerInventory : MonoBehaviour
         {
             Destroy(weapon.gameObject);
         }
-
         weapon = null;
         itemsText.SetActive(false);
         yield return new WaitForSeconds(0.5f);

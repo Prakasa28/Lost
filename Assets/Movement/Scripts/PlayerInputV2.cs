@@ -65,6 +65,22 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": ""NormalizeVector2"",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""PickUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""e9fda7eb-cd39-4004-a494-829f5cfb7c0d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": ""NormalizeVector2"",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Open"",
+                    ""type"": ""Button"",
+                    ""id"": ""b1ee62a4-4786-4652-9e15-ed3923c966eb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": ""NormalizeVector2"",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -243,6 +259,28 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
                     ""action"": ""ChangeEnemy"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c81b928-47bf-47d6-8245-5f31036fd69d"",
+                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PickUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cc35bb17-d225-456d-bddd-281771e2da9f"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Open"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -257,6 +295,8 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
         m_CharacterControlls_Attack = m_CharacterControlls.FindAction("Attack", throwIfNotFound: true);
         m_CharacterControlls_Charge = m_CharacterControlls.FindAction("Charge", throwIfNotFound: true);
         m_CharacterControlls_ChangeEnemy = m_CharacterControlls.FindAction("ChangeEnemy", throwIfNotFound: true);
+        m_CharacterControlls_PickUp = m_CharacterControlls.FindAction("PickUp", throwIfNotFound: true);
+        m_CharacterControlls_Open = m_CharacterControlls.FindAction("Open", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -312,6 +352,8 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
     private readonly InputAction m_CharacterControlls_Attack;
     private readonly InputAction m_CharacterControlls_Charge;
     private readonly InputAction m_CharacterControlls_ChangeEnemy;
+    private readonly InputAction m_CharacterControlls_PickUp;
+    private readonly InputAction m_CharacterControlls_Open;
     public struct CharacterControllsActions
     {
         private @PlayerInputV2 m_Wrapper;
@@ -322,6 +364,8 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
         public InputAction @Attack => m_Wrapper.m_CharacterControlls_Attack;
         public InputAction @Charge => m_Wrapper.m_CharacterControlls_Charge;
         public InputAction @ChangeEnemy => m_Wrapper.m_CharacterControlls_ChangeEnemy;
+        public InputAction @PickUp => m_Wrapper.m_CharacterControlls_PickUp;
+        public InputAction @Open => m_Wrapper.m_CharacterControlls_Open;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControlls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -349,6 +393,12 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
                 @ChangeEnemy.started -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnChangeEnemy;
                 @ChangeEnemy.performed -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnChangeEnemy;
                 @ChangeEnemy.canceled -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnChangeEnemy;
+                @PickUp.started -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnPickUp;
+                @PickUp.performed -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnPickUp;
+                @PickUp.canceled -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnPickUp;
+                @Open.started -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnOpen;
+                @Open.performed -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnOpen;
+                @Open.canceled -= m_Wrapper.m_CharacterControllsActionsCallbackInterface.OnOpen;
             }
             m_Wrapper.m_CharacterControllsActionsCallbackInterface = instance;
             if (instance != null)
@@ -371,6 +421,12 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
                 @ChangeEnemy.started += instance.OnChangeEnemy;
                 @ChangeEnemy.performed += instance.OnChangeEnemy;
                 @ChangeEnemy.canceled += instance.OnChangeEnemy;
+                @PickUp.started += instance.OnPickUp;
+                @PickUp.performed += instance.OnPickUp;
+                @PickUp.canceled += instance.OnPickUp;
+                @Open.started += instance.OnOpen;
+                @Open.performed += instance.OnOpen;
+                @Open.canceled += instance.OnOpen;
             }
         }
     }
@@ -383,5 +439,7 @@ public class @PlayerInputV2 : IInputActionCollection, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnCharge(InputAction.CallbackContext context);
         void OnChangeEnemy(InputAction.CallbackContext context);
+        void OnPickUp(InputAction.CallbackContext context);
+        void OnOpen(InputAction.CallbackContext context);
     }
 }
