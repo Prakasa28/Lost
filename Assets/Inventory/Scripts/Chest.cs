@@ -6,16 +6,22 @@ public class Chest : MonoBehaviour
 {
     // get the children object
     private GameObject chest;
+
     // private GameObject childChest;
     public GameObject items;
     private GameObject chestText;
     private bool collisionOccured = false;
     private ParticleSystem chestEffectParticleSystem;
     private GameObject chestEffect;
+    private Animator animator;
+    private int isOpeningHash;
+
     void Start()
     {
         chestText = GameObject.FindGameObjectWithTag("ChestText");
         chest = GameObject.FindGameObjectWithTag("Chest");
+        animator = GetComponent<Animator>();
+        isOpeningHash = Animator.StringToHash("IsOpening");
         chestEffect = GameObject.FindGameObjectWithTag("ChestEffect");
         chestEffectParticleSystem = chestEffect.GetComponent<ParticleSystem>();
         items.SetActive(false);
@@ -27,13 +33,14 @@ public class Chest : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (collisionOccured)
-        {           
+        {
             return;
         }
-        if (other.gameObject.CompareTag("Player"))  
+
+        if (other.gameObject.CompareTag("Player"))
         {
             chestText.SetActive(true);
-            collisionOccured = true; 
+            collisionOccured = true;
         }
     }
 
@@ -54,6 +61,7 @@ public class Chest : MonoBehaviour
         // check if chest is opened
         if (collisionOccured && Input.GetKeyDown(KeyCode.E))
         {
+            animator.SetBool(isOpeningHash, true);
             // rotate chest
             chest.transform.Rotate(-90, 0, 0);
             // stop the particles
