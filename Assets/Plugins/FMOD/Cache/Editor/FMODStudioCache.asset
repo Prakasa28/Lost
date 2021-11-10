@@ -125,6 +125,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1700
+--- !u!114 &-8252188364446816633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Juhani Junkala - Adaptive Game Music/State
+  m_EditorClassIdentifier: 
+  Name: State
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &-7610479657051914593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,7 +275,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 3118973156329162473}
+  - {fileID: 2567340453398419826}
   MinDistance: 1
   MaxDistance: 20
   Length: 168000
@@ -517,7 +541,7 @@ MonoBehaviour:
   - {fileID: 4132131409670617937}
   StringsBanks:
   - {fileID: 3525942762061365936}
-  cacheTime: 637721112049881384
+  cacheTime: 637721239334959322
   cacheVersion: 9
 --- !u!114 &886628677832760124
 MonoBehaviour:
@@ -713,6 +737,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 914
+--- !u!114 &2567340453398419826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Juhani Junkala - Adaptive Game Music/State
+  m_EditorClassIdentifier: 
+  Name: State
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &2816442490711787070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -882,7 +930,7 @@ MonoBehaviour:
     Bank.strings.bank
   Name: Master Bank.strings
   StudioPath: bank:/Master Bank.strings
-  lastModified: 637721112049881384
+  lastModified: 637721239334959322
   FileSizes:
   - Name: Desktop
     Value: 1438
@@ -947,7 +995,7 @@ MonoBehaviour:
     Bank.bank
   Name: Master Bank
   StudioPath: bank:/Master Bank
-  lastModified: 637721112049831521
+  lastModified: 637721239334919113
   FileSizes:
   - Name: Desktop
     Value: 2949632
@@ -1006,6 +1054,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1115
+--- !u!114 &5200785744126010198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Juhani Junkala - Adaptive Game Music/State
+  m_EditorClassIdentifier: 
+  Name: State
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &5287948699384796742
 MonoBehaviour:
   m_ObjectHideFlags: 0
