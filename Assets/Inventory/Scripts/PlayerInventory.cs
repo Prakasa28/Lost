@@ -19,7 +19,6 @@ public class PlayerInventory : MonoBehaviour
     private GroundItem followingItem;
     private List<ItemObject> items;
     public Mesh armoredMesh;
-
     void Awake()
     {
         items = new List<ItemObject>();
