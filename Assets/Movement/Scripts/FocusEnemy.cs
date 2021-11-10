@@ -20,7 +20,10 @@ public class FocusEnemy : MonoBehaviour
     [HideInInspector]
     public GameObject focusedTarget;
 
+    private AudioController audioCamera;
     private bool canChangeEnemy = true;
+
+
 
     void Awake()
     {
@@ -29,6 +32,7 @@ public class FocusEnemy : MonoBehaviour
         enemies = GameObject.FindGameObjectsWithTag("enemy");
         enemiesInRange = new List<GameObject>();
         BossHealthBar = GameObject.FindGameObjectWithTag("bossHealthbar").GetComponent<HealthBar>();
+        audioCamera = GameObject.FindGameObjectWithTag("Camera").GetComponentInChildren<AudioController>();
     }
 
 
@@ -117,8 +121,10 @@ public class FocusEnemy : MonoBehaviour
             //spawn the canvas
             EnemyStats enemyStats = focusedBoss.GetComponent<EnemyStats>();
             BossHealthBar.gameObject.SetActive(true);
+            audioCamera.StartBattle();
             return;
         }
+        audioCamera.StopBattle();
         BossHealthBar.gameObject.SetActive(false);
     }
 

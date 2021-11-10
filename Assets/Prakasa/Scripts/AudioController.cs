@@ -6,8 +6,8 @@ using FMODUnity;
 
 public class AudioController : MonoBehaviour
 {
-    
 
+    private bool battleMusic = false;
     FMOD.Studio.EventInstance Music;
     //FMOD.Studio.paramterInstance combatVal;
 
@@ -15,7 +15,7 @@ public class AudioController : MonoBehaviour
     void Start()
      {
       
-        Music = FMODUnity.RuntimeManager.CreateInstance("event:/Juhani Junkala - Adaptive Game Music");
+        Music = FMODUnity.RuntimeManager.CreateInstance("event:/GameSound/Juhani Junkala - Adaptive Game Music");
         Music.start();
 
     }
@@ -23,13 +23,24 @@ public class AudioController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("space"))
+        if (battleMusic == true)
         {
             Music.setParameterByName("State", 1.0f, true);
         }
-        if (Input.GetKeyDown("k"))
+        else
         {
             Music.setParameterByName("State", 0f, true);
         }
+          
+    }
+
+    public void StartBattle()
+    {
+        battleMusic = true;
+    }
+
+    public void StopBattle()
+    {
+        battleMusic = false;
     }
 }

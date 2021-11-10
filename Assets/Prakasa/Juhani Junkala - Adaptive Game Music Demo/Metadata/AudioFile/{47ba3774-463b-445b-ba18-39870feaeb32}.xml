@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{47ba3774-463b-445b-ba18-39870feaeb32}">
+		<property name="assetPath">
+			<value>rage.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>3.9009523809523809</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{50edfb25-7476-4c14-b917-f0c7a8f2b703}</destination>
+		</relationship>
+	</object>
+</objects>
